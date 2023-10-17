@@ -59,3 +59,21 @@
 .card-mask {
   mask-image: url("../assets/card-mask.svg");
 }
+.drop-scroll {
+  animation: drop-scroll 3200ms infinite;
+}
+
+@keyframes drop-scroll {
+  0% {
+    transform: translateY(-4px);
+    opacity: 0.6;
+  }
+  50% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-4px);
+    opacity: 0.6;
+  }
+}

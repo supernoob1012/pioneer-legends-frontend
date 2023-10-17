@@ -56,7 +56,7 @@ export default function Index(props: { isMute: boolean; setIsMute: Function }) {
           <div className="grid place-content-center h-screen relative z-10">
             <img src="/img/logo.png" className="w-[163px] h-[212px]" alt="" />
             <Link href={"#content"} passHref>
-              <div className="w-10 h-10 absolute left-1/2 -translate-x-1/2 bottom-[56px] cursor-pointer">
+              <div className="w-10 h-10 absolute left-1/2 -translate-x-1/2 bottom-[56px] cursor-pointer drop-scroll">
                 <DownArrowIcon />
               </div>
             </Link>

@@ -9,7 +9,7 @@ import {
   useUserData,
 } from "../../context/UserProvider";
 import CloseButton from "./CloseButton";
-import { CheckLineIcon, InputCloseIcon } from "../SvgIcons";
+import { CheckLineIcon, LoadingSpin } from "../SvgIcons";
 import { getNonce, requestSignature, updateProfile } from "../../utils/api";
 import ModalEdges from "./ModalCorner";
 import DisplayNamebox from "./DisplayNamebox";
@@ -60,7 +60,8 @@ const ProfileModal: FC = () => {
     try {
       const sig = await requestSignature(
         wallet,
-        `Authorize your wallet.\nname: ${username}\nwallet: ${wallet.publicKey?.toBase58() as string
+        `Authorize your wallet.\nname: ${username}\nwallet: ${
+          wallet.publicKey?.toBase58() as string
         }\nnonce: ${getNonce()}`
       );
       console.log(username, checkedImge);
@@ -96,7 +97,7 @@ const ProfileModal: FC = () => {
 
   const CloseModal: FC = () => {
     return (
-      <div className="fixed left-0 top-0 w-screen h-screen z-[1000] flex items-center justify-center backdrop-blur-[20px]  bg-[#000000]/40">
+      <div className="fixed left-0 top-0 w-screen h-screen z-[1000] flex items-center justify-center backdrop-blur-[20px] bg-[#000000]/40">
         <div className="w-[576px] bg-gradient-to-b from-[#0F0902] to-[#26211E]  rounded-2xl relative p-2">
           <div className="bg-gradient-to-b from-[#1F1B18] to-[#393028]">
             <ModalEdges />
@@ -130,109 +131,109 @@ const ProfileModal: FC = () => {
 
   return isProfileModal ? (
     <>
-      {!isClose && (
-        <div className="fixed left-0 top-0 w-screen h-screen z-[1000] flex items-center justify-center backdrop-blur-[20px]  bg-[#000000]/40">
-          <div className="w-[568px] bg-gradient-to-b from-[#0F0902] to-[#26211E]  rounded-2xl relative p-2">
-            <ModalEdges />
-            <CloseButton
-              className="absolute right-5 top-[34px]"
-              onClose={closeModal}
+      <div className="fixed left-0 top-0 w-screen h-screen z-[1000] flex items-center justify-center backdrop-blur-[20px]  bg-[#000000]/40">
+        <div className="w-[568px] bg-gradient-to-b from-[#0F0902] to-[#26211E]  rounded-2xl relative p-2">
+          <ModalEdges />
+          <CloseButton
+            className="absolute right-5 top-[34px]"
+            onClose={closeModal}
+          />
+          <div
+            className="bg-gradient-to-b from-[#1F1B18] to-[#393028] px-6 py-7"
+            onClick={() => setInputActive(false)}
+          >
+            <div className="relative">
+              <p className="text-[24px] font-secondary text-primary-100 leading-[1.33] uppercase">
+                edit profile
+              </p>
+            </div>
+            <DisplayNamebox
+              username={username}
+              setUsername={setUsername}
+              inputActive={inputActive}
             />
-            <div
-              className="bg-gradient-to-b from-[#1F1B18] to-[#393028] px-6 py-7"
-              onClick={() => setInputActive(false)}
-            >
-              <div className="relative">
-                <p className="text-[24px] font-secondary text-primary-100 leading-[1.33] uppercase">
-                  edit profile
-                </p>
-              </div>
-              <DisplayNamebox
-                username={username}
-                setUsername={setUsername}
-                inputActive={inputActive}
-              />
-              <div className="relative">
-                <p className="text-white font-medium">Profile picture</p>
-                {allNftList.length !== 0 ? (
-                  <div className="h-[248px] overflow-auto mt-2 pr-1.5 custom-scroll">
-                    <div className="grid grid-cols-4 gap-4">
-                      {allNftList.map((item, key) => (
-                        <PfpCard
-                          image={item.image}
-                          key={key}
-                          pfp={userData.image}
-                          checkedImge={checkedImge}
-                          setCheckedImage={setCheckedImage}
-                        />
-                      ))}
-                    </div>
+            <div className="relative">
+              <p className="text-white font-medium">Profile picture</p>
+              {allNftList.length !== 0 ? (
+                <div className="h-[248px] overflow-auto mt-2 pr-1.5 custom-scroll">
+                  <div className="grid grid-cols-4 gap-4">
+                    {allNftList.map((item, key) => (
+                      <PfpCard
+                        image={item.image}
+                        key={key}
+                        pfp={userData.image}
+                        checkedImge={checkedImge}
+                        setCheckedImage={setCheckedImage}
+                      />
+                    ))}
                   </div>
-                ) : (
-                  <div className="h-[200px] flex items-center flex-col mt-8">
+                </div>
+              ) : (
+                <div className="h-[200px] flex items-center flex-col mt-8">
+                  <div
+                    className="w-[100px] h-[100px] rounded-full z-20 relative overflow-hidden"
+                    style={{
+                      backgroundImage:
+                        "radial-gradient(115.57% 115.57% at -3.5% -16%, #3F434B 0%, #2D2721 100%)",
+                    }}
+                  >
                     <div
-                      className="w-[100px] h-[100px] rounded-full z-20 relative overflow-hidden"
+                      className="m-0.5 w-[96px] h-[96px] rounded-full overflow-hidden"
                       style={{
                         backgroundImage:
-                          "radial-gradient(115.57% 115.57% at -3.5% -16%, #3F434B 0%, #2D2721 100%)",
+                          "linear-gradient(149deg, #38393C 9.39%, #2D2721 93.63%)",
                       }}
                     >
-                      <div
-                        className="m-0.5 w-[96px] h-[96px] rounded-full overflow-hidden"
-                        style={{
-                          backgroundImage:
-                            "linear-gradient(149deg, #38393C 9.39%, #2D2721 93.63%)",
-                        }}
-                      >
-                        <div className="m-1.5 overflow-hidden rounded-full bg-[#675F57]">
-                          {/* eslint-disable-next-line */}
-                          <img
-                            src={"/img/default-avatar.svg"}
-                            className="w-full h-full"
-                            alt=""
-                          />
-                        </div>
-                      </div>
-                    </div>
-                    <div className="grid place-content-center w-fultext-center mx-auto text-center text-[#E4DECD] font-medium">
-                      <p>You have no NFT,</p>
-                      <div className="whitespace-nowrap">
-                        buy one from{" "}
-                        <span className="underline">
-                          <Link href="#" passHref>
-                            Matic Eden
-                          </Link>
-                        </span>{" "}
-                        now
+                      <div className="m-1.5 overflow-hidden rounded-full bg-[#675F57]">
+                        {/* eslint-disable-next-line */}
+                        <img
+                          src={"/img/default-avatar.svg"}
+                          className="w-full h-full"
+                          alt=""
+                        />
                       </div>
                     </div>
                   </div>
-                )}
-
-                <div className="py-6 flex items-center justify-center relative gap-7">
-                  <div
-                    className="w-full h-8 absolute left-0 -top-8 z-10 pointer-events-none"
-                    style={{
-                      background:
-                        "linear-gradient(180deg, rgba(53, 44, 37, 0.00) 0%, #352C25 100%)",
-                    }}
-                  />
-                  <Button variant="secondary" onClick={closeModal}>
-                    Cancel
-                  </Button>
-                  <Button
-                    variant="primary"
-                    onClick={update}
-                    disabled={isSaving}
-                  >
-                    Save
-                  </Button>
+                  <div className="grid place-content-center w-fultext-center mx-auto text-center text-[#E4DECD] font-medium">
+                    <p>You have no NFT,</p>
+                    <div className="whitespace-nowrap">
+                      buy one from{" "}
+                      <span className="underline">
+                        <Link href="#" passHref>
+                          Matic Eden
+                        </Link>
+                      </span>{" "}
+                      now
+                    </div>
+                  </div>
                 </div>
+              )}
+
+              <div className="py-6 flex items-center justify-center relative gap-7">
+                <div
+                  className="w-full h-8 absolute left-0 -top-8 z-10 pointer-events-none"
+                  style={{
+                    background:
+                      "linear-gradient(180deg, rgba(53, 44, 37, 0.00) 0%, #352C25 100%)",
+                  }}
+                />
+                <Button variant="secondary" onClick={closeModal}>
+                  Cancel
+                </Button>
+                <Button variant="primary" onClick={update} disabled={isSaving}>
+                  {isSaving ? (
+                    <div className="w-6 h-6 relative mx-auto animate-spin">
+                      <Image src={"/icons/spin.png"} layout="fill" alt="" />
+                    </div>
+                  ) : (
+                    "Save"
+                  )}
+                </Button>
               </div>
             </div>
           </div>
         </div>
-      )}
+      </div>
       {isClose && <CloseModal />}
     </>
   ) : (
@@ -248,9 +249,9 @@ const PfpCard = ({
   setCheckedImage,
 }: {
   image: string;
-    pfp: string;
+  pfp: string;
   checkedImge: string;
-    setCheckedImage: Function;
+  setCheckedImage: Function;
 }) => {
   const { userData } = useUserData();
   const [isClicked, setIsClicked] = useState(false);

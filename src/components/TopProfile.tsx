@@ -123,7 +123,7 @@ const TopProfile: FC<Props> = ({ address }) => {
           )}
         </div>
         <button
-          className="w-6 h-6 flex items-center justify-center"
+          className="w-6 h-6 flex items-center justify-center hover:bg-[#E1E4CD1A] active:bg-[#1E191566]"
           onClick={() => setOpened(!opened)}
         >
           <HamburgerIcon />
@@ -141,7 +141,7 @@ const TopProfile: FC<Props> = ({ address }) => {
           <ul className="relative z-10" onClick={() => setOpened(false)}>
             <li className="">
               <button
-                className="p-3 text-[16px] font-medium text-white w-full text-left hover:bg-[#e1e4cd1a] focus:bg-[#1e191566]"
+                className="p-3 text-[16px] font-medium text-white w-full text-left hover:bg-[#e1e4cd1a] active:bg-[#1e191566]"
                 onClick={hanleMyWalletModal}
               >
                 My wallet
@@ -149,7 +149,7 @@ const TopProfile: FC<Props> = ({ address }) => {
             </li>
             <li className="">
               <button
-                className="p-3 text-[16px] font-medium text-white w-full text-left hover:bg-[#e1e4cd1a] focus:bg-[#1e191566]"
+                className="p-3 text-[16px] font-medium text-white w-full text-left hover:bg-[#e1e4cd1a] active:bg-[#1e191566]"
                 onClick={handleShareModal}
               >
                 Share
@@ -157,7 +157,7 @@ const TopProfile: FC<Props> = ({ address }) => {
             </li>
             <li className="">
               <button
-                className="p-3 text-[16px] font-medium text-white w-full text-left hover:bg-[#e1e4cd1a] focus:bg-[#1e191566]"
+                className="p-3 text-[16px] font-medium text-white w-full text-left hover:bg-[#e1e4cd1a] active:bg-[#1e191566]"
                 onClick={handleAboutModal}
               >
                 Tutorial
@@ -165,7 +165,7 @@ const TopProfile: FC<Props> = ({ address }) => {
             </li>
             <li className="">
               <button
-                className="p-3 text-[16px] font-medium text-white w-full text-left hover:bg-[#e1e4cd1a] focus:bg-[#1e191566]"
+                className="p-3 text-[16px] font-medium text-white w-full text-left hover:bg-[#e1e4cd1a] active:bg-[#1e191566]"
                 onClick={handleDisconnectWalletModal}
               >
                 Disconnect wallet

@@ -381,14 +381,14 @@ export const DownArrowIcon: FC = () => {
     >
       <path
         d="M5.33368 23.4751L19.4758 29.9998L33.6179 23.4751"
-        stroke="#A39C87"
+        stroke="white"
         strokeWidth="3"
       />
       <path
         fillRule="evenodd"
         clipRule="evenodd"
-        d="M16.1402 18.8092L5.96205 14.1133L4.70526 16.8373L12.6492 20.5024L16.1402 18.8092ZM16.1723 22.1279L18.8474 23.3621L19.4758 23.652L20.1042 23.3621L34.2463 16.8373L32.9895 14.1133L26.9673 16.8918L16.1723 22.1279Z"
-        fill="#A39C87"
+        d="M16.1402 18.8092L5.96208 14.1133L4.70529 16.8373L12.6493 20.5024L16.1402 18.8092ZM16.1723 22.1279L18.8474 23.3621L19.4758 23.652L20.1042 23.3621L34.2463 16.8373L32.9896 14.1133L26.9673 16.8918L16.1723 22.1279Z"
+        fill="white"
       />
     </svg>
   );
@@ -576,6 +576,41 @@ export const CardCropMask: FC<{
       className={className}
     >
       <path d="M0 8L8 0H154V154H0V8Z" fill="#D9D9D9" />
+    </svg>
+  );
+};
+
+export const LoadingSpin = () => {
+  return (
+    <svg
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <mask id="path-1-inside-1_336_13628" fill="white">
+        <path d="M24 12C24 18.6274 18.6274 24 12 24C5.37258 24 0 18.6274 0 12C0 5.37258 5.37258 0 12 0C18.6274 0 24 5.37258 24 12ZM4.03115 12C4.03115 16.4011 7.59893 19.9688 12 19.9688C16.4011 19.9688 19.9688 16.4011 19.9688 12C19.9688 7.59893 16.4011 4.03115 12 4.03115C7.59893 4.03115 4.03115 7.59893 4.03115 12Z" />
+      </mask>
+      <path
+        d="M24 12C24 18.6274 18.6274 24 12 24C5.37258 24 0 18.6274 0 12C0 5.37258 5.37258 0 12 0C18.6274 0 24 5.37258 24 12ZM4.03115 12C4.03115 16.4011 7.59893 19.9688 12 19.9688C16.4011 19.9688 19.9688 16.4011 19.9688 12C19.9688 7.59893 16.4011 4.03115 12 4.03115C7.59893 4.03115 4.03115 7.59893 4.03115 12Z"
+        stroke="url(#paint0_angular_336_13628)"
+        strokeWidth="8"
+        mask="url(#path-1-inside-1_336_13628)"
+      />
+      <defs>
+        <radialGradient
+          id="paint0_angular_336_13628"
+          cx="0"
+          cy="0"
+          r="1"
+          gradientUnits="userSpaceOnUse"
+          gradientTransform="translate(12 12) scale(12)"
+        >
+          <stop stopColor="white" stopOpacity="0" />
+          <stop offset="1" stopColor="#00F3FF" />
+        </radialGradient>
+      </defs>
     </svg>
   );
 };

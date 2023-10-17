@@ -1,9 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
-import React, { useState, useContext } from "react";
+import React, { useContext } from "react";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { errorAlert } from "./ToastGroup";
 import Button from "./Button";
-import ClickAwayComponent from "./ClickAwayComponent";
 import { BackpackIcon, LedgerIcon, PhantomIcon } from "./SvgIcons";
 import { ModalContext } from "../context/ModalProvider";
 import { useUserData } from "../context/UserProvider";
@@ -13,12 +12,6 @@ const ConnectWallet = () => {
   const { wallets, select, connected } = useWallet();
   const { setIsProfileModal } = useContext<any>(ModalContext);
   const { isDataLoading } = useUserData();
-
-  const [isOpen, setIsOpen] = useState(false);
-
-  const handleSelectWallet = () => {
-    setIsOpen(!isOpen);
-  };
 
   const handelConnectPhantom = () => {
     for (let i = 0; i < wallets.length; i++) {
@@ -56,10 +49,7 @@ const ConnectWallet = () => {
     }
   };
   return (
-    <ClickAwayComponent
-      onClickAway={() => setIsOpen(false)}
-      className="backdrop-blur-[10px]"
-    >
+    <div className="group">
       <div className="relative">
         {connected ? (
           <>
@@ -80,63 +70,59 @@ const ConnectWallet = () => {
             )}
           </>
         ) : (
-          <Button variant="primary" onClick={handleSelectWallet}>
-            Connect wallet
-          </Button>
+          <Button variant="primary">Connect wallet</Button>
         )}
 
-        {isOpen && (
-          <div className="min-w-[238px] h-[240px] pt-3 pb-9 px-4 absolute left-0 top-[60px] backdrop-blur-[10px]">
-            <div
-              className="absolute left-0 top-0 w-full h-full opacity-70"
-              style={{
-                backgroundImage:
-                  "linear-gradient(180deg, #0F0902 0%, #26211E 100%)",
-              }}
-            ></div>
-            {/* <div className="absolute left-2 bottom-2 z-10 w-5 h-5 mix-blend-overlay">
+        <div className="min-w-[238px] py-3 px-4 absolute right-0 top-[40px] hidden group-hover:block">
+          <div
+            className="absolute left-0 top-5 w-full h-[calc(100%-20px)] opacity-70 backdrop-blur-[10px]"
+            style={{
+              backgroundImage:
+                "linear-gradient(180deg, #0F0902 0%, #26211E 100%)",
+            }}
+          ></div>
+          {/* <div className="absolute left-2 bottom-2 z-10 w-5 h-5 mix-blend-overlay">
               <Image src={"/img/screw.svg"} width={20} height={20} alt="" />
             </div>
             <div className="absolute right-2 bottom-2 z-10 w-5 h-5 mix-blend-overlay">
               <Image src={"/img/screw.svg"} width={20} height={20} alt="" />
             </div> */}
-            <ul className="relative z-10">
-              <li className="">
-                <button
-                  className="p-3 text-[16px] font-medium text-white w-full text-left hover:bg-[#e1e4cd1a] focus:bg-[#1e191566]"
-                  onClick={handelConnectPhantom}
-                >
-                  <div className="flex items-center gap-2">
-                    <PhantomIcon /> Phantom
-                  </div>
-                </button>
-              </li>
-              <li className="">
-                <button
-                  className="p-3 text-[16px] font-medium text-white w-full text-left hover:bg-[#e1e4cd1a] focus:bg-[#1e191566]"
-                  onClick={handleConnectBackpack}
-                >
-                  <div className="flex items-center gap-2">
-                    <BackpackIcon /> Backpack
-                  </div>
-                </button>
-              </li>
-              <li className="">
-                <button
-                  className="p-3 text-[16px] font-medium text-white w-full text-left hover:bg-[#e1e4cd1a] focus:bg-[#1e191566]"
-                  onClick={handleConnectLedger}
-                >
-                  <div className="flex items-center gap-2">
-                    <LedgerIcon />
-                    Phantom/Ledger
-                  </div>
-                </button>
-              </li>
-            </ul>
-          </div>
-        )}
+          <ul className="relative z-10 mt-5">
+            <li className="">
+              <button
+                className="p-3 text-[16px] font-medium text-white w-full text-left hover:bg-[#e1e4cd1a] active:bg-[#1e191566]"
+                onClick={handelConnectPhantom}
+              >
+                <div className="flex items-center gap-2">
+                  <PhantomIcon /> Phantom
+                </div>
+              </button>
+            </li>
+            <li className="">
+              <button
+                className="p-3 text-[16px] font-medium text-white w-full text-left hover:bg-[#e1e4cd1a] active:bg-[#1e191566]"
+                onClick={handleConnectBackpack}
+              >
+                <div className="flex items-center gap-2">
+                  <BackpackIcon /> Backpack
+                </div>
+              </button>
+            </li>
+            <li className="">
+              <button
+                className="p-3 text-[16px] font-medium text-white w-full text-left hover:bg-[#e1e4cd1a] active:bg-[#1e191566]"
+                onClick={handleConnectLedger}
+              >
+                <div className="flex items-center gap-2">
+                  <LedgerIcon />
+                  Phantom/Ledger
+                </div>
+              </button>
+            </li>
+          </ul>
+        </div>
       </div>
-    </ClickAwayComponent>
+    </div>
   );
 };
 
