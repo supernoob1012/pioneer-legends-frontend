@@ -73,7 +73,7 @@ const ConnectWallet = () => {
           <Button variant="primary">Connect wallet</Button>
         )}
 
-        <div className="min-w-[238px] py-3 px-4 absolute right-0 top-[40px] hidden group-hover:block">
+        <div className="min-w-[238px] py-3 px-4 absolute right-auto left-0 lg:left-auto lg:right-0 top-[40px] hidden group-hover:block">
           <div
             className="absolute left-0 top-5 w-full h-[calc(100%-20px)] opacity-70 backdrop-blur-[10px]"
             style={{

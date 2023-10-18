@@ -65,15 +65,15 @@
 
 @keyframes drop-scroll {
   0% {
-    transform: translateY(-4px);
+    transform: translate(-50%, -4px);
     opacity: 0.6;
   }
   50% {
-    transform: translateY(0);
+    transform: translate(-50%, 0);
     opacity: 1;
   }
   100% {
-    transform: translateY(-4px);
+    transform: translate(-50%, -4px);
     opacity: 0.6;
   }
 }

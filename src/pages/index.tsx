@@ -65,9 +65,9 @@ export default function Index(props: { isMute: boolean; setIsMute: Function }) {
             className="text-[#fff] pt-[157px] pb-[80px] relative"
             id="content"
           >
-            <div className="w-[970px] mx-auto">
-              <h2 className="text-[36px] font-normal">Intro words</h2>
-              <p className="mt-4 text-[20px] font-normal">
+            <div className="w-[calc(100%-40px)] lg:w-[970px] mx-5 lg:mx-auto">
+              <h2 className="text-[24px] lg:text-[36px] font-medium lg:font-normal text-center lg:text-left leading-[1.5]">Intro words</h2>
+              <p className="mt-4 text-[16px] lg:text-[20px] font-medium lg:font-normal leading-[1.5] text-center lg:text-left">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Diam
                 imperdiet sem id venenatis, massa ornare. Odio diam lectus
                 laoreet semper tortor non. In risus, proin purus a sit. Lorem
@@ -85,8 +85,8 @@ export default function Index(props: { isMute: boolean; setIsMute: Function }) {
                   />
                 ))}
               </div>
-              <h2 className="text-[36px] font-normal">Close Word</h2>
-              <p className="mt-4 text-[20px] font-normal">
+              <h2 className="text-[24px] lg:text-[36px] font-medium lg:font-normal text-center lg:text-left leading-[1.5]">Close Word</h2>
+              <p className="mt-4 text-[16px] lg:text-[20px] font-medium lg:font-normal leading-[1.5] text-center lg:text-left">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Diam
                 imperdiet sem id venenatis, massa ornare. Odio diam lectus
                 laoreet semper tortor non. In risus, proin purus a sit. Lorem

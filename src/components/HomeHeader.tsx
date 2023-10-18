@@ -26,8 +26,8 @@ const HomeHeader: FC<Props> = ({ scroll }) => {
           }}
         ></div>
       </div>
-      <div className="flex items-center justify-between w-full px-8 z-10 relative">
-        <div className="py-4">
+      <div className="flex items-center justify-between w-full px-6 lg:px-8 z-10 relative">
+        <div className="py-4 hidden lg:block">
           <img
             src="/img/logo@sm.png"
             className="w-[177px] h-[74px] duration-300"
@@ -37,7 +37,7 @@ const HomeHeader: FC<Props> = ({ scroll }) => {
             }}
           />
         </div>
-        <div className="flex py-[18px]">
+        <div className="flex py-[18px] w-full justify-between lg:justify-end">
           <ConnectWallet />
           <div className="flex items-center gap-4 ml-10">
             <Link href={"#"} passHref>
