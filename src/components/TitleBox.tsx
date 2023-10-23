@@ -1,4 +1,4 @@
-import { FC, ReactNode } from "react";
+import { FC, ReactNode, useEffect, useRef } from "react";
 import { SolanaIcon } from "./SvgIcons";
 
 interface BoxProps {
@@ -26,12 +26,13 @@ const TitleBox: FC<BoxProps> = ({
   isBottom = false,
   onClick,
 }) => {
+
   return (
     <div
       className="absolute z-10 cursor-pointer"
       style={{
-        left: left,
-        top: top,
+        left,
+        top
       }}
       onClick={onClick}
     >
@@ -49,6 +50,7 @@ const TitleBox: FC<BoxProps> = ({
         </div>
         <div
           className="absolute left-0 top-0 w-full h-full opacity-70"
+          draggable="false"
           style={{
             backgroundImage:
               "linear-gradient(180deg, #0F0902 0%, #26211E 100%)",
@@ -88,6 +90,7 @@ const TitleBox: FC<BoxProps> = ({
             height: 184,
           }}
           alt=""
+          draggable="false"
         />
       </div>
     </div>

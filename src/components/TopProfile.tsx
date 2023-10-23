@@ -48,14 +48,16 @@ const TopProfile: FC<Props> = ({ address }) => {
   return (
     <ClickAwayComponent
       onClickAway={() => setOpened(false)}
-      className="fixed top-[18px] right-4 z-50 w-[237px] h-[60px] flex items-center"
+      className="fixed top-[18px] right-4 z-50 w-[132px] lg:w-[237px] h-[60px] flex items-center"
     >
-      <div
-        className="absolute left-0 top-0 w-full h-full opacity-75 backdrop-blur-[20px]"
-        style={{
-          backgroundImage: `url("/img/t-p-bg.svg")`,
-        }}
-      />
+      <div className="absolute left-0 top-0 w-[132px] lg:w-[237px] h-full overflow-hidden">
+        <div
+          className="absolute left-0 top-0 w-[237px] h-full opacity-75 backdrop-blur-[20px]"
+          style={{
+            backgroundImage: `url("/img/t-p-bg.svg")`,
+          }}
+        />
+      </div>
       {/* eslint-disable-next-line */}
       <img
         src="/img/deco-rightbottom.png"
@@ -76,7 +78,7 @@ const TopProfile: FC<Props> = ({ address }) => {
               <Skeleton
                 baseColor="#828282"
                 highlightColor="#999999"
-                className="relative ml-6"
+                className="relative ml-4 lg:ml-6"
                 style={{
                   width: 48,
                   height: 48,
@@ -86,7 +88,7 @@ const TopProfile: FC<Props> = ({ address }) => {
               <Skeleton
                 baseColor="#828282"
                 highlightColor="#999999"
-                className="relative ml-2"
+                className="hidden lg:block relative ml-2"
                 style={{
                   width: 80,
                   height: 16,
@@ -97,7 +99,7 @@ const TopProfile: FC<Props> = ({ address }) => {
           ) : (
             <>
               <div
-                className="w-12 h-12 rounded-full border border-[#0000001a] z-20 relative ml-6 overflow-hidden"
+                className="w-12 h-12 rounded-full border border-[#0000001a] z-20 relative ml-4 lg:ml-6 overflow-hidden"
                 style={{
                   backgroundImage:
                     "radial-gradient(115.57% 115.57% at -3.5% -16%, #3F434B 0%, #2D2721 100%)",
@@ -114,7 +116,7 @@ const TopProfile: FC<Props> = ({ address }) => {
                   alt=""
                 />
               </div>
-              <p className="text-[#fff] text-[14px] leading-[22px] font-[500] ml-2">
+              <p className="text-[#fff] text-[14px] leading-[22px] font-[500] ml-2 hidden lg:block">
                 {userData.username !== ""
                   ? userData.username
                   : getShortAddress(address)}
@@ -123,14 +125,14 @@ const TopProfile: FC<Props> = ({ address }) => {
           )}
         </div>
         <button
-          className="w-6 h-6 flex items-center justify-center hover:bg-[#E1E4CD1A] active:bg-[#1E191566]"
+          className="mr-2.5 lg:mr-0 w-6 h-6 flex items-center justify-center hover:bg-[#E1E4CD1A] active:bg-[#1E191566]"
           onClick={() => setOpened(!opened)}
         >
           <HamburgerIcon />
         </button>
       </div>
       {opened && (
-        <div className="min-w-[238px] py-3 px-4 absolute left-0 top-[74px] backdrop-blur-[20px]">
+        <div className="min-w-[238px] py-3 px-4 absolute right-0 left-auto lg:right-auto lg:left-0 top-[74px] backdrop-blur-[20px]">
           <div
             className="absolute left-0 top-0 w-full h-full opacity-70"
             style={{

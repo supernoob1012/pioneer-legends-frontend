@@ -1,7 +1,10 @@
-import React, { useContext } from "react";
+/* eslint-disable @next/next/no-img-element */
+import React, { useCallback, useContext, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import {
   MiningIcon,
+  MinusIcon,
+  PlusIcon,
   SpaceshipIcon,
   TownhallIcon,
 } from "../components/SvgIcons";
@@ -10,9 +13,24 @@ import TopProfile from "../components/TopProfile";
 import { ModalContext } from "../context/ModalProvider";
 import TitleBox from "../components/TitleBox";
 import Link from "next/link";
-
+import useWindowSize from "../utils/useWindowSize";
 const Map = () => {
   const { setIsStakeModal } = useContext<any>(ModalContext);
+  const [zoom, setZoom] = useState(0.5);
+  const [zoomRate, setZoomRate] = useState(0);
+  const zoomIn = useCallback(() => {
+    if (zoom <= 0.95) {
+      setZoom(zoom + 0.05);
+      setZoomRate(zoomRate + 1);
+    }
+  }, [zoom, zoomRate]);
+
+  const zoomOut = useCallback(() => {
+    if (zoom >= 0.55) {
+      setZoom(zoom - 0.05);
+      setZoomRate(zoomRate - 1);
+    }
+  }, [zoom, zoomRate]);
 
   const wallet = useWallet();
 
@@ -20,8 +38,67 @@ const Map = () => {
     setIsStakeModal(true);
   };
 
+  const videoContainerRef = useRef<HTMLDivElement>(null);
+  let isDragging = false;
+  let prevX = 0;
+  let prevY = 0;
+  const { width, height } = useWindowSize();
+  useEffect(() => {
+    const handleMouseDown = (e: any) => {
+      isDragging = true;
+      prevX = e.clientX;
+      prevY = e.clientY;
+    };
+
+    const handleMouseMove = (e: any) => {
+      if (!isDragging) return;
+
+      const currentX = e.clientX;
+      const currentY = e.clientY;
+      const deltaX = currentX - prevX;
+      const deltaY = currentY - prevY;
+
+      const videoContainer = videoContainerRef.current;
+      if (videoContainer === null) {
+        return;
+      }
+      let newX = videoContainer.offsetLeft + deltaX;
+      let newY = videoContainer.offsetTop + deltaY;
+      if (newX > 960) {
+        newX = 960;
+      }
+      if (newX < 960 - (1920 - width)) {
+        newX = 960 - (1920 - width);
+      }
+      if (newY > 540) {
+        newY = 540;
+      }
+      if (newY < 540 - (1080 - height)) {
+        newY = 540 - (1080 - height);
+      }
+      videoContainer.style.left = `${newX}px`;
+      videoContainer.style.top = `${newY}px`;
+      prevX = currentX;
+      prevY = currentY;
+    };
+
+    const handleMouseUp = () => {
+      isDragging = false;
+    };
+
+    document.addEventListener('mousedown', handleMouseDown);
+    document.addEventListener('mousemove', handleMouseMove);
+    document.addEventListener('mouseup', handleMouseUp);
+
+    return () => {
+      document.removeEventListener('mousedown', handleMouseDown);
+      document.removeEventListener('mousemove', handleMouseMove);
+      document.removeEventListener('mouseup', handleMouseUp);
+    };
+  }, [width, height]);
+
   return (
-    <div className="h-screen relative grid place-content-center overflow-hidden">
+    <div className="w-screen h-screen relative grid place-content-center overflow-hidden">
       <div
         className="absolute left-0 top-0 w-full h-[160px] z-20"
         style={{
@@ -36,7 +113,7 @@ const Map = () => {
         pfp=""
       />
       <Link href={"/"} passHref>
-        <div className="w-[289px] h-[32px] absolute top-[21px] left-[26px] z-50 cursor-pointer">
+        <div className="w-[289px] h-[32px] absolute top-[21px] left-[26px] z-50 cursor-pointer opacity-0 lg:opacity-100 pointer-events-none lg:pointer-events-auto">
           <Image
             src="/img/logo@text.png"
             className="relative"
@@ -45,68 +122,77 @@ const Map = () => {
           />
         </div>
       </Link>
-      <div className="w-[1920px] h-[1080px] absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
-        <div className="w-[1920px] h-[1080px]">
-          <Image
+      <div className="w-[3840px] h-[2160px] absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
+        ref={videoContainerRef}
+      >
+        <div
+          className="duration-200"
+          style={{
+            transform: `scale(${zoom})`,
+          }}
+        >
+          <img
             src={"/img/background/empty.png"}
-            className="absolute z-[1] object-cover"
-            layout="fill"
-            loading="lazy"
+            className={`z-[1] object-cover duration-150 w-full h-full`}
+            draggable="false"
+
             alt=""
           />
-          <Image
+          <img
             src={"/img/background/river_animation.gif"}
-            className="absolute z-[1] object-cover"
-            layout="fill"
-            loading="lazy"
+            className={`absolute left-0 top-0 z-[1] object-cover duration-150 w-full h-full`}
+            draggable="false"
             alt=""
           />
-          {/* <img src="/img/background/empty.png" alt="" /> */}
+          <div className="left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-0 h-0 absolute z-20">
+            <div className="absolute left-[-1480px] top-[-970px] w-[664px] h-[664px]">
+              <Image
+                src={"/img/background/airship_animation.gif"}
+                className="z-[1] object-cover"
+                layout="fill"
+                loading="lazy"
+                alt=""
+              />
+            </div>
+            <div className="absolute left-[-416px] top-[-362px] w-[683px] h-[683px]">
+              <Image
+                src={"/img/background/town_hall_animation.gif"}
+                className="z-[1] object-cover"
+                layout="fill"
+                loading="lazy"
+                alt=""
+              />
+            </div>
+            <div className="absolute left-[90px] top-[-908px] w-[410px] h-[410px]">
+              <Image
+                src={"/img/background/windmill_animation.gif"}
+                className="z-[1] object-cover"
+                layout="fill"
+                loading="lazy"
+                draggable="false"
+                alt=""
+              />
+            </div>
+            <div className="absolute left-[710px] top-[230px] w-[410px] h-[410px]">
+              <Image
+                src={"/img/background/windmill_animation.gif"}
+                className="z-[1] object-cover"
+                layout="fill"
+                draggable="false"
+                loading="lazy"
+                alt=""
+              />
+            </div>
+          </div>
         </div>
         <div className="left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-0 h-0 absolute z-20">
-          <div className="absolute left-[-740px] top-[-485px] w-[332px] h-[332px]">
-            <Image
-              src={"/img/background/airship_animation.gif"}
-              className="z-[1] object-cover"
-              layout="fill"
-              loading="lazy"
-              alt=""
-            />
-          </div>
-          <div className="absolute left-[-208px] top-[-181px] w-[341.5px] h-[341.5px]">
-            <Image
-              src={"/img/background/town_hall_animation.gif"}
-              className="z-[1] object-cover"
-              layout="fill"
-              loading="lazy"
-              alt=""
-            />
-          </div>
-          <div className="absolute left-[46px] top-[-452px] w-[205px] h-[205px]">
-            <Image
-              src={"/img/background/windmill_animation.gif"}
-              className="z-[1] object-cover"
-              layout="fill"
-              loading="lazy"
-              alt=""
-            />
-          </div>
-          <div className="absolute left-[355px] top-[115px] w-[205px] h-[205px]">
-            <Image
-              src={"/img/background/windmill_animation.gif"}
-              className="z-[1] object-cover"
-              layout="fill"
-              loading="lazy"
-              alt=""
-            />
-          </div>
           <TitleBox
             title="spaceship"
             icon={<SpaceshipIcon />}
             balance={10000}
             supply={1024.59}
-            left={-652}
-            top={-134}
+            left={-652 - 44 * zoomRate}
+            top={-134 - 14 * zoomRate}
             hoverLeft={-68}
             hoverTop={-308}
             onClick={handleOpenSpaceship}
@@ -118,7 +204,7 @@ const Map = () => {
             balance={10000}
             supply={1024.59}
             left={-143}
-            top={-250}
+            top={-250 - 14 * zoomRate}
             hoverLeft={-64}
             hoverTop={114}
             onClick={() => console.log("town hall")}
@@ -128,13 +214,35 @@ const Map = () => {
             icon={<MiningIcon />}
             balance={10000}
             supply={1024.59}
-            left={250}
-            top={-180}
+            left={250 + 32 * zoomRate}
+            top={-180 - 14 * zoomRate}
             hoverLeft={-70}
             hoverTop={28}
             onClick={() => console.log("mining")}
           />
         </div>
+      </div>
+      <div className="fixed right-8 bottom-8 flex flex-col z-50" style={{}}>
+        <button
+          className="p-2 relative z-20 hover:bg-[#e1e4cd1a] active:bg-[#1E191566]"
+          onClick={zoomIn}
+        >
+          <PlusIcon />
+        </button>
+        <div className="bg-[#E1E4CD1A] w-4 h-[1px] z-20 ml-2" />
+        <button
+          className="p-2 relative z-20 hover:bg-[#e1e4cd1a] active:bg-[#1E191566]"
+          onClick={zoomOut}
+        >
+          <MinusIcon />
+        </button>
+        <div
+          className="absolute left-0 top-0 w-full h-full"
+          style={{
+            background:
+              "linear-gradient(180deg, rgba(15, 9, 2, 0.70) 0%, rgba(38, 33, 30, 0.70) 100%)",
+          }}
+        ></div>
       </div>
     </div>
   );

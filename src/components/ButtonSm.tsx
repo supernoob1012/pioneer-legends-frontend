@@ -93,7 +93,7 @@ const ButtonSm: FC<ButtonProps> = ({ children, onClick, style, disabled }) => {
         </div>
       </div>
       {/* pressed end */}
-      <div className="font-medium text-[12px] text-[#fff] relative px-2 z-30 group-active:mt-0.5">
+      <div className="font-medium text-[12px] text-[#fff] relative px-2 z-10 group-active:mt-0.5 whitespace-nowrap">
         {children}
       </div>
     </button>

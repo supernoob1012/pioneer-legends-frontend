@@ -2,7 +2,7 @@ import Image from "next/image";
 import { FC } from "react";
 
 interface ButtonProps {
-  onClose: () => void;
+  onClose: any;
   className?: string;
 }
 
@@ -36,7 +36,7 @@ const CloseButton: FC<ButtonProps> = ({
           alt=""
         />
       </div>
-      <div className="h-[38px] w-[38px] absolute -right-11 top-1.5 block group-active:hidden">
+      <div className="h-[38px] w-[38px] absolute -right-11 top-1.5 group-active:hidden md:flex hidden">
         <Image
           src="/img/button/close-shadow.svg"
           className="relative"

@@ -92,7 +92,7 @@ const StakeCard: FC<ItemProps> = ({
         <div className="shadow-card">
           <div
             className="aspect-square relative card-mask"
-            onClick={selectAble ? () => {} : () => setIsShowOrigin(true)}
+            onClick={selectAble ? () => { } : () => setIsShowOrigin(true)}
           >
             {selectAble && (
               <>
@@ -110,7 +110,7 @@ const StakeCard: FC<ItemProps> = ({
                 </div>
               </>
             )}
-            <Image src={image} layout="fill" alt=""  className=""/>
+            <Image src={image} layout="fill" alt="" className="" />
             {/* <Image src={"/img/avatar.png"} layout="fill" alt="" /> */}
           </div>
           <div
@@ -147,11 +147,11 @@ const StakeCard: FC<ItemProps> = ({
         <div className="fixed left-0 top-0 w-screen h-screen backdrop-blur-[10px] z-50 bg-[#000000CC]">
           <img
             src={image}
-            className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[100vh] h-screen"
+            className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[100vh] md:h-screen h-auto"
             alt=""
           />
           <button
-            className="absolute right-[96px] top-9 z-40"
+            className="absolute md:right-[96px] md:top-9 z-40 top-6 right-6"
             onClick={() => setIsShowOrigin(false)}
           >
             <CloseIcon />

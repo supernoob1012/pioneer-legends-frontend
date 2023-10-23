@@ -174,7 +174,7 @@ const Button: FC<ButtonProps> = ({
           <div className="w-1.5 h-1.5 bg-[#1E1915] rotate-45 ml-0.5" />
         </div>
       </div>
-      <div className="font-semibold text-[16px] text-[#fff] relative px-2 z-30 group-active:mt-0.5">
+      <div className="font-semibold text-[16px] text-[#fff] relative px-2 z-30 group-active:mt-0.5 whitespace-nowrap">
         {children}
       </div>
     </button>
