@@ -13,7 +13,6 @@ import MyWalletModal from "../components/Modal/MyWalletModal";
 import { UserProvider } from "../context/UserProvider";
 import StakeModal from "../components/Modal/StakeModal";
 import "react-loading-skeleton/dist/skeleton.css";
-import Loading from "../components/Loading";
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
@@ -29,7 +28,6 @@ export default function App({ Component, pageProps }: AppProps) {
               <AboutModal />
               <MyWalletModal />
               <StakeModal />
-              <Loading />
             </MainLayout>
           </ModalProvider>
         </UserProvider>
