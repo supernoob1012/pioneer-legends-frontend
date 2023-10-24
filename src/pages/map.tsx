@@ -50,59 +50,6 @@ const Map = () => {
   let prevX = 0;
   let prevY = 0;
   const { width, height } = useWindowSize();
-  useEffect(() => {
-    const handleMouseDown = (e: any) => {
-      isDragging = true;
-      prevX = e.clientX;
-      prevY = e.clientY;
-    };
-
-    const handleMouseMove = (e: any) => {
-      if (!isDragging) return;
-
-      const currentX = e.clientX;
-      const currentY = e.clientY;
-      const deltaX = currentX - prevX;
-      const deltaY = currentY - prevY;
-
-      const videoContainer = videoContainerRef.current;
-      if (videoContainer === null) {
-        return;
-      }
-      let newX = videoContainer.offsetLeft + deltaX;
-      let newY = videoContainer.offsetTop + deltaY;
-      if (newX > 960) {
-        newX = 960;
-      }
-      if (newX < 960 - (1920 - width)) {
-        newX = 960 - (1920 - width);
-      }
-      if (newY > 540) {
-        newY = 540;
-      }
-      if (newY < 540 - (1080 - height)) {
-        newY = 540 - (1080 - height);
-      }
-      videoContainer.style.left = `${newX}px`;
-      videoContainer.style.top = `${newY}px`;
-      prevX = currentX;
-      prevY = currentY;
-    };
-
-    const handleMouseUp = () => {
-      isDragging = false;
-    };
-
-    document.addEventListener("mousedown", handleMouseDown);
-    document.addEventListener("mousemove", handleMouseMove);
-    document.addEventListener("mouseup", handleMouseUp);
-
-    return () => {
-      document.removeEventListener("mousedown", handleMouseDown);
-      document.removeEventListener("mousemove", handleMouseMove);
-      document.removeEventListener("mouseup", handleMouseUp);
-    };
-  }, [width, height]);
 
   return (
     <>
@@ -132,7 +79,6 @@ const Map = () => {
         </Link>
         <div
           className="w-[3840px] h-[2160px] absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
-          ref={videoContainerRef}
         >
           <div
             className="duration-200"
@@ -195,7 +141,7 @@ const Map = () => {
           </div>
           <div className="left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-0 h-0 absolute z-20">
             <TitleBox
-              title="spaceship"
+              title="airship"
               icon={<SpaceshipIcon />}
               balance={10000}
               supply={1024.59}

@@ -30,7 +30,7 @@ export const MinusIcon: FC<IconProps> = () => {
     </svg>
   );
 };
-export const CrossIcon: FC<IconProps> = () => {
+export const CrossIcon: FC<IconProps> = ({ color }) => {
   return (
     <svg
       width="24"
@@ -43,14 +43,14 @@ export const CrossIcon: FC<IconProps> = () => {
         fillRule="evenodd"
         clipRule="evenodd"
         d="M13.2037 14.8964L19.2314 20.9241L20.9295 19.226L14.9043 13.2007H13.2037V14.8964ZM10.8022 13.2007H9.1014L3.08984 19.2122L4.78797 20.9104L10.8022 14.8961V13.2007ZM13.2037 10.7992H14.8992L20.9201 4.7782L19.222 3.08008L13.2037 9.09839V10.7992ZM10.8022 9.09862V10.7992H9.10651L3.09923 4.7919L4.79735 3.09378L10.8022 9.09862Z"
-        fill="white"
+        fill={color}
       />
       <rect
         x="10.8086"
         y="10.8066"
         width="2.40151"
         height="2.40151"
-        fill="white"
+        fill={color}
       />
     </svg>
   );

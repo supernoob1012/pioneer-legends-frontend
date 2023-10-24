@@ -40,13 +40,17 @@ const HomeHeader: FC<Props> = ({ scroll }) => {
         <div className="flex py-[18px] w-full justify-between lg:justify-end">
           <ConnectWallet />
           <div className="flex items-center gap-4 ml-10">
-            <Link href={"#"} passHref>
-              <a className="w-8 h-8">
+            <Link href="https://x.com/pioneerlegendio/" passHref>
+              <a
+                className="w-8 h-8"
+              >
                 <TwitterIcon />
               </a>
             </Link>
-            <Link href={"#"} passHref>
-              <a className="w-8 h-8">
+            <Link href="https://discord.com/invite/pioneerlegends" passHref>
+              <a
+                className="w-8 h-8"
+              >
                 <DiscordIcon />
               </a>
             </Link>

@@ -73,7 +73,7 @@ const StakeModal: FC = () => {
                 onClose={closeModal}
               /> :
               <button onClick={closeModal}>
-                <CrossIcon />
+                <CrossIcon color="white" />
               </button>
             }
             {/* <button
@@ -249,7 +249,7 @@ const StakeModal: FC = () => {
                     buy one from{" "}
                     <span className="underline">
                       <Link href="#" passHref>
-                        Matic Eden
+                        Magic Eden
                       </Link>
                     </span>{" "}
                     now
@@ -296,7 +296,7 @@ const StakeModal: FC = () => {
                     buy one from{" "}
                     <span className="underline">
                       <Link href="#" passHref>
-                        Matic Eden
+                        Magic Eden
                       </Link>
                     </span>{" "}
                     now

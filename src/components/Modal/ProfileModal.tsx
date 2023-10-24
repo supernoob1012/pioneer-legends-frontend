@@ -149,7 +149,7 @@ const ProfileModal: FC = () => {
               <div className="flex md:hidden"
                 onClick={closeModal}
               >
-                <CrossIcon />
+                <CrossIcon color="white" />
               </div>
             </div>
             <div className="flex flex-col md:h-auto h-[calc(100%-31px)] overflow-x-hidden overflow-y-hidden">
@@ -217,7 +217,7 @@ const ProfileModal: FC = () => {
                         buy one from{" "}
                         <span className="underline">
                           <Link href="#" passHref>
-                            Matic Eden
+                            Magic Eden
                           </Link>
                         </span>{" "}
                         now
@@ -226,7 +226,7 @@ const ProfileModal: FC = () => {
                   </div>
                 )}
 
-                <div className="md:py-10 py-0 md:h-auto h-[88px] md:px-0 flex items-center md:justify-center -ml-[1px] justify-between gap-7 md:relative fixed w-full left-0 px-7 bottom-0 bg-[#342B2590] backdrop-blur-sm">
+                <div className="md:py-10 py-0 md:h-auto h-[88px] md:px-0 flex items-center md:justify-center -ml-[1px] justify-between gap-7 md:relative fixed w-full left-0 px-5 bottom-0 bg-[#342B2590] backdrop-blur-sm">
                   <div
                     className="w-full h-8 absolute left-0 bottom-[120px] z-10 pointer-events-none blur-[16px] md:flex hidden"
                     style={{

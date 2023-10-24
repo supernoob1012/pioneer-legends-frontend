@@ -77,7 +77,7 @@ const MyWalletModal: FC = () => {
                   height={40}
                   alt=""
                 /> :
-                <CrossIcon />
+                <CrossIcon color="white" />
               }
             </button>
           </div>
@@ -160,7 +160,7 @@ const MyWalletModal: FC = () => {
                         buy one from{" "}
                         <span className="underline">
                           <Link href="#" passHref>
-                            Matic Eden
+                            Magic Eden
                           </Link>
                         </span>{" "}
                         now
@@ -194,7 +194,7 @@ const MyWalletModal: FC = () => {
                   buy one from{" "}
                   <span className="underline">
                     <Link href="#" passHref>
-                      Matic Eden
+                      Magic Eden
                     </Link>
                   </span>{" "}
                   now

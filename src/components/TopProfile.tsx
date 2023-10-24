@@ -69,7 +69,7 @@ const TopProfile: FC<Props> = ({ address }) => {
           className="flex items-center cursor-pointer"
           onClick={() => {
             if (!isDataLoading) {
-              setIsProfileModal(true);
+              setIsMyWalletModal(true);
             }
           }}
         >
