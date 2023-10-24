@@ -6,6 +6,8 @@ import { DownArrowIcon } from "../components/SvgIcons";
 import { HOME_INTRO_CONTENT } from "../config";
 import IntroBox from "../components/IntroBox";
 import HomeHeader from "../components/HomeHeader";
+import { useWallet } from "@solana/wallet-adapter-react";
+import { useRouter } from "next/router";
 
 export default function Index(props: { isMute: boolean; setIsMute: Function }) {
   const mainRef = useRef<HTMLDivElement>(null);
@@ -34,6 +36,16 @@ export default function Index(props: { isMute: boolean; setIsMute: Function }) {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
+
+  const wallet = useWallet();
+  const router = useRouter();
+  
+  useEffect(() => {
+    if (wallet.connected && wallet.publicKey) {
+      router.push("/map");
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [wallet.connected, wallet.publicKey]);
 
   return (
     <>
@@ -66,7 +78,9 @@ export default function Index(props: { isMute: boolean; setIsMute: Function }) {
             id="content"
           >
             <div className="w-[calc(100%-40px)] lg:w-[970px] mx-5 lg:mx-auto">
-              <h2 className="text-[24px] lg:text-[36px] font-medium lg:font-normal text-center lg:text-left leading-[1.5]">Intro words</h2>
+              <h2 className="text-[24px] lg:text-[36px] font-medium lg:font-normal text-center lg:text-left leading-[1.5]">
+                Intro words
+              </h2>
               <p className="mt-4 text-[16px] lg:text-[20px] font-medium lg:font-normal leading-[1.5] text-center lg:text-left">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Diam
                 imperdiet sem id venenatis, massa ornare. Odio diam lectus
@@ -85,7 +99,9 @@ export default function Index(props: { isMute: boolean; setIsMute: Function }) {
                   />
                 ))}
               </div>
-              <h2 className="text-[24px] lg:text-[36px] font-medium lg:font-normal text-center lg:text-left leading-[1.5]">Close Word</h2>
+              <h2 className="text-[24px] lg:text-[36px] font-medium lg:font-normal text-center lg:text-left leading-[1.5]">
+                Close Word
+              </h2>
               <p className="mt-4 text-[16px] lg:text-[20px] font-medium lg:font-normal leading-[1.5] text-center lg:text-left">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Diam
                 imperdiet sem id venenatis, massa ornare. Odio diam lectus

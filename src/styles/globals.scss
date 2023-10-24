@@ -7,7 +7,8 @@
 }
 
 .gradient-bg {
-  background: linear-gradient(180deg, #4D4036 0%, #362C23 28.12%, #261C13 100%), #D9D9D9 !important;
+  background: linear-gradient(180deg, #4d4036 0%, #362c23 28.12%, #261c13 100%),
+    #d9d9d9 !important;
 }
 
 .wallet-adapter-button.wallet-adapter-button-trigger {
@@ -55,25 +56,25 @@
 }
 
 ::-webkit-scrollbar-track {
-  background-color: #342C25;
+  background-color: #342c25;
   /* Background color of the track */
 }
 
 /* Customize the scrollbar thumb */
 ::-webkit-scrollbar-thumb {
-  background-color: #473C34;
+  background-color: #473c34;
 }
 
 /* Customize the scrollbar thumb on hover */
 ::-webkit-scrollbar-thumb {
-  background-color: #473C34;
+  background-color: #473c34;
   background-size: contain;
   background-repeat: no-repeat;
 }
 
 .Toastify__toast {
-  background: linear-gradient(90deg, #831A14 0%, #4D1109 100%) !important;
-  box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.40) !important;
+  background: linear-gradient(90deg, #831a14 0%, #4d1109 100%) !important;
+  box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.4) !important;
   color: white !important;
   position: fixed !important;
   height: 72px !important;
@@ -107,5 +108,64 @@
   100% {
     transform: translate(-50%, -4px);
     opacity: 0.6;
+  }
+}
+.elipse-animate {
+  background: radial-gradient(
+    45.54% 45.54% at 50% 50%,
+    #fff 0%,
+    rgba(0, 0, 0, 0) 100%
+  );
+  mix-blend-mode: color-dodge;
+  width: 84px;
+  height: 54px;
+  flex-shrink: 0;
+}
+
+.eclips-animate {
+  animation: eclips-animate 2s infinite;
+  animation-timing-function: cubic-bezier(0, 0, 1, 1);
+  animation-delay: 0.5s;
+}
+
+@keyframes eclips-animate {
+  0% {
+    transform: translate(-40px, 12px);
+    opacity: 0;
+  }
+  50% {
+    transform: translate(-40px, 12px);
+    opacity: 0;
+  }
+  75% {
+    transform: translate(70px, 12px);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(220px, 12px);
+    opacity: 0;
+  }
+}
+.blue-animate {
+  animation: blue-animate 2s infinite;
+  animation-delay: 0.5s;
+  animation-timing-function: cubic-bezier(0, 0, 1, 1);
+}
+
+@keyframes blue-animate {
+  0% {
+    transform: translateX(-170px);
+  }
+  40% {
+    transform: translateX(-170px);
+  }
+  50% {
+    transform: translateX(-80px);
+  }
+  95% {
+    transform: translateX(0px);
+  }
+  100% {
+    transform: translatX(220px);
   }
 }

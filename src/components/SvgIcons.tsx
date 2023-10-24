@@ -32,12 +32,29 @@ export const MinusIcon: FC<IconProps> = () => {
 };
 export const CrossIcon: FC<IconProps> = () => {
   return (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path fillRule="evenodd" clipRule="evenodd" d="M13.2037 14.8964L19.2314 20.9241L20.9295 19.226L14.9043 13.2007H13.2037V14.8964ZM10.8022 13.2007H9.1014L3.08984 19.2122L4.78797 20.9104L10.8022 14.8961V13.2007ZM13.2037 10.7992H14.8992L20.9201 4.7782L19.222 3.08008L13.2037 9.09839V10.7992ZM10.8022 9.09862V10.7992H9.10651L3.09923 4.7919L4.79735 3.09378L10.8022 9.09862Z" fill="white" />
-      <rect x="10.8086" y="10.8066" width="2.40151" height="2.40151" fill="white" />
+    <svg
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M13.2037 14.8964L19.2314 20.9241L20.9295 19.226L14.9043 13.2007H13.2037V14.8964ZM10.8022 13.2007H9.1014L3.08984 19.2122L4.78797 20.9104L10.8022 14.8961V13.2007ZM13.2037 10.7992H14.8992L20.9201 4.7782L19.222 3.08008L13.2037 9.09839V10.7992ZM10.8022 9.09862V10.7992H9.10651L3.09923 4.7919L4.79735 3.09378L10.8022 9.09862Z"
+        fill="white"
+      />
+      <rect
+        x="10.8086"
+        y="10.8066"
+        width="2.40151"
+        height="2.40151"
+        fill="white"
+      />
     </svg>
-  )
-}
+  );
+};
 export const PlusIcon: FC<IconProps> = () => {
   return (
     <svg
@@ -636,6 +653,42 @@ export const LoadingSpin = () => {
         >
           <stop stopColor="white" stopOpacity="0" />
           <stop offset="1" stopColor="#00F3FF" />
+        </radialGradient>
+      </defs>
+    </svg>
+  );
+};
+
+export const EclipsSymbol: FC<IconProps> = ({ className }) => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="84"
+      height="54"
+      viewBox="0 0 84 54"
+      fill="none"
+      className={className}
+    >
+      <g style={{ mixBlendMode: "color-dodge" }}>
+        <ellipse
+          cx="42"
+          cy="27"
+          rx="42"
+          ry="27"
+          fill="url(#paint0_radial_805_229)"
+        />
+      </g>
+      <defs>
+        <radialGradient
+          id="paint0_radial_805_229"
+          cx="0"
+          cy="0"
+          r="1"
+          gradientUnits="userSpaceOnUse"
+          gradientTransform="translate(42 27) rotate(90) scale(24.5893 38.25)"
+        >
+          <stop stopColor="white" />
+          <stop offset="1" stopOpacity="0" />
         </radialGradient>
       </defs>
     </svg>
