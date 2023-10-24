@@ -161,7 +161,8 @@ const Map = () => {
               top={-250 - 14 * zoomRate}
               hoverLeft={-64}
               hoverTop={114}
-              onClick={() => console.log("town hall")}
+              onClick={handleOpenSpaceship}
+
             />
             <TitleBox
               title="mining"
@@ -172,7 +173,8 @@ const Map = () => {
               top={-180 - 14 * zoomRate}
               hoverLeft={-70}
               hoverTop={28}
-              onClick={() => console.log("mining")}
+              onClick={handleOpenSpaceship}
+
             />
           </div>
         </div>

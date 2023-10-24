@@ -110,12 +110,11 @@
     opacity: 0.6;
   }
 }
+
 .elipse-animate {
-  background: radial-gradient(
-    45.54% 45.54% at 50% 50%,
-    #fff 0%,
-    rgba(0, 0, 0, 0) 100%
-  );
+  background: radial-gradient(45.54% 45.54% at 50% 50%,
+      #fff 0%,
+      rgba(0, 0, 0, 0) 100%);
   mix-blend-mode: color-dodge;
   width: 84px;
   height: 54px;
@@ -133,19 +132,23 @@
     transform: translate(-40px, 12px);
     opacity: 0;
   }
+
   50% {
     transform: translate(-40px, 12px);
     opacity: 0;
   }
+
   75% {
     transform: translate(70px, 12px);
     opacity: 1;
   }
+
   100% {
     transform: translate(220px, 12px);
     opacity: 0;
   }
 }
+
 .blue-animate {
   animation: blue-animate 2s infinite;
   animation-delay: 0.5s;
@@ -156,16 +159,28 @@
   0% {
     transform: translateX(-170px);
   }
+
   40% {
     transform: translateX(-170px);
   }
+
   50% {
     transform: translateX(-80px);
   }
+
   95% {
     transform: translateX(0px);
   }
+
   100% {
     transform: translatX(220px);
   }
+}
+
+.connect .connect-drop {
+  display: none;
+}
+
+.connect:hover .connect-drop {
+  display: block;
 }
