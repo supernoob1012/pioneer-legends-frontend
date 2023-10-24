@@ -77,9 +77,7 @@ const Map = () => {
             />
           </div>
         </Link>
-        <div
-          className="w-[3840px] h-[2160px] absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
-        >
+        <div className="w-[3840px] h-[2160px] absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
           <div
             className="duration-200"
             style={{
@@ -162,7 +160,6 @@ const Map = () => {
               hoverLeft={-64}
               hoverTop={114}
               onClick={handleOpenSpaceship}
-
             />
             <TitleBox
               title="mining"
@@ -174,7 +171,6 @@ const Map = () => {
               hoverLeft={-70}
               hoverTop={28}
               onClick={handleOpenSpaceship}
-
             />
           </div>
         </div>
