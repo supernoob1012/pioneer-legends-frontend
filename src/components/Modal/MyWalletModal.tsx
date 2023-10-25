@@ -133,7 +133,9 @@ const MyWalletModal: FC = () => {
                     </div>
                   </div>
                   <div className="flex gap-8 w-[calc(100%-10px)] md:w-auto ml-0 md:ml-0 justify-between mt-9">
-                    <Button onClick={handleProfileModal}>Edit profile</Button>
+                    <Button variant="secondary" onClick={handleProfileModal}>
+                      Edit profile
+                    </Button>
                     <Button
                       variant="secondary"
                       onClick={handleDisconnectWalletModal}
