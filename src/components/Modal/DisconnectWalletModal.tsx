@@ -1,8 +1,7 @@
-import React, { FC, useState, useContext } from "react";
+import React, { FC, useContext, useEffect } from "react";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { useRouter } from "next/router";
 import { ModalContext } from "../../context/ModalProvider";
-import { CloseIcon } from "../SvgIcons";
 import Image from "next/image";
 import Button from "../Button";
 
@@ -10,20 +9,15 @@ const DisconnectWalletModal: FC = () => {
   const { isDisconnectWalletModal, setIsDisconnectWalletModal } =
     useContext<any>(ModalContext);
 
-  // const { wallet, connected, connect, disconnect, publicKey } = useWallet();
   const { disconnect } = useWallet();
   const router = useRouter();
 
-  // const handleConnect = () => {
-  //   connect();
-  // };
-
-  const handleDisconnect = () => {
-    disconnect();
-    // wallet.disconnect()
+  const handleDisconnect = async () => {
+    await disconnect();
     setIsDisconnectWalletModal(!isDisconnectWalletModal);
     router.push("/");
   };
+
   return isDisconnectWalletModal ? (
     <div className="fixed left-0 top-0 w-screen h-screen z-[1000] flex items-center justify-center backdrop-blur-[20px]  bg-[#000000]/40 md:px-0 px-[14px]">
       <div className="w-[576px] bg-gradient-to-b from-[#0F0902] to-[#26211E]  rounded-2xl relative p-2">
@@ -73,10 +67,7 @@ const DisconnectWalletModal: FC = () => {
               >
                 Cancel
               </Button>
-              <Button
-                variant="primary"
-                onClick={handleDisconnect}
-              >
+              <Button variant="primary" onClick={handleDisconnect}>
                 Disconnect
               </Button>
             </div>

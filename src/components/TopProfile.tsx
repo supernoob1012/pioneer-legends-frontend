@@ -16,7 +16,6 @@ const TopProfile: FC<Props> = ({ address }) => {
   const [opened, setOpened] = useState(false);
 
   const {
-    setIsProfileModal,
     isDisconnectWalletModal,
     setIsDisconnectWalletModal,
     isShareModal,

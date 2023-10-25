@@ -9,14 +9,14 @@ const MainLayout: FC<LayoutProps> = ({ children }) => {
   const wallet = useWallet();
   const router = useRouter();
 
-  useEffect(() => {
-    if (wallet.connected) {
-      router.push("/map");
-    } else {
-      router.push("/");
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [wallet.connected]);
+  // useEffect(() => {
+  //   if (wallet.connected) {
+  //     router.push("/map");
+  //   } else {
+  //     router.push("/");
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [wallet.connected]);
 
   return (
     <>
