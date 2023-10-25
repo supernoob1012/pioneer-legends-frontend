@@ -21,7 +21,11 @@ import TitleBox from "../components/TitleBox";
 import Link from "next/link";
 import useWindowSize from "../utils/useWindowSize";
 import Loading from "../components/Loading";
+import ScrollBooster from "scrollbooster";
 const Map = () => {
+  const viewport = useRef<HTMLDivElement>(null);
+  const content = useRef<HTMLDivElement>(null);
+  const video = useRef<HTMLVideoElement>(null);
   const { setIsStakeModal } = useContext<any>(ModalContext);
   const [zoom, setZoom] = useState(0.5);
   const [zoomRate, setZoomRate] = useState(0);
@@ -50,10 +54,32 @@ const Map = () => {
   let prevX = 0;
   let prevY = 0;
   const { width, height } = useWindowSize();
+  useEffect(() => {
+    if (viewport.current) {
+      const sb = new ScrollBooster({
+        viewport: viewport.current,
+        content: content.current!,
+        scrollMode: "transform",
+        direction: "all",
+        emulateScroll: true,
 
+        bounce: false, // Adds a bounce effect when content edge is reached
+      });
+      const offsetX =
+        content.current!.scrollWidth - viewport.current!.offsetWidth;
+      const offsetY =
+        content.current!.scrollHeight - viewport.current!.offsetHeight!;
+      sb.setPosition({
+        x: offsetX / 2,
+        y: offsetY / 2,
+      });
+    }
+  }, [viewport]);
   return (
     <>
-      <div className="w-screen h-screen relative grid place-content-center overflow-hidden">
+      <div className="w-screen h-screen relative flex justify-center items-center overflow-hidden"
+        ref={viewport}
+      >
         <div
           className="absolute left-0 top-0 w-full h-[160px] z-20"
           style={{
@@ -78,6 +104,7 @@ const Map = () => {
           </div>
         </Link>
         <div
+          ref={content}
           className="w-[3840px] h-[2160px] absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
         >
           <div
