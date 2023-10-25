@@ -7,14 +7,14 @@ interface BoxProps {
   username: string;
   setUsername: Function;
   inputActive: boolean;
-  setIsChanged: React.Dispatch<React.SetStateAction<boolean>>
+  setIsChanged: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const DisplayNamebox: FC<BoxProps> = ({
   username,
   setUsername,
   inputActive,
-  setIsChanged
+  setIsChanged,
 }) => {
   const { userData } = useUserData();
   const { publicKey } = useWallet();
@@ -22,12 +22,11 @@ const DisplayNamebox: FC<BoxProps> = ({
     console.log("username", userData.username);
     setUsername(value);
     if (userData.username === value) {
-      setIsChanged(false)
+      setIsChanged(false);
     } else {
-      setIsChanged(true)
+      setIsChanged(true);
     }
     if (value === "") {
-
     }
   };
   const [isActive, setIsActive] = useState(false);
@@ -50,22 +49,33 @@ const DisplayNamebox: FC<BoxProps> = ({
         <button
           className={`absolute right-3 top-3 ${!username ? "hidden" : "show"}`}
           onClick={() => setUsername("")}
-        >
-        </button>
+        ></button>
         <div className="flex justify-between items-center relative">
           {publicKey && (
             <input
               id="username"
-              className="p-3 w-full bg-[#322E28] rounded-xl text-[#ffffff] outline-none focus:text-white placeholder:text-white placeholder:opacity-50"
+              className="p-3 w-full bg-[#E1E4CD1A] hover:bg-[#E1E4CD33] rounded-xl text-[#ffffff] outline-none focus:text-white placeholder:text-white"
               value={username}
-              placeholder={publicKey.toBase58().slice(0, 5) + "..." + publicKey.toBase58().substring(publicKey.toBase58().length - 5, publicKey.toBase58().length)}
-              onChange={e => handleUsername(e.target.value)}
+              placeholder={
+                publicKey.toBase58().slice(0, 5) +
+                "..." +
+                publicKey
+                  .toBase58()
+                  .substring(
+                    publicKey.toBase58().length - 5,
+                    publicKey.toBase58().length
+                  )
+              }
+              onChange={(e) => handleUsername(e.target.value)}
               style={{
                 caretColor: "#29A3A9",
               }}
             />
           )}
-          <button className={`absolute top-[12px] right-[15px] w-4 h-4 ${username === "" ? 'hidden' : 'block'}`}
+          <button
+            className={`absolute top-[12px] right-[15px] w-4 h-4 ${
+              username === "" ? "hidden" : "block"
+            }`}
             onClick={() => {
               handleUsername("");
             }}
@@ -78,36 +88,44 @@ const DisplayNamebox: FC<BoxProps> = ({
           htmlFor="username"
         >
           <div
-            className={`group-hover:bg-[#29A3A9] h-0.5 w-[calc(100%-12px)] absolute bg-transparent ${inputActive ? "bg-[#29A3A9]" : ""
-              } top-0 left-1.5`}
+            className={`h-0.5 w-[calc(100%-12px)] absolute bg-transparent ${
+              inputActive ? "bg-[#29A3A9]" : ""
+            } top-0 left-1.5`}
           />
           <div
-            className={`group-hover:bg-[#29A3A9] h-0.5 w-[calc(100%-12px)] absolute bg-transparent ${inputActive ? "bg-[#29A3A9]" : ""
-              } bottom-0 left-1.5`}
+            className={`h-0.5 w-[calc(100%-12px)] absolute bg-transparent ${
+              inputActive ? "bg-[#29A3A9]" : ""
+            } bottom-0 left-1.5`}
           />
           <div
-            className={`group-hover:bg-[#29A3A9] h-9 w-0.5 absolute bg-transparent ${inputActive ? "bg-[#29A3A9]" : ""
-              } left-0 top-1.5`}
+            className={`h-9 w-0.5 absolute bg-transparent ${
+              inputActive ? "bg-[#29A3A9]" : ""
+            } left-0 top-1.5`}
           />
           <div
-            className={`group-hover:bg-[#29A3A9] h-9 w-0.5 absolute bg-transparent ${inputActive ? "bg-[#29A3A9]" : ""
-              } right-0 top-1.5`}
+            className={`h-9 w-0.5 absolute bg-transparent ${
+              inputActive ? "bg-[#29A3A9]" : ""
+            } right-0 top-1.5`}
           />
           <div
-            className={`group-hover:bg-[#29A3A9] h-3 w-0.5 absolute bg-transparent ${inputActive ? "bg-[#29A3A9]" : ""
-              } left-0.5 -top-0.5 rotate-45`}
+            className={`h-3 w-0.5 absolute bg-transparent ${
+              inputActive ? "bg-[#29A3A9]" : ""
+            } left-0.5 -top-0.5 rotate-45`}
           />
           <div
-            className={`group-hover:bg-[#29A3A9] h-3 w-0.5 absolute bg-transparent ${inputActive ? "bg-[#29A3A9]" : ""
-              } right-0.5 -top-0.5 -rotate-45`}
+            className={`h-3 w-0.5 absolute bg-transparent ${
+              inputActive ? "bg-[#29A3A9]" : ""
+            } right-0.5 -top-0.5 -rotate-45`}
           />
           <div
-            className={`group-hover:bg-[#29A3A9] h-3 w-0.5 absolute bg-transparent ${inputActive ? "bg-[#29A3A9]" : ""
-              } left-0.5 -bottom-0.5 -rotate-45`}
+            className={` h-3 w-0.5 absolute bg-transparent ${
+              inputActive ? "bg-[#29A3A9]" : ""
+            } left-0.5 -bottom-0.5 -rotate-45`}
           />
           <div
-            className={`group-hover:bg-[#29A3A9] h-3 w-0.5 absolute bg-transparent ${inputActive ? "bg-[#29A3A9]" : ""
-              } right-0.5 -bottom-0.5 rotate-45`}
+            className={` h-3 w-0.5 absolute bg-transparent ${
+              inputActive ? "bg-[#29A3A9]" : ""
+            } right-0.5 -bottom-0.5 rotate-45`}
           />
         </label>
       </div>

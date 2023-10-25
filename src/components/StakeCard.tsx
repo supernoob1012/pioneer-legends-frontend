@@ -89,7 +89,7 @@ const StakeCard: FC<ItemProps> = ({
   return (
     <>
       {mint && (
-        <div className="shadow-card active:shadow-[0_0_0_0] relative active:top-3 hover:top-[6px]">
+        <div className="shadow-card active:shadow-[0_0_0_0] relative active:top-3 hover:top-[6px] cursor-pointer">
           <div
             className="aspect-square relative card-mask"
             onClick={selectAble ? () => {} : () => setIsShowOrigin(true)}
@@ -111,6 +111,11 @@ const StakeCard: FC<ItemProps> = ({
               </>
             )}
             <Image src={image} layout="fill" alt="" className="" />
+            {selected.indexOf(mint) !== -1 ? (
+              <div className="absolute bg-[#00000066] top-0 left-0 right-0 bottom-0"></div>
+            ) : (
+              <></>
+            )}
             {/* <Image src={"/img/avatar.png"} layout="fill" alt="" /> */}
           </div>
           <div

@@ -85,14 +85,14 @@ const Map = () => {
             }}
           >
             <img
-              src={"/img/background/empty.png"}
-              className={`z-[1] object-cover duration-150 w-full h-full`}
+              src={"/img/background/river_animation.gif"}
+              className={`absolute left-0 top-0 z-[1] object-cover duration-150 w-full h-full`}
               draggable="false"
               alt=""
             />
             <img
-              src={"/img/background/river_animation.gif"}
-              className={`absolute left-0 top-0 z-[1] object-cover duration-150 w-full h-full`}
+              src={"/img/background/empty.png"}
+              className={`z-[1] object-cover duration-150 w-full h-full relative`}
               draggable="false"
               alt=""
             />
