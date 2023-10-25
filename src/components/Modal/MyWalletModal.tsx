@@ -67,7 +67,7 @@ const MyWalletModal: FC = () => {
               My Wallet
             </p>
             <CloseButton
-              className="absolute right-5 top-[34px] md:flex hidden z-10"
+              className="absolute right-5 top-[20px] md:flex hidden z-10"
               onClose={() => setIsMyWalletModal(false)}
             />
             {/* <button
