@@ -224,97 +224,9 @@ const StakeModal: FC = () => {
           </div>
           {tab === "wallet" && (
             <div className="md:block hidden md:px-12 px-5 md:pt-8 pt-6 pb-12 md:h-[374px] h-[calc(100vh-320px)] overflow-y-scroll overflow-x-hidden">
-              {walletNfts.length === 0 ? (
+              {walletNfts.length !== 0 ? (
                 <div className="grid md:grid-cols-5 grid-cols-2 gap-x-5 gap-y-4 mt-4 pb-10 min-h-[224px]">
-                  <StakeCard
-                    image={"/img/avatar.png"}
-                    // image={nft.image}
-                    title={"1"}
-                    mint={"1"}
-                    staked={true}
-                    selected={selected}
-                    selectAble={selectAble}
-                    setSelected={setSelected}
-                    force={() => setForeceRender(forceRender)}
-                  />
-                  <StakeCard
-                    image={"/img/avatar.png"}
-                    // image={nft.image}
-                    title={"1"}
-                    mint={"1"}
-                    staked={true}
-                    selected={selected}
-                    selectAble={selectAble}
-                    setSelected={setSelected}
-                    force={() => setForeceRender(forceRender)}
-                  />
-                  <StakeCard
-                    image={"/img/avatar.png"}
-                    // image={nft.image}
-                    title={"1"}
-                    mint={"1"}
-                    staked={true}
-                    selected={selected}
-                    selectAble={selectAble}
-                    setSelected={setSelected}
-                    force={() => setForeceRender(forceRender)}
-                  />
-                  <StakeCard
-                    image={"/img/avatar.png"}
-                    // image={nft.image}
-                    title={"1"}
-                    mint={"1"}
-                    staked={true}
-                    selected={selected}
-                    selectAble={selectAble}
-                    setSelected={setSelected}
-                    force={() => setForeceRender(forceRender)}
-                  />
-                  <StakeCard
-                    image={"/img/avatar.png"}
-                    // image={nft.image}
-                    title={"1"}
-                    mint={"1"}
-                    staked={true}
-                    selected={selected}
-                    selectAble={selectAble}
-                    setSelected={setSelected}
-                    force={() => setForeceRender(forceRender)}
-                  />
-                  <StakeCard
-                    image={"/img/avatar.png"}
-                    // image={nft.image}
-                    title={"1"}
-                    mint={"1"}
-                    staked={true}
-                    selected={selected}
-                    selectAble={selectAble}
-                    setSelected={setSelected}
-                    force={() => setForeceRender(forceRender)}
-                  />
-                  <StakeCard
-                    image={"/img/avatar.png"}
-                    // image={nft.image}
-                    title={"1"}
-                    mint={"1"}
-                    staked={true}
-                    selected={selected}
-                    selectAble={selectAble}
-                    setSelected={setSelected}
-                    force={() => setForeceRender(forceRender)}
-                  />
-                  <StakeCard
-                    image={"/img/avatar.png"}
-                    // image={nft.image}
-                    title={"1"}
-                    mint={"1"}
-                    staked={true}
-                    selected={selected}
-                    selectAble={selectAble}
-                    setSelected={setSelected}
-                    force={() => setForeceRender(forceRender)}
-                  />
-                  {/* {walletNfts.map((nft, index: number) => (
+                  {walletNfts.map((nft, index: number) => (
                     <StakeCard
                       key={index}
                       image={"/img/avatar.png"}
@@ -327,7 +239,7 @@ const StakeModal: FC = () => {
                       setSelected={setSelected}
                       force={() => setForeceRender(forceRender)}
                     />
-                  ))} */}
+                  ))}
                 </div>
               ) : (
                 <div className="grid w-full place-content-center mx-auto min-h-[224px] pb-12 text-center text-[#E4DECD] font-medium relative">
