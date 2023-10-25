@@ -21,7 +21,7 @@ const NftCard: FC<ItemProps> = ({ title, image, mint, staked }) => {
   }, [title]);
 
   return (
-    <div className="shadow-card">
+    <div className="shadow-card active:shadow-[0_0_0_0] relative active:top-3 hover:top-[6px]">
       <div
         className="aspect-square relative cursor-pointer card-mask"
         onClick={() => setIsShowOrigin(true)}

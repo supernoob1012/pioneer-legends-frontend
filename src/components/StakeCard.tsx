@@ -89,10 +89,10 @@ const StakeCard: FC<ItemProps> = ({
   return (
     <>
       {mint && (
-        <div className="shadow-card">
+        <div className="shadow-card active:shadow-[0_0_0_0] relative active:top-3 hover:top-[6px]">
           <div
             className="aspect-square relative card-mask"
-            onClick={selectAble ? () => { } : () => setIsShowOrigin(true)}
+            onClick={selectAble ? () => {} : () => setIsShowOrigin(true)}
           >
             {selectAble && (
               <>
@@ -127,18 +127,6 @@ const StakeCard: FC<ItemProps> = ({
             <p className="text-[#AFABA8] text-[11px] font-normal flex items-center pb-2">
               Rarity multiplier: 1x
             </p>
-            {!staked ? (
-              <ButtonSm onClick={handleNftStake} disabled={loading}>
-                {loading ? "Loading..." : "Stake"}
-              </ButtonSm>
-            ) : (
-              <div className="grid gap-3 grid-cols-1">
-                <ButtonSm onClick={handleNftUnStake} disabled={loading}>
-                  Unstake
-                </ButtonSm>
-                {/* <ButtonSm>Claim</ButtonSm> */}
-              </div>
-            )}
           </div>
         </div>
       )}
