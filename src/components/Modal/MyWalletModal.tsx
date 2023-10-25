@@ -8,6 +8,7 @@ import { UserContext, UserContextProps } from "../../context/UserProvider";
 import Button from "../Button";
 import NftCard from "../NftCard";
 import Link from "next/link";
+import CloseButton from "./CloseButton";
 import useWindowSize from "../../utils/useWindowSize";
 const MyWalletModal: FC = () => {
   const {
@@ -33,7 +34,6 @@ const MyWalletModal: FC = () => {
     setIsDisconnectWalletModal(!isDisconnectWalletModal);
     setIsMyWalletModal(false);
   };
-
 
   if (!wallet.publicKey) return <></>;
   return isMyWalletModal ? (
@@ -66,20 +66,25 @@ const MyWalletModal: FC = () => {
             <p className="text-[24px] font-secondary text-primary-100 leading-[1.33] uppercase">
               My Wallet
             </p>
-            <button
+            <CloseButton
+              className="absolute right-5 top-[34px] md:flex hidden z-10"
+              onClose={() => setIsMyWalletModal(false)}
+            />
+            {/* <button
               className="md:absolute md:-right-5 md:top-[34px] flex"
               onClick={() => setIsMyWalletModal(false)}
             >
-              {isMobile ?
+              {isMobile ? (
                 <Image
                   src="/img/close-normal.png"
                   width={40}
                   height={40}
                   alt=""
-                /> :
+                />
+              ) : (
                 <CrossIcon color="white" />
-              }
-            </button>
+              )}
+            </button> */}
           </div>
           <div className="">
             <div className="-ml-6 relative w-[calc(100%+47px)] lg:w-[1006px] h-[248px] md:h-[132px]">
@@ -95,7 +100,7 @@ const MyWalletModal: FC = () => {
               <div className="w-4 h-4 overflow-hidden absolute right-0 -top-4">
                 <div className="w-6 h-6 bg-[#161311] rotate-45 mt-1 -ml-[15px]" />
               </div>
-              <div className="flex flex-col h-[calc(100vh-72px)] overflow-y-scroll overflow-x-hidden relative">
+              <div className="flex flex-col overflow-y-scroll overflow-x-hidden relative">
                 <img
                   src={"/img/mobile/info-banner.png"}
                   className="w-full h-[248px] absolute left-0 top-0 block md:hidden "
@@ -202,7 +207,6 @@ const MyWalletModal: FC = () => {
               </div>
             )}
           </div>
-
         </div>
       </div>
     </div>

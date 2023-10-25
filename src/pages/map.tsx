@@ -189,7 +189,6 @@ const Map = () => {
               hoverLeft={-64}
               hoverTop={114}
               onClick={handleOpenSpaceship}
-
             />
             <TitleBox
               title="mining"
@@ -201,7 +200,6 @@ const Map = () => {
               hoverLeft={-70}
               hoverTop={28}
               onClick={handleOpenSpaceship}
-
             />
           </div>
         </div>
