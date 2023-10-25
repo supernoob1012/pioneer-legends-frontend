@@ -52,28 +52,31 @@ const DisplayNamebox: FC<BoxProps> = ({
         ></button>
         <div className="flex justify-between items-center relative">
           {publicKey && (
-            <input
-              id="username"
-              className="p-3 w-full bg-[#E1E4CD1A] hover:bg-[#E1E4CD33] rounded-xl text-[#ffffff] outline-none focus:text-white placeholder:text-white"
-              value={username}
-              placeholder={
-                publicKey.toBase58().slice(0, 5) +
-                "..." +
-                publicKey
-                  .toBase58()
-                  .substring(
-                    publicKey.toBase58().length - 5,
-                    publicKey.toBase58().length
-                  )
-              }
-              onChange={(e) => handleUsername(e.target.value)}
-              style={{
-                caretColor: "#29A3A9",
-              }}
-            />
+            <>
+              <input
+                id="username"
+                className="p-3 w-full bg-[#E1E4CD1A] hover:bg-[#E1E4CD33] rounded-xl text-[#ffffff] outline-none focus:text-white placeholder:text-white peer relative z-[3]"
+                value={username}
+                placeholder={
+                  publicKey.toBase58().slice(0, 5) +
+                  "..." +
+                  publicKey
+                    .toBase58()
+                    .substring(
+                      publicKey.toBase58().length - 5,
+                      publicKey.toBase58().length
+                    )
+                }
+                onChange={(e) => handleUsername(e.target.value)}
+                style={{
+                  caretColor: "#29A3A9",
+                }}
+              />
+              <div className="absolute overflow-hidden top-[-170px] left-[62px] right-[62px] bottom-[-170px] border-transparent peer-focus:border-[#29A3A9] peer-focus:border-[2px] rotate-45 after:absolute after:-top-16 after:left-[168px] after:-bottom-16 after:right-[168px] after:rotate-45 peer-focus:after:border-[#29A3A9] peer-focus:after:border-[2px]" />
+            </>
           )}
           <button
-            className={`absolute top-[12px] right-[15px] w-4 h-4 ${
+            className={`absolute top-[12px] right-[15px] w-4 h-4 z-[5] ${
               username === "" ? "hidden" : "block"
             }`}
             onClick={() => {
@@ -83,7 +86,7 @@ const DisplayNamebox: FC<BoxProps> = ({
             <CrossIcon color="#A39C87" />
           </button>
         </div>
-        <label
+        {/* <label
           className="absolute left-0 top-0 w-full h-full pointer-events-none"
           htmlFor="username"
         >
@@ -127,7 +130,7 @@ const DisplayNamebox: FC<BoxProps> = ({
               inputActive ? "bg-[#29A3A9]" : ""
             } right-0.5 -bottom-0.5 rotate-45`}
           />
-        </label>
+        </label> */}
       </div>
     </div>
   );
