@@ -57,5 +57,4 @@ export const NFT_METADATA = [
   },
 ];
 
-// export const BACKEND_URL = "https://tiny-puce-mite-suit.cyclic.app";
-export const BACKEND_URL = "http://localhost:3001";
+export const BACKEND_URL = "https://tiny-puce-mite-suit.cyclic.app";
