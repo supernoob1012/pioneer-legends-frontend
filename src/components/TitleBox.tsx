@@ -1,6 +1,6 @@
 import { FC, ReactNode, useEffect, useRef } from "react";
 import { SolanaIcon } from "./SvgIcons";
-
+const RATE_ZOOM = 1.3;
 interface BoxProps {
   title: string;
   icon: ReactNode;
@@ -11,6 +11,7 @@ interface BoxProps {
   hoverLeft: number;
   hoverTop?: number;
   isBottom?: boolean;
+  zoomRate?: number;
   onClick: () => void;
 }
 
@@ -24,6 +25,7 @@ const TitleBox: FC<BoxProps> = ({
   hoverLeft = 0,
   hoverTop = 0,
   isBottom = false,
+  zoomRate = 1,
   onClick,
 }) => {
   return (
@@ -36,10 +38,12 @@ const TitleBox: FC<BoxProps> = ({
       onClick={onClick}
     >
       <div
-        className="absolute w-[300px] h-[300px] group peer/pp"
+        className="absolute group peer/pp"
         style={{
           left: hoverLeft,
           top: hoverTop,
+          width: 300 * zoomRate * RATE_ZOOM,
+          height: 184 * zoomRate * RATE_ZOOM,
         }}
       >
         {/* eslint-disable-next-line */}
@@ -47,8 +51,8 @@ const TitleBox: FC<BoxProps> = ({
           src="/img/build-hover.png"
           className="mt-[100px] opacity-0 group-hover:opacity-100 duration-150"
           style={{
-            width: 300,
-            height: 184,
+            width: 300 * zoomRate * RATE_ZOOM,
+            height: 184 * zoomRate * RATE_ZOOM,
           }}
           alt=""
           draggable="false"
@@ -58,12 +62,14 @@ const TitleBox: FC<BoxProps> = ({
         <div
           className="w-[18px] h-2.5 overflow-hidden absolute -translate-x-1/2 z-[9] ml-1"
           style={{
-            bottom: isBottom ? 74 : -10,
-            left: isBottom ? "50%" : "50%",
-            marginLeft: isBottom ? -8 : 0,
-            transform: `${
-              isBottom ? "translateX(-50%) rotate(180deg)" : "translateX(-50%)"
-            }`,
+            bottom: title === 'airship' ? 74 : -10,
+            left: title === 'airship' ? "50%" : "50%",
+            marginLeft: title === 'airship' ? -8 : 0,
+            transform: `${title === 'airship' ? "translateX(-50%) rotate(180deg)" : "translateX(-50%)"}`
+            // bottom: isBottom ? 74 : -10,
+            // left: isBottom ? "50%" : "50%",
+            // marginLeft: isBottom ? -8 : 0,
+            // transform: `${isBottom ? "translateX(-50%) rotate(180deg)" : "translateX(-50%)"}`
           }}
         >
           <div className="bg-[#38291E] w-4 h-4 rotate-45 absolute left-0 -top-[11px] opacity-70" />

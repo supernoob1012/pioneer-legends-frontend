@@ -147,22 +147,6 @@ const TopProfile: FC<Props> = ({ address }) => {
             <li className="">
               <button
                 className="p-3 text-[16px] font-medium text-white w-full text-left hover:bg-[#e1e4cd1a] active:bg-[#1e191566]"
-                onClick={handleShareModal}
-              >
-                Share
-              </button>
-            </li>
-            <li className="">
-              <button
-                className="p-3 text-[16px] font-medium text-white w-full text-left hover:bg-[#e1e4cd1a] active:bg-[#1e191566]"
-                onClick={handleAboutModal}
-              >
-                Tutorial
-              </button>
-            </li>
-            <li className="">
-              <button
-                className="p-3 text-[16px] font-medium text-white w-full text-left hover:bg-[#e1e4cd1a] active:bg-[#1e191566]"
                 onClick={handleDisconnectWalletModal}
               >
                 Disconnect wallet
