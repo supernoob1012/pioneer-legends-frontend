@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { FC, useState, useContext, useEffect } from "react";
 import { getShortAddress } from "../utils/util";
 import { HamburgerIcon } from "./SvgIcons";
@@ -97,23 +98,18 @@ const TopProfile: FC<Props> = ({ address }) => {
             </>
           ) : (
             <>
-              <div
-                className="w-12 h-12 rounded-full border border-[#0000001a] z-20 relative ml-4 lg:ml-6 overflow-hidden"
-                style={{
-                  backgroundImage:
-                    "radial-gradient(115.57% 115.57% at -3.5% -16%, #3F434B 0%, #2D2721 100%)",
-                }}
-              >
-                {/* eslint-disable-next-line */}
-                <img
-                  src={
-                    userData.image !== ""
-                      ? userData.image
-                      : "/img/default-avatar.svg"
-                  }
-                  className="w-12 h-12"
-                  alt=""
-                />
+              <div className="w-12 h-12 rounded-full z-20 relative ml-4 lg:ml-6 overflow-hidden bg-[radial-gradient(115.57%_115.57%_at_-3.5%_-16%,#3F434B_0%,#2D2721_100%)] after:absolute after:top-0 after:left-0 after:right-0 after:bottom-0 after:rounded-full hover:after:bg-[rgba(225,228,205,0.30)] flex items-center justify-center">
+                <div className="w-10 h-10 overflow-hidden rounded-full">
+                  <img
+                    src={
+                      userData.image !== ""
+                        ? userData.image
+                        : "/img/default-avatar.svg"
+                    }
+                    className=" object-none"
+                    alt="user avartar"
+                  />
+                </div>
               </div>
               <p className="text-[#fff] text-[14px] leading-[22px] font-[500] ml-2 hidden lg:block">
                 {userData.username !== ""
