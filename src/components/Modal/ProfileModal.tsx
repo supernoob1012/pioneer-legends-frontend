@@ -40,7 +40,6 @@ const ProfileModal: FC = () => {
   }, [isProfileModal]);
 
   useEffect(() => {
-    console.log(userData);
     if (wallet.publicKey) {
       if (useData.userData.username === "") {
         setUsername(wallet.publicKey.toBase58());
@@ -61,10 +60,10 @@ const ProfileModal: FC = () => {
     try {
       const sig = await requestSignature(
         wallet,
-        `Authorize your wallet.\nname: ${username}\nwallet: ${wallet.publicKey?.toBase58() as string
-        }\nnonce: ${getNonce()}`
+        `Authorize your wallet.\nname: ${username}\nwallet: ${
+          wallet.publicKey?.toBase58() as string
+        }\nnonce: ${getNonce(wallet.publicKey?.toBase58() as string)}`
       );
-      console.log(username, checkedImge);
       if (sig) {
         await updateProfile({
           name: username,
@@ -146,9 +145,7 @@ const ProfileModal: FC = () => {
               <p className="text-[24px] font-secondary text-primary-100 leading-[1.33] uppercase">
                 edit profile
               </p>
-              <div className="flex md:hidden"
-                onClick={closeModal}
-              >
+              <div className="flex md:hidden" onClick={closeModal}>
                 <CrossIcon color="white" />
               </div>
             </div>
@@ -160,7 +157,9 @@ const ProfileModal: FC = () => {
                 setIsChanged={setIsChanged}
               />
               <div className="relative h-[calc(100%-320px)] flex flex-col justify-center items-center">
-                <p className="text-white font-medium absolute top-0 left-0">Profile picture</p>
+                <p className="text-white font-medium absolute top-0 left-0">
+                  Profile picture
+                </p>
                 {allNftList.length !== 0 ? (
                   <div className="md:h-[248px] h-full overflow-auto md:mt-2 mt-[10px] pr-1.5 custom-scroll md:mb-0 mb-[112px]">
                     <div className="grid grid-cols-3 md:grid-cols-4 md:gap-4 gap-[12px]">
@@ -175,14 +174,13 @@ const ProfileModal: FC = () => {
                     ))} */}
                       {Array.from({ length: 30 }, (_, index) => (
                         <PfpCard
-                          image={'/img/avatar.png'}
+                          image={"/img/avatar.png"}
                           key={index}
                           pfp={userData.image}
                           checkedImge={checkedImge}
                           setCheckedImage={setCheckedImage}
                         />
                       ))}
-
                     </div>
                   </div>
                 ) : (
@@ -237,7 +235,11 @@ const ProfileModal: FC = () => {
                   <Button variant="secondary" onClick={closeModal}>
                     Cancel
                   </Button>
-                  <Button variant="primary" onClick={update} disabled={isSaving || !isChanged}>
+                  <Button
+                    variant="primary"
+                    onClick={update}
+                    disabled={isSaving || !isChanged}
+                  >
                     {isSaving ? (
                       <div className="w-6 h-6 relative mx-auto animate-spin">
                         <Image src={"/icons/spin.png"} layout="fill" alt="" />
@@ -282,7 +284,12 @@ const PfpCard = ({
         setCheckedImage(image);
       }}
     >
-      <Image src='/img/avatar.png' layout="fill" className="relative z-10" alt="" />
+      <Image
+        src="/img/avatar.png"
+        layout="fill"
+        className="relative z-10"
+        alt=""
+      />
       <div className="bg-[#1E1915] absolute left-1.5 top-1.5 w-full h-full" />
       {checkedImge === image && (
         <div

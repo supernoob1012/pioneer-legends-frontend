@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { errorAlert } from "./ToastGroup";
 import Button from "./Button";
@@ -7,13 +7,50 @@ import { BackpackIcon, LedgerIcon, PhantomIcon } from "./SvgIcons";
 import { ModalContext } from "../context/ModalProvider";
 import { useUserData } from "../context/UserProvider";
 import Skeleton from "react-loading-skeleton";
+import bs58 from "bs58";
+import { authorizeUser, getNonce } from "../utils/api";
+import { useRouter } from "next/router";
 
 const ConnectWallet = () => {
-  const { wallets, select, connected } = useWallet();
+  const { wallets, select, connected, publicKey, signMessage } = useWallet();
+  const router = useRouter();
   const { setIsProfileModal } = useContext<any>(ModalContext);
   const { isDataLoading } = useUserData();
+  const [isAuthrized, setIsAuthrized] = useState<boolean>(false);
 
-  const handelConnectPhantom = () => {
+  useEffect(() => {
+    const getnon = async () => {
+      if (!signMessage) return;
+      const nonce = await getNonce(publicKey?.toBase58()!);
+      if (nonce) {
+        const message = new TextEncoder().encode(
+          `Authorize your wallet. nonce: ${nonce}`
+        );
+        const sig = await signMessage(message);
+
+        if (sig) {
+          const ret = await authorizeUser(
+            publicKey?.toBase58()!,
+            bs58.encode(new Uint8Array(sig as unknown as ArrayBuffer)),
+            nonce as string
+          );
+
+          if (ret) {
+            router.push("/map");
+            setIsAuthrized(true);
+          } else {
+            router.push("/");
+          }
+        }
+      }
+    };
+
+    if (publicKey && connected) {
+      getnon();
+    }
+  }, [publicKey, connected]);
+
+  const handelConnectPhantom = async () => {
     for (let i = 0; i < wallets.length; i++) {
       if (wallets[i].adapter.name === "Phantom") {
         if (wallets[i].readyState === "Installed") {
@@ -51,7 +88,7 @@ const ConnectWallet = () => {
   return (
     <div className="relative connect">
       <div className="">
-        {connected ? (
+        {connected && isAuthrized ? (
           <>
             {isDataLoading ? (
               <Skeleton
@@ -72,7 +109,6 @@ const ConnectWallet = () => {
         ) : (
           <Button variant="primary">Connect wallet</Button>
         )}
-
       </div>
       <div className="min-w-[238px] py-3 px-4 absolute right-auto left-0 lg:left-auto lg:right-0 top-[40px] connect-drop">
         <div
