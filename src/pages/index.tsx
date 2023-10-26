@@ -39,13 +39,13 @@ export default function Index(props: { isMute: boolean; setIsMute: Function }) {
 
   const wallet = useWallet();
   const router = useRouter();
-  
-  useEffect(() => {
-    if (wallet.connected && wallet.publicKey) {
-      router.push("/map");
-    }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [wallet.connected, wallet.publicKey]);
+
+  // useEffect(() => {
+  //   if (wallet.connected && wallet.publicKey) {
+  //     router.push("/map");
+  //   }
+  // // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [wallet.connected, wallet.publicKey]);
 
   return (
     <>

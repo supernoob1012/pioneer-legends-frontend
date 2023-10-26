@@ -102,8 +102,38 @@ export const requestSignature = async (
   }
 };
 
-export const getNonce = (): number => {
-  return Math.floor(new Date().getTime() / 3600000);
+export const signature = async (signMessage: any, nonce: string) => {
+  if (signMessage) {
+    const message = new TextEncoder().encode(
+      `Authorize your wallet. nonce: ${nonce}`
+    );
+    const sig = await signMessage(message);
+    return sig;
+  }
+};
+
+export const getNonce = async (wallet: string) => {
+  if (wallet) {
+    const res = await axios.post(`${BACKEND_URL}/nonce/get-nonce`, {
+      wallet,
+    });
+    return res?.data?.nonce;
+  }
+};
+
+export const authorizeUser = async (
+  wallet: string,
+  signature: string,
+  nonce: string
+) => {
+  const res = await axios.post(`${BACKEND_URL}/user/authorize`, {
+    wallet: wallet,
+    signature: signature,
+    nonce: nonce,
+  });
+
+  if (res?.status == 200) return true;
+  return false;
 };
 
 export const updateProfile = async ({
