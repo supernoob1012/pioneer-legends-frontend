@@ -50,12 +50,12 @@ const DisplayNamebox: FC<BoxProps> = ({
           className={`absolute right-3 top-3 ${!username ? "hidden" : "show"}`}
           onClick={() => setUsername("")}
         ></button>
-        <div className="flex justify-between items-center relative">
+        <div className="flex justify-between items-center relative w-full">
           {publicKey && (
             <>
               <input
                 id="username"
-                className="p-3 w-full bg-[#E1E4CD1A] hover:bg-[#E1E4CD33] rounded-xl text-[#ffffff] outline-none focus:text-white placeholder:text-white peer relative z-[3]"
+                className="p-3 w-[calc(100%-24px)] left-[12px] bg-[#E1E4CD1A] hover:bg-[#E1E4CD33] text-[#ffffff] outline-none focus:text-white placeholder:text-white peer relative z-[3]"
                 value={username}
                 placeholder={
                   publicKey.toBase58().slice(0, 5) +
@@ -72,7 +72,8 @@ const DisplayNamebox: FC<BoxProps> = ({
                   caretColor: "#29A3A9",
                 }}
               />
-              <div className="absolute overflow-hidden top-[-170px] left-[62px] right-[62px] bottom-[-170px] border-transparent peer-focus:border-[#29A3A9] peer-focus:border-[2px] rotate-45 after:absolute after:-top-16 after:left-[168px] after:-bottom-16 after:right-[168px] after:rotate-45 peer-focus:after:border-[#29A3A9] peer-focus:after:border-[2px]" />
+              <div className="box-outer absolute peer-hover:before:border-r-[22px] peer-hover:before:border-r-[rgba(225,228,205,0.2)] peer-hover:after:border-l-[22px] peer-hover:after:border-l-[rgba(225,228,205,0.2)] "></div>
+              <div className="absolute w-full h-full bg-[#fff0] peer-focus:before:bg-[linear-gradient(to_right,#29A3A9_0%,#29A3A9_100%),linear-gradient(to_right,#29A3A9_0%,#29A3A9_100%),linear-gradient(-45deg,transparent_45%,#29A3A9_50%,transparent_55%),linear-gradient(to_right,#29A3A9_0%,#29A3A9_100%),linear-gradient(225deg,transparent_45%,#29A3A9_50%,transparent_55%),linear-gradient(-45deg,transparent_45%,#29A3A9_50%,transparent_55%),linear-gradient(to_right,#29A3A9_0%,#29A3A9_100%),linear-gradient(225deg,transparent_45%,#29A3A9_50%,transparent_55%)] input_border"></div>
             </>
           )}
           <button
@@ -86,51 +87,6 @@ const DisplayNamebox: FC<BoxProps> = ({
             <CrossIcon color="#A39C87" />
           </button>
         </div>
-        {/* <label
-          className="absolute left-0 top-0 w-full h-full pointer-events-none"
-          htmlFor="username"
-        >
-          <div
-            className={`h-0.5 w-[calc(100%-12px)] absolute bg-transparent ${
-              inputActive ? "bg-[#29A3A9]" : ""
-            } top-0 left-1.5`}
-          />
-          <div
-            className={`h-0.5 w-[calc(100%-12px)] absolute bg-transparent ${
-              inputActive ? "bg-[#29A3A9]" : ""
-            } bottom-0 left-1.5`}
-          />
-          <div
-            className={`h-9 w-0.5 absolute bg-transparent ${
-              inputActive ? "bg-[#29A3A9]" : ""
-            } left-0 top-1.5`}
-          />
-          <div
-            className={`h-9 w-0.5 absolute bg-transparent ${
-              inputActive ? "bg-[#29A3A9]" : ""
-            } right-0 top-1.5`}
-          />
-          <div
-            className={`h-3 w-0.5 absolute bg-transparent ${
-              inputActive ? "bg-[#29A3A9]" : ""
-            } left-0.5 -top-0.5 rotate-45`}
-          />
-          <div
-            className={`h-3 w-0.5 absolute bg-transparent ${
-              inputActive ? "bg-[#29A3A9]" : ""
-            } right-0.5 -top-0.5 -rotate-45`}
-          />
-          <div
-            className={` h-3 w-0.5 absolute bg-transparent ${
-              inputActive ? "bg-[#29A3A9]" : ""
-            } left-0.5 -bottom-0.5 -rotate-45`}
-          />
-          <div
-            className={` h-3 w-0.5 absolute bg-transparent ${
-              inputActive ? "bg-[#29A3A9]" : ""
-            } right-0.5 -bottom-0.5 rotate-45`}
-          />
-        </label> */}
       </div>
     </div>
   );
