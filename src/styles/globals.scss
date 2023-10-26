@@ -72,6 +72,10 @@
   background-repeat: no-repeat;
 }
 
+main {
+  background: #201913 !important;
+}
+
 .Toastify__toast {
   background: linear-gradient(90deg, #831a14 0%, #4d1109 100%) !important;
   box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.4) !important;
@@ -192,7 +196,7 @@
   height: 100%;
   top: 0;
   left: 0;
-  background-size: 97% 2px, 97% 2px, 4% 100%, 2px 65%, 4% 100%, 4% 100%, 2px 65%, 4% 100%;
+  background-size: calc(100% - 20px) 2px, calc(100% - 20px) 2px, 20px 100%, 2px 65%, 20px 100%, 20px 100%, 2px 65%, 20px 100%;
   background-position: 50% 100%, 50% 0%, 100% 24px, 100% 50%, 100% -24px, 0 -24px, 0 50%, 0 24px;
   background-repeat: no-repeat, no-repeat;
 }
@@ -216,7 +220,7 @@
 .box-outer:after {
   content: "";
   position: absolute;
-  top: 0.5px;
+  top: -1.5px;
   right: -10px;
   border-bottom: 25px solid #27221d;
   border-left: 22px solid rgba(225, 228, 205, 0.1);

@@ -140,11 +140,11 @@ const MyWalletModal: FC = () => {
                       variant="secondary"
                       onClick={handleDisconnectWalletModal}
                     >
-                      Disconnect wallet
+                      Disconnect
                     </Button>
                   </div>
                 </div>
-                <div className="md:hidden block md:px-12 px-5 md:pt-8 pt-[60px] md:pb-12 pb-6 md:h-[374px] md:mx-0 mx-5 h-[calc(100%-212px)]">
+                <div className="md:hidden block md:px-12 px-5 md:pt-8 pt-[180px] md:pb-12 pb-6 h-[calc(100vh-320px)] md:mx-0 mx-5">
                   <p className="text-[14px] text-[white] font-medium flex gap-1">
                     {allNftList.length !== 0 && <p>My NFT</p>}
                     {allNftList.length !== 0 && <>({allNftList.length})</>}{" "}
@@ -161,16 +161,20 @@ const MyWalletModal: FC = () => {
                       ))}
                     </div>
                   ) : (
-                    <div className="flex justify-center flex-col h-full w-full mx-auto text-center text-[#E4DECD] font-medium">
-                      <p>You have no NFT,</p>
-                      <div className="whitespace-nowrap">
-                        buy one from{" "}
-                        <span className="underline">
-                          <Link href="#" passHref>
-                            Magic Eden
-                          </Link>
-                        </span>{" "}
-                        now
+                    <div className="grid grid-cols-2 gap-6 justify-center items-center flex-col h-full w-full mx-auto text-center text-[#E4DECD] font-medium relative">
+                      <div className="bg-[#2D2620] h-[calc(100% - 200px)] aspect-[9/16]"></div>
+                      <div className="bg-[#2D2620] h-[calc(100% - 200px)] aspect-[9/16]"></div>
+                      <div className="flex flex-col absolute top-20 justify-center items-center w-full">
+                        <p>You have no NFT,</p>
+                        <div className="whitespace-nowrap">
+                          buy one from{" "}
+                          <span className="underline">
+                            <Link href="#" passHref>
+                              Magic Eden
+                            </Link>
+                          </span>{" "}
+                          now
+                        </div>
                       </div>
                     </div>
                   )}
