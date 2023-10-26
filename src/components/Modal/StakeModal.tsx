@@ -91,7 +91,7 @@ const StakeModal: FC = () => {
           </div>
           <div className="">
             <div
-              className="-ml-6 relative w-[calc(100%+47px)] lg:w-[1006px] h-[248px] md:h-[132px]"
+              className="-ml-6 relative w-[calc(100%+47px)] lg:w-[1006px] h-[248px] max-md:h-[132px]"
               // style={{
               //   width: 1006,
               //   height: 132,
@@ -121,7 +121,7 @@ const StakeModal: FC = () => {
                     onClick={stakeAll}
                     disabled={selected.length === 0}
                     style={{
-                      width: "100%",
+                      width: "calc(100vw - 40px)",
                       marginLeft: "8px",
                       marginRight: "8px",
                     }}
@@ -223,46 +223,88 @@ const StakeModal: FC = () => {
             </div>
           </div>
           {tab === "wallet" && (
-            <div className="md:block hidden md:px-12 px-5 md:pt-8 pt-6 pb-12 md:h-[374px] h-[calc(100vh-320px)] overflow-y-scroll overflow-x-hidden">
-              {walletNfts.length !== 0 ? (
-                <div className="grid md:grid-cols-5 grid-cols-2 gap-x-5 gap-y-4 mt-4 pb-10 min-h-[224px]">
-                  {walletNfts.map((nft, index: number) => (
-                    <StakeCard
-                      key={index}
-                      image={"/img/avatar.png"}
-                      // image={nft.image}
-                      title={nft.name}
-                      mint={nft.mint}
-                      staked={nft.staked}
-                      selected={selected}
-                      selectAble={selectAble}
-                      setSelected={setSelected}
-                      force={() => setForeceRender(forceRender)}
-                    />
-                  ))}
-                </div>
-              ) : (
-                <div className="grid w-full place-content-center mx-auto min-h-[224px] pb-12 text-center text-[#E4DECD] font-medium relative">
-                  <div className="grid grid-cols-2 w-full md:grid-cols-5 gap-x-5 gap-y-4 pb-10 md:min-h-[224px] min-h-[calc(100%-35px)] absolute left-0 top-0 md:mt-10 mt-0">
-                    <div className="bg-[#2D2620] md:h-[220px] h-auto"></div>
-                    <div className="bg-[#2D2620] md:h-[220px] h-auto"></div>
-                    <div className="bg-[#2D2620] md:h-[220px] h-auto"></div>
-                    <div className="bg-[#2D2620] md:h-[220px] h-auto"></div>
-                    <div className="bg-[#2D2620] md:h-[220px] h-auto md:block hidden"></div>
+            <>
+              <div className="md:block hidden md:px-12 px-5 md:pt-8 pt-6 pb-12 md:h-[374px] h-[calc(100vh-320px)] overflow-y-scroll overflow-x-hidden">
+                {walletNfts.length !== 0 ? (
+                  <div className="grid md:grid-cols-5 grid-cols-2 gap-x-5 gap-y-4 mt-4 pb-10 min-h-[224px]">
+                    {walletNfts.map((nft, index: number) => (
+                      <StakeCard
+                        key={index}
+                        image={"/img/avatar.png"}
+                        // image={nft.image}
+                        title={nft.name}
+                        mint={nft.mint}
+                        staked={nft.staked}
+                        selected={selected}
+                        selectAble={selectAble}
+                        setSelected={setSelected}
+                        force={() => setForeceRender(forceRender)}
+                      />
+                    ))}
                   </div>
-                  <p className="z-10">You have no NFT,</p>
-                  <div className="whitespace-nowrap z-10">
-                    buy one from{" "}
-                    <span className="underline">
-                      <Link href="#" passHref>
-                        Magic Eden
-                      </Link>
-                    </span>{" "}
-                    now
+                ) : (
+                  <div className="grid w-full place-content-center mx-auto min-h-[224px] pb-12 text-center text-[#E4DECD] font-medium relative">
+                    <div className="grid grid-cols-2 w-full md:grid-cols-5 gap-x-5 gap-y-4 pb-10 md:min-h-[224px] min-h-[calc(100%-35px)] absolute left-0 top-0 md:mt-10 mt-0">
+                      <div className="bg-[#2D2620] md:h-[220px] h-auto max-md:aspect-[264/328]"></div>
+                      <div className="bg-[#2D2620] md:h-[220px] h-auto max-md:aspect-[264/328]"></div>
+                      <div className="bg-[#2D2620] md:h-[220px] h-auto max-md:aspect-[264/328]"></div>
+                      <div className="bg-[#2D2620] md:h-[220px] h-auto max-md:aspect-[264/328]"></div>
+                      <div className="bg-[#2D2620] md:h-[220px] h-auto max-md:aspect-[264/328] md:block hidden"></div>
+                    </div>
+                    <p className="z-10">You have no NFT,</p>
+                    <div className="whitespace-nowrap z-10">
+                      buy one from{" "}
+                      <span className="underline">
+                        <Link href="#" passHref>
+                          Magic Eden
+                        </Link>
+                      </span>{" "}
+                      now
+                    </div>
                   </div>
-                </div>
-              )}
-            </div>
+                )}
+              </div>
+              <div className="max-md:block hidden md:px-12 px-5 md:pt-8 pt-6 pb-12 md:h-[374px] h-[calc(100vh-320px)] overflow-y-scroll overflow-x-hidden">
+                {walletNfts.length !== 0 ? (
+                  <div className="grid md:grid-cols-5 grid-cols-2 gap-x-5 gap-y-4 mt-4 pb-10 min-h-[224px]">
+                    {walletNfts.map((nft, index: number) => (
+                      <StakeCard
+                        key={index}
+                        image={"/img/avatar.png"}
+                        // image={nft.image}
+                        title={nft.name}
+                        mint={nft.mint}
+                        staked={nft.staked}
+                        selected={selected}
+                        selectAble={selectAble}
+                        setSelected={setSelected}
+                        force={() => setForeceRender(forceRender)}
+                      />
+                    ))}
+                  </div>
+                ) : (
+                  <div className="grid w-full place-content-center mx-auto min-h-[224px] pb-12 text-center text-[#E4DECD] font-medium relative">
+                    <div className="grid grid-cols-2 w-full md:grid-cols-5 gap-x-5 gap-y-4 pb-10 md:min-h-[224px] min-h-[calc(100%-35px)] absolute left-0 top-0 md:mt-10 mt-0">
+                      <div className="bg-[#2D2620] md:h-[220px] h-auto max-md:aspect-[264/328]"></div>
+                      <div className="bg-[#2D2620] md:h-[220px] h-auto max-md:aspect-[264/328]"></div>
+                      <div className="bg-[#2D2620] md:h-[220px] h-auto max-md:aspect-[264/328]"></div>
+                      <div className="bg-[#2D2620] md:h-[220px] h-auto max-md:aspect-[264/328]"></div>
+                      <div className="bg-[#2D2620] md:h-[220px] h-auto max-md:aspect-[264/328] md:block hidden"></div>
+                    </div>
+                    <p className="z-10">You have no NFT,</p>
+                    <div className="whitespace-nowrap z-10">
+                      buy one from{" "}
+                      <span className="underline">
+                        <Link href="#" passHref>
+                          Magic Eden
+                        </Link>
+                      </span>{" "}
+                      now
+                    </div>
+                  </div>
+                )}
+              </div>
+            </>
           )}
           {tab === "staked" && (
             <div className="md:px-12 px-5 pt-8 md:pb-12 flex pb-6 md:h-[374px] h-[calc(100%-175px)] overflow-auto">
@@ -286,11 +328,11 @@ const StakeModal: FC = () => {
               ) : (
                 <div className="grid w-full place-content-center mx-auto min-h-[224px] pb-12 text-center text-[#E4DECD] font-medium relative">
                   <div className="grid grid-cols-2 w-full md:grid-cols-5 gap-x-5 gap-y-4 pb-10 md:min-h-[224px] min-h-[calc(100%-35px)] absolute left-0 top-0 md:mt-10 mt-0">
-                    <div className="bg-[#2D2620] md:h-[220px] h-auto"></div>
-                    <div className="bg-[#2D2620] md:h-[220px] h-auto"></div>
-                    <div className="bg-[#2D2620] md:h-[220px] h-auto"></div>
-                    <div className="bg-[#2D2620] md:h-[220px] h-auto"></div>
-                    <div className="bg-[#2D2620] md:h-[220px] h-auto md:block hidden"></div>
+                    <div className="bg-[#2D2620] md:h-[220px] h-auto max-md:aspect-[264/328]"></div>
+                    <div className="bg-[#2D2620] md:h-[220px] h-auto max-md:aspect-[264/328]"></div>
+                    <div className="bg-[#2D2620] md:h-[220px] h-auto max-md:aspect-[264/328]"></div>
+                    <div className="bg-[#2D2620] md:h-[220px] h-auto max-md:aspect-[264/328]"></div>
+                    <div className="bg-[#2D2620] md:h-[220px] h-auto max-md:aspect-[264/328] md:block hidden"></div>
                   </div>
                   <p className="z-10">You have no NFT,</p>
                   <div className="whitespace-nowrap z-10">
