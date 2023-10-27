@@ -38,27 +38,27 @@ const TitleBox: FC<BoxProps> = ({
       onClick={onClick}
     >
       <div
-        className="absolute group peer/pp"
+        className="absolute group peer border border-black"
         style={{
           left: hoverLeft,
           top: hoverTop,
-          width: 300 * zoomRate * RATE_ZOOM,
-          height: 184 * zoomRate * RATE_ZOOM,
+          width: 230 * zoomRate * RATE_ZOOM,
+          height: 230 * zoomRate * RATE_ZOOM,
         }}
       >
         {/* eslint-disable-next-line */}
         <img
           src="/img/build-hover.png"
-          className="mt-[100px] opacity-0 group-hover:opacity-100 duration-150"
+          className="opacity-100 group-hover:opacity-100 duration-150 border border-[red]"
           style={{
-            width: 300 * zoomRate * RATE_ZOOM,
-            height: 184 * zoomRate * RATE_ZOOM,
+            width: 230 * zoomRate * RATE_ZOOM,
+            height: 230 * zoomRate * RATE_ZOOM,
           }}
           alt=""
           draggable="false"
         />
       </div>
-      <div className="w-[180px] h-[74px] pt-3 relative z-10 backdrop-blur-[2px] before:absolute before:left-0 before:top-0 before:right-0 before:bottom-0 before:opacity-70 before:bg-[linear-gradient(180deg,#0F0902_0%,#26211E_100%)] peer-hover/pp:before:bg-[linear-gradient(180deg,rgba(255,255,255,0.4)_0%,rgba(255,255,255,0)_100%),linear-gradient(180deg,#0F0902_0%,#26211E_100%)]">
+      <div className="w-[180px] h-[74px] pt-3 relative z-10 backdrop-blur-[2px] before:absolute before:left-0 before:top-0 before:right-0 before:bottom-0 before:opacity-70 before:bg-[linear-gradient(180deg,#0F0902_0%,#26211E_100%)] peer-hover:before:bg-[linear-gradient(180deg,rgba(255,255,255,0.4)_0%,rgba(255,255,255,0)_100%),linear-gradient(180deg,#0F0902_0%,#26211E_100%)]">
         <div
           className="w-[18px] h-2.5 overflow-hidden absolute -translate-x-1/2 z-[9] ml-1"
           style={{

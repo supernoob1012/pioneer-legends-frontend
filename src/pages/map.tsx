@@ -32,15 +32,15 @@ const Map = () => {
   const [zoom, setZoom] = useState(1);
   const [zoomRate, setZoomRate] = useState(0);
   const zoomIn = useCallback(() => {
-    if (zoom < 2) {
-      setZoom(zoom + 0.1);
+    if (zoom < 1.25) {
+      setZoom(zoom + 0.05);
       setZoomRate(zoomRate + 1);
     }
   }, [zoom, zoomRate]);
 
   const zoomOut = useCallback(() => {
     if (zoom > 1) {
-      setZoom(zoom - 0.1);
+      setZoom(zoom - 0.05);
       setZoomRate(zoomRate - 1);
     }
   }, [zoom, zoomRate]);
@@ -107,11 +107,14 @@ const Map = () => {
             </Link>
             <div
               ref={content}
-              className="w-[1680px] md:w-[2400px] h-[980px] md:h-[1400px] "
+              style={{
+                width: (3840 / 2160) * (height + (width > 768 ? 300 : 500)),
+                height: height + (width > 768 ? 300 : 500),
+              }}
             >
               <video
                 ref={video}
-                className={`w-full h-full z-20 object-cover object-left-top`}
+                className="w-full h-full z-20 object-cover object-left-top"
                 style={{
                   transform: `scale(${zoom})`
                 }}
@@ -129,16 +132,16 @@ const Map = () => {
                   data-wf-ignore="true"
                 />
               </video>
-              <div className="left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-0 h-0 absolute z-20">
+              <div className="absolute left-0 top-0 w-full h-full z-20">
                 <TitleBox
                   title="airship"
                   icon={<SpaceshipIcon />}
                   balance={10000}
                   supply={1024.59}
-                  left={-792 - 70 * zoomRate}
+                  left={(-792 - 70) * zoomRate}
                   top={-184 - 20 * zoomRate}
-                  hoverLeft={-124 + (-22 * zoomRate)}
-                  hoverTop={-370 + (-25 * zoomRate)}
+                  hoverLeft={-124 + (0 * zoomRate)}
+                  hoverTop={-370 + (0 * zoomRate)}
                   zoomRate={zoom}
                   onClick={handleOpenSpaceship}
                   isBottom
@@ -150,8 +153,8 @@ const Map = () => {
                   supply={1024.59}
                   left={-105 - 2 * zoomRate}
                   top={-300 - 22 * zoomRate}
-                  hoverLeft={-120 + (-20 * zoomRate)}
-                  hoverTop={158 + (18 * zoomRate)}
+                  hoverLeft={-120 + (0 * zoomRate)}
+                  hoverTop={158 + (0 * zoomRate)}
                   zoomRate={zoom}
                   onClick={handleOpenSpaceship}
                 />
@@ -162,8 +165,8 @@ const Map = () => {
                   supply={1024.59}
                   left={410 + 49 * zoomRate}
                   top={-220 - 14 * zoomRate}
-                  hoverLeft={-101 + (-18 * zoomRate)}
-                  hoverTop={59 + (7 * zoomRate)}
+                  hoverLeft={-267 + (-34 * zoomRate)}
+                  hoverTop={19 + (4 * zoomRate)}
                   zoomRate={zoom}
                   onClick={handleOpenSpaceship}
                 />
