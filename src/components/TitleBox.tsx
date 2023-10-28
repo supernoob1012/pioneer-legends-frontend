@@ -1,6 +1,6 @@
 import { FC, ReactNode, useEffect, useRef } from "react";
 import { SolanaIcon } from "./SvgIcons";
-const RATE_ZOOM = 1.3;
+const RATE_ZOOM = 1;
 interface BoxProps {
   title: string;
   icon: ReactNode;
@@ -25,7 +25,6 @@ const TitleBox: FC<BoxProps> = ({
   hoverLeft = 0,
   hoverTop = 0,
   isBottom = false,
-  zoomRate = 1,
   onClick,
 }) => {
   return (
@@ -42,21 +41,33 @@ const TitleBox: FC<BoxProps> = ({
         style={{
           left: hoverLeft,
           top: hoverTop,
-          width: 230 * zoomRate * RATE_ZOOM,
-          height: 230 * zoomRate * RATE_ZOOM,
+          width: 230,
+          height: 230,
         }}
       >
         {/* eslint-disable-next-line */}
-        <img
-          src="/img/build-hover.png"
-          className="opacity-100 group-hover:opacity-100 duration-150 border border-[red]"
-          style={{
-            width: 230 * zoomRate * RATE_ZOOM,
-            height: 230 * zoomRate * RATE_ZOOM,
-          }}
-          alt=""
-          draggable="false"
-        />
+        {title === 'mining' ?
+          <img
+            src="/img/build-hover1.png"
+            className="opacity-100 group-hover:opacity-100 duration-150 border border-[red]"
+            style={{
+              width: 230,
+              height: 230,
+            }}
+            alt=""
+            draggable="false"
+          /> :
+          <img
+            src="/img/build-hover.png"
+            className="opacity-100 group-hover:opacity-100 duration-150 border border-[red]"
+            style={{
+              width: 230,
+              height: 230,
+            }}
+            alt=""
+            draggable="false"
+          />
+        }
       </div>
       <div className="w-[180px] h-[74px] pt-3 relative z-10 backdrop-blur-[2px] before:absolute before:left-0 before:top-0 before:right-0 before:bottom-0 before:opacity-70 before:bg-[linear-gradient(180deg,#0F0902_0%,#26211E_100%)] peer-hover:before:bg-[linear-gradient(180deg,rgba(255,255,255,0.4)_0%,rgba(255,255,255,0)_100%),linear-gradient(180deg,#0F0902_0%,#26211E_100%)]">
         <div
