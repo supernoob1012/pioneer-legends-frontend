@@ -76,6 +76,7 @@ const Map = () => {
   }, [viewport]);
 
   useEffect(() => {
+    console.log('0000000', width, height)
     if (width * 9 === height * 16) {
       setViewHeight(height);
       setViewWidth(width)
@@ -122,7 +123,7 @@ const Map = () => {
                 />
               </div>
             </Link>
-            {/* {console.log('test', height, width)} */}
+            {console.log('test', viewWidth, viewHeight)}
             <div
             className=""
               ref={content}
