@@ -157,7 +157,7 @@ const Map = () => {
               >
                 <img
                   src="/img/build-hover.png"
-                  className="opacity-0 group-hover:opacity-100 duration-150"
+                  className="opacity-0 group-hover:opacity-100 duration-150 peer"
                   style={{
                     width: 230,
                     height: 230,
@@ -168,7 +168,7 @@ const Map = () => {
                   alt=""
                   draggable="false"
                 />
-                <div className="w-[180px] mt-5 ml-8 h-[74px] pt-3 relative z-10 backdrop-blur-[2px] before:absolute before:left-0 before:top-0 before:right-0 before:bottom-0 before:opacity-70 before:bg-[linear-gradient(180deg,#0F0902_0%,#26211E_100%)] peer-hover:before:bg-[linear-gradient(180deg,rgba(255,255,255,0.4)_0%,rgba(255,255,255,0)_100%),linear-gradient(180deg,#0F0902_0%,#26211E_100%)]">
+                <div className="w-[180px] mt-5 ml-8 h-[74px] pt-3 relative z-10 backdrop-blur-[2px] before:absolute before:left-0 before:top-0 before:right-0 before:bottom-0 before:opacity-70 before:bg-[linear-gradient(180deg,#0F0902_0%,#26211E_100%)] group-hover:before:bg-[linear-gradient(180deg,rgba(255,255,255,0.4)_0%,rgba(255,255,255,0)_100%),linear-gradient(180deg,#0F0902_0%,#26211E_100%)]">
                   <div
                     className="w-[18px] h-2.5 overflow-hidden absolute -translate-x-1/2 z-[9] ml-1"
                     style={{
@@ -223,7 +223,7 @@ const Map = () => {
                   alt=""
                   draggable="false"
                 />
-                <div className="ml-7 -mt-[360px] w-[180px] h-[74px] pt-3 relative z-10 backdrop-blur-[2px] before:absolute before:left-0 before:top-0 before:right-0 before:bottom-0 before:opacity-70 before:bg-[linear-gradient(180deg,#0F0902_0%,#26211E_100%)] peer-hover:before:bg-[linear-gradient(180deg,rgba(255,255,255,0.4)_0%,rgba(255,255,255,0)_100%),linear-gradient(180deg,#0F0902_0%,#26211E_100%)]">
+                <div className="ml-7 -mt-[360px] w-[180px] h-[74px] pt-3 relative z-10 backdrop-blur-[2px] before:absolute before:left-0 before:top-0 before:right-0 before:bottom-0 before:opacity-70 before:bg-[linear-gradient(180deg,#0F0902_0%,#26211E_100%)] group-hover:before:bg-[linear-gradient(180deg,rgba(255,255,255,0.4)_0%,rgba(255,255,255,0)_100%),linear-gradient(180deg,#0F0902_0%,#26211E_100%)]">
                   <div
                     className="w-[18px] h-2.5 overflow-hidden absolute -translate-x-1/2 z-[9] ml-1"
                     style={{
@@ -279,7 +279,7 @@ const Map = () => {
                   alt=""
                   draggable="false"
                 />
-                <div className="ml-[34px] -mt-[300px] w-[180px] h-[74px] pt-3 relative z-10 backdrop-blur-[2px] before:absolute before:left-0 before:top-0 before:right-0 before:bottom-0 before:opacity-70 before:bg-[linear-gradient(180deg,#0F0902_0%,#26211E_100%)] peer-hover:before:bg-[linear-gradient(180deg,rgba(255,255,255,0.4)_0%,rgba(255,255,255,0)_100%),linear-gradient(180deg,#0F0902_0%,#26211E_100%)]">
+                <div className="ml-[34px] -mt-[300px] w-[180px] h-[74px] pt-3 relative z-10 backdrop-blur-[2px] before:absolute before:left-0 before:top-0 before:right-0 before:bottom-0 before:opacity-70 before:bg-[linear-gradient(180deg,#0F0902_0%,#26211E_100%)] group-hover:before:bg-[linear-gradient(180deg,rgba(255,255,255,0.4)_0%,rgba(255,255,255,0)_100%),linear-gradient(180deg,#0F0902_0%,#26211E_100%)]">
                   <div
                     className="w-[18px] h-2.5 overflow-hidden absolute -translate-x-1/2 z-[9] ml-1"
                     style={{
