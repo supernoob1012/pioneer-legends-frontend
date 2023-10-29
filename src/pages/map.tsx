@@ -11,6 +11,7 @@ import {
   MiningIcon,
   MinusIcon,
   PlusIcon,
+  SolanaIcon,
   SpaceshipIcon,
   TownhallIcon,
 } from "../components/SvgIcons";
@@ -30,23 +31,9 @@ const Map = () => {
   const video = useRef<HTMLVideoElement>(null);
   const { setIsStakeModal } = useContext<any>(ModalContext);
   const [zoom, setZoom] = useState(1);
-  const [zoomRate, setZoomRate] = useState(0);
   const [viewWidth, setViewWidth] = useState(0);
   const [viewHeight, setViewHeight] = useState(0);
-
-  const zoomIn = useCallback(() => {
-    if (zoom < 1.25) {
-      setZoom(zoom + 0.05);
-      setZoomRate(zoomRate + 1);
-    }
-  }, [zoom, zoomRate]);
-
-  const zoomOut = useCallback(() => {
-    if (zoom > 1) {
-      setZoom(zoom - 0.05);
-      setZoomRate(zoomRate - 1);
-    }
-  }, [zoom, zoomRate]);
+  const [scale, setScale] = useState(1)
 
   const wallet = useWallet();
 
@@ -76,7 +63,6 @@ const Map = () => {
   }, [viewport]);
 
   useEffect(() => {
-    console.log('0000000', width, height)
     if (width * 9 === height * 16) {
       setViewHeight(height);
       setViewWidth(width)
@@ -89,6 +75,10 @@ const Map = () => {
     }
   }, [width, height])
 
+  useEffect(() => {
+    setScale(viewHeight / 9)
+  }, [viewHeight])
+
   return (
     <>
       <main>
@@ -100,13 +90,13 @@ const Map = () => {
             ref={viewport}
             className="z-10 w-screen h-screen overflow-hidden" // Set width, height, and overflow
           >
-            <div
+            {/* <div
               className="absolute left-0 top-0 w-full h-[160px] z-20"
               style={{
                 backgroundImage:
                   "linear-gradient(180deg, rgba(30, 25, 21, 0.50) 0%, rgba(30, 25, 21, 0.00) 100%)",
               }}
-            />
+            /> */}
             <TopProfile
               address={
                 wallet.publicKey?.toBase58() ? wallet.publicKey?.toBase58() : ""
@@ -123,9 +113,8 @@ const Map = () => {
                 />
               </div>
             </Link>
-            {console.log('test', viewWidth, viewHeight)}
             <div
-            className=""
+              className="relative"
               ref={content}
               style={{
                 width: viewWidth,
@@ -154,72 +143,179 @@ const Map = () => {
                   data-wf-ignore="true"
                 />
               </video>
-              <div className="absolute left-0 top-0 w-full h-full z-20">
-                <TitleBox
-                  title="airship"
-                  icon={<SpaceshipIcon />}
-                  balance={10000}
-                  supply={1024.59}
-                  left={(-792 - 70) * zoomRate}
-                  top={-184 - 20 * zoomRate}
-                  hoverLeft={-124 + (0 * zoomRate)}
-                  hoverTop={-370 + (0 * zoomRate)}
-                  zoomRate={zoom}
-                  onClick={handleOpenSpaceship}
-                  isBottom
+              <div
+                style={{
+                  position: 'absolute',
+                  top: `${9 * viewHeight / 100}px`,
+                  left: `${12.8 * viewWidth / 100}px`,
+                  transformOrigin: '0% 0%',
+                  transform: `scale(${scale}%)`,
+                  opacity: 1
+                }}
+                className="cursor-pointer group"
+                onClick={handleOpenSpaceship}
+              >
+                <img
+                  src="/img/build-hover.png"
+                  className="opacity-0 group-hover:opacity-100 duration-150"
+                  style={{
+                    width: 230,
+                    height: 230,
+                    // transform: `scale(${scale}%)`,
+                    // transformOrigin: '70% 50%'
+                    // scale: `${scale}%`
+                  }}
+                  alt=""
+                  draggable="false"
                 />
-                <TitleBox
-                  title="townhall"
-                  icon={<TownhallIcon />}
-                  balance={10000}
-                  supply={1024.59}
-                  left={-105 - 2 * zoomRate}
-                  top={-300 - 22 * zoomRate}
-                  hoverLeft={-120 + (0 * zoomRate)}
-                  hoverTop={158 + (0 * zoomRate)}
-                  zoomRate={zoom}
-                  onClick={handleOpenSpaceship}
+                <div className="w-[180px] mt-5 ml-8 h-[74px] pt-3 relative z-10 backdrop-blur-[2px] before:absolute before:left-0 before:top-0 before:right-0 before:bottom-0 before:opacity-70 before:bg-[linear-gradient(180deg,#0F0902_0%,#26211E_100%)] peer-hover:before:bg-[linear-gradient(180deg,rgba(255,255,255,0.4)_0%,rgba(255,255,255,0)_100%),linear-gradient(180deg,#0F0902_0%,#26211E_100%)]">
+                  <div
+                    className="w-[18px] h-2.5 overflow-hidden absolute -translate-x-1/2 z-[9] ml-1"
+                    style={{
+                      bottom: 74,
+                      left: "50%",
+                      marginLeft: -8,
+                      transform: "translateX(-50%) rotate(180deg)"
+                    }}
+                  >
+                    <div className="bg-[#38291E] w-4 h-4 rotate-45 absolute left-0 -top-[11px] opacity-70" />
+                  </div>
+                  <p className="text-primary-100 font-secondary text-[18px] leading-[32px] uppercase text-center z-10 relative">
+                    {`AIRSHIP`}
+                  </p>
+                  <div className="flex items-center justify-center gap-2 z-10 relative">
+                    <div className="flex items-end">
+                      <SpaceshipIcon />
+                      <div className="font-normal text-[11px] ml-[3.2px] text-primary-200">
+                        {1000}
+                      </div>
+                    </div>
+                    <div className="flex items-end">
+                      <SolanaIcon />
+                      <span className="font-normal text-[11px] ml-[3.2px] text-primary-200">
+                        {1020}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                style={{
+                  position: 'absolute',
+                  top: `${38.5 * viewHeight / 100}px`,
+                  left: `${40.5 * viewWidth / 100}px`,
+                  transformOrigin: '0% 0%',
+                  transform: `scale(${scale}%)`
+                }}
+                onClick={handleOpenSpaceship}
+                className="cursor-pointer group"
+              >
+                <img
+                  src="/img/build-hover.png"
+                  className="opacity-0 group-hover:opacity-100 duration-150"
+                  style={{
+                    width: 230,
+                    height: 230,
+                    // transform: `scale(${scale}%)`,
+                    // transformOrigin: '70% 50%'
+                    // scale: `${scale}%`
+                  }}
+                  alt=""
+                  draggable="false"
                 />
-                <TitleBox
-                  title="mining"
-                  icon={<MiningIcon />}
-                  balance={10000}
-                  supply={1024.59}
-                  left={410 + 49 * zoomRate}
-                  top={-220 - 14 * zoomRate}
-                  hoverLeft={-267 + (-34 * zoomRate)}
-                  hoverTop={19 + (4 * zoomRate)}
-                  zoomRate={zoom}
-                  onClick={handleOpenSpaceship}
+                <div className="ml-7 -mt-[360px] w-[180px] h-[74px] pt-3 relative z-10 backdrop-blur-[2px] before:absolute before:left-0 before:top-0 before:right-0 before:bottom-0 before:opacity-70 before:bg-[linear-gradient(180deg,#0F0902_0%,#26211E_100%)] peer-hover:before:bg-[linear-gradient(180deg,rgba(255,255,255,0.4)_0%,rgba(255,255,255,0)_100%),linear-gradient(180deg,#0F0902_0%,#26211E_100%)]">
+                  <div
+                    className="w-[18px] h-2.5 overflow-hidden absolute -translate-x-1/2 z-[9] ml-1"
+                    style={{
+                      bottom: -10,
+                      left: "53%",
+                      marginLeft: -8,
+                      transform: "translateX(-50%) rotate(0deg)"
+                    }}
+                  >
+                    <div className="bg-[#38291E] w-4 h-4 rotate-45 absolute left-0 -top-[11px] opacity-70" />
+                  </div>
+                  <p className="text-primary-100 font-secondary text-[18px] leading-[32px] uppercase text-center z-10 relative">
+                    TOWNHALL
+                  </p>
+                  <div className="flex items-center justify-center gap-2 z-10 relative">
+                    <div className="flex items-end">
+                      <TownhallIcon />
+                      <div className="font-normal text-[11px] ml-[3.2px] text-primary-200 mt-1">
+                        2312
+                      </div>
+                    </div>
+                    <div className="flex items-end">
+                      <SolanaIcon />
+                      <span className="font-normal text-[11px] ml-[3.2px] text-primary-200">
+                        2345
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                style={{
+                  position: 'absolute',
+                  top: `${37 * viewHeight / 100}px`,
+                  left: `${60.5 * viewWidth / 100}px`,
+                  transformOrigin: '0% 0%',
+                  transform: `scale(${scale}%)`
+                }}
+                onClick={handleOpenSpaceship}
+                className="cursor-pointer group"
+
+              >
+                <img
+                  src="/img/build-hover1.png"
+                  className="opacity-0 group-hover:opacity-100 duration-150"
+                  style={{
+                    width: 230,
+                    height: 230,
+                    // transform: `scale(${scale}%)`,
+                    // transformOrigin: '70% 50%'
+                    // scale: `${scale}%`
+                  }}
+                  alt=""
+                  draggable="false"
                 />
+                <div className="ml-[34px] -mt-[300px] w-[180px] h-[74px] pt-3 relative z-10 backdrop-blur-[2px] before:absolute before:left-0 before:top-0 before:right-0 before:bottom-0 before:opacity-70 before:bg-[linear-gradient(180deg,#0F0902_0%,#26211E_100%)] peer-hover:before:bg-[linear-gradient(180deg,rgba(255,255,255,0.4)_0%,rgba(255,255,255,0)_100%),linear-gradient(180deg,#0F0902_0%,#26211E_100%)]">
+                  <div
+                    className="w-[18px] h-2.5 overflow-hidden absolute -translate-x-1/2 z-[9] ml-1"
+                    style={{
+                      bottom: -10,
+                      left: "53%",
+                      marginLeft: -8,
+                      transform: "translateX(-50%) rotate(0deg)"
+                    }}
+                  >
+                    <div className="bg-[#38291E] w-4 h-4 rotate-45 absolute left-0 -top-[11px] opacity-70" />
+                  </div>
+                  <p className="text-primary-100 font-secondary text-[18px] leading-[32px] uppercase text-center z-10 relative">
+                    MINING
+                  </p>
+                  <div className="flex items-center justify-center gap-2 z-10 relative">
+                    <div className="flex items-end">
+                      <MiningIcon />
+
+                      <div className="font-normal text-[11px] ml-[3.2px] text-primary-200 mt-1">
+                        2323
+                      </div>
+                    </div>
+                    <div className="flex items-end">
+                      <SolanaIcon />
+                      <span className="font-normal text-[11px] ml-[3.2px] text-primary-200">
+                        1020
+                      </span>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </main>
-      <div className="fixed right-8 bottom-8 flex flex-col z-50" style={{}}>
-        <button
-          className="p-2 relative z-20 hover:bg-[#e1e4cd1a] active:bg-[#1E191566]"
-          onClick={zoomIn}
-        >
-          <PlusIcon />
-        </button>
-        <div className="bg-[#E1E4CD1A] w-4 h-[1px] z-20 ml-2" />
-        <button
-          className="p-2 relative z-20 hover:bg-[#e1e4cd1a] active:bg-[#1E191566]"
-          onClick={zoomOut}
-        >
-          <MinusIcon />
-        </button>
-        <div
-          className="absolute left-0 top-0 w-full h-full"
-          style={{
-            background:
-              "linear-gradient(180deg, rgba(15, 9, 2, 0.70) 0%, rgba(38, 33, 30, 0.70) 100%)",
-          }}
-        ></div>
-      </div>
-      <Loading />
+      {/* <Loading /> */}
 
     </>
   )
