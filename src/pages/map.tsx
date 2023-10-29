@@ -78,7 +78,32 @@ const Map = () => {
   useEffect(() => {
     setScale(viewHeight / 9)
   }, [viewHeight])
+  useEffect(() => {
+    const handleWheel = (event: any) => {
+      if (event.ctrlKey) {
+        event.preventDefault();
+      }
+    };
 
+    window.addEventListener('wheel', handleWheel, { passive: false });
+
+    return () => {
+      window.removeEventListener('wheel', handleWheel);
+    };
+  }, []);
+  useEffect(() => {
+    const handleKeyDown = (event: any) => {
+      if (event.ctrlKey && (event.key === '-' || event.key === '=')) {
+        event.preventDefault();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown, { passive: false });
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, []);
   return (
     <>
       <main>
@@ -315,7 +340,7 @@ const Map = () => {
           </div>
         </div>
       </main>
-      {/* <Loading /> */}
+      <Loading />
 
     </>
   )
