@@ -12,7 +12,15 @@ import { authorizeUser, getNonce } from "../utils/api";
 import { useRouter } from "next/router";
 
 const ConnectWallet = () => {
-  const { wallets, select, connected, publicKey, signMessage } = useWallet();
+  const {
+    wallets,
+    connect,
+    select,
+    connecting,
+    publicKey,
+    connected,
+    signMessage,
+  } = useWallet();
   const router = useRouter();
   const { setIsProfileModal } = useContext<any>(ModalContext);
   const { isDataLoading } = useUserData();
@@ -50,15 +58,16 @@ const ConnectWallet = () => {
     }
   }, [publicKey, connected]);
 
-  const handleConnect = (walletName: string) => {
+  const handleConnect = async (walletName: string) => {
     try {
-      for (let i = 0; i < wallets.length; i++) {
-        if (wallets[i].adapter.name === walletName) {
-          if (wallets[i].readyState === "Installed") {
-            select(wallets[i].adapter.name);
-          } else {
-            errorAlert("Cannot connect the wallet!");
-          }
+      const wallet = wallets.find(wallet => wallet.adapter.name === walletName);
+      if (wallet) {
+        if (wallet.readyState === "Installed") {
+          console.log("what?");
+          select(wallet.adapter.name);
+          // await connect();
+        } else {
+          errorAlert("Cannot connect the wallet!");
         }
       }
     } catch (error) {
@@ -88,7 +97,21 @@ const ConnectWallet = () => {
             )}
           </>
         ) : (
-          <Button variant="primary">Connect wallet</Button>
+          <>
+            {connecting ? (
+              <Skeleton
+                baseColor="#828282"
+                highlightColor="#999999"
+                style={{
+                  width: 136,
+                  height: 40,
+                  borderRadius: 6,
+                }}
+              />
+            ) : (
+              <Button variant="primary">Connect wallet</Button>
+            )}
+          </>
         )}
       </div>
       <div className="min-w-[238px] py-3 px-4 absolute right-auto left-0 lg:left-auto lg:right-0 top-[40px] connect-drop">
@@ -103,6 +126,9 @@ const ConnectWallet = () => {
           <button
             className="p-3 text-[16px] font-medium text-white w-full text-left hover:bg-[#e1e4cd1a] active:bg-[#1e191566]"
             onClick={() => handleConnect("Phantom")}
+            // onClick={() => {
+            //   setModalVisible(true);
+            // }}
           >
             <div className="flex items-center gap-2">
               <PhantomIcon /> Phantom
