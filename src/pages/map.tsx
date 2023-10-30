@@ -103,6 +103,8 @@ const Map = () => {
     const setTechAnim = () => {
       if (width <= 480) {
         setIsTech(true);
+      } else {
+        setIsTech(false);
       }
     };
 
