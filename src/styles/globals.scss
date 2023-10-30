@@ -238,3 +238,35 @@ main {
   opacity: 0.7;
 
 }
+
+.hand_anim {
+  animation: hand 3s ease-in-out infinite;
+}
+
+@keyframes hand {
+  0% {}
+
+  33% {
+    transform: translateX(0);
+  }
+
+  47% {
+    transform: translateX(-18px);
+  }
+
+  60% {
+    transform: translateX(18px);
+  }
+
+  73% {
+    transform: translateX(-18px);
+  }
+
+  87% {
+    transform: translateX(18px);
+  }
+
+  100% {
+    transform: translateX(0);
+  }
+}

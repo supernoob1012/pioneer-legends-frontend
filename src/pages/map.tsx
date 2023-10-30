@@ -14,6 +14,7 @@ import Link from "next/link";
 import useWindowSize from "../utils/useWindowSize";
 import Loading from "../components/Loading";
 import ScrollBooster from "scrollbooster";
+import { UserTech } from "../components/UserTech";
 
 const Map = () => {
   const { width, height } = useWindowSize();
@@ -24,12 +25,14 @@ const Map = () => {
   const [viewWidth, setViewWidth] = useState(0);
   const [viewHeight, setViewHeight] = useState(0);
   const [scale, setScale] = useState(1);
+  const [isTech, setIsTech] = useState<boolean>(false);
 
   const wallet = useWallet();
 
   const handleOpenSpaceship = () => {
     setIsStakeModal(true);
   };
+
   useEffect(() => {
     if (viewport.current) {
       const sb = new ScrollBooster({
@@ -81,6 +84,7 @@ const Map = () => {
       window.removeEventListener("wheel", handleWheel);
     };
   }, []);
+
   useEffect(() => {
     const handleKeyDown = (event: any) => {
       if (event.ctrlKey && (event.key === "-" || event.key === "=")) {
@@ -94,8 +98,23 @@ const Map = () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
   }, []);
+
+  useEffect(() => {
+    const setTechAnim = () => {
+      if (width <= 480) {
+        setIsTech(true);
+      }
+    };
+
+    const tiemr = setTimeout(() => {
+      setTechAnim();
+    }, 3000);
+
+    return () => clearTimeout(tiemr);
+  }, [width]);
+
   return (
-    <>
+    <div className="relative">
       <main>
         <div className="relative w-screen h-screen overflow-hidden">
           {/* <div className="h-1/5 bg-gradient-to-b from-black/70 fixed top-0 left-0 right-0 w-full z-[21] pointer-events-none" />
@@ -327,7 +346,10 @@ const Map = () => {
         </div>
       </main>
       <Loading />
-    </>
+      <div className="flex justify-center">
+        {isTech && <UserTech setIsTech={setIsTech} />}
+      </div>
+    </div>
   );
 };
 
