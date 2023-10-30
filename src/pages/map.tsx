@@ -23,6 +23,7 @@ import Link from "next/link";
 import useWindowSize from "../utils/useWindowSize";
 import Loading from "../components/Loading";
 import ScrollBooster from "scrollbooster";
+import { UserTech } from "../components/UserTech";
 
 const Map = () => {
   const { width, height } = useWindowSize();
@@ -33,13 +34,15 @@ const Map = () => {
   const [zoom, setZoom] = useState(1);
   const [viewWidth, setViewWidth] = useState(0);
   const [viewHeight, setViewHeight] = useState(0);
-  const [scale, setScale] = useState(1)
+  const [scale, setScale] = useState(1);
+  const [isTech, setIsTech] = useState<boolean>(false);
 
   const wallet = useWallet();
 
   const handleOpenSpaceship = () => {
     setIsStakeModal(true);
   };
+
   useEffect(() => {
     if (viewport.current) {
       const sb = new ScrollBooster({
@@ -65,19 +68,20 @@ const Map = () => {
   useEffect(() => {
     if (width * 9 === height * 16) {
       setViewHeight(height);
-      setViewWidth(width)
+      setViewWidth(width);
     } else if (width * 9 > height * 16) {
-      setViewHeight(width * 9 / 16);
-      setViewWidth(width)
+      setViewHeight((width * 9) / 16);
+      setViewWidth(width);
     } else {
       setViewHeight(height);
-      setViewWidth(height * 16 / 9)
+      setViewWidth((height * 16) / 9);
     }
-  }, [width, height])
+  }, [width, height]);
 
   useEffect(() => {
-    setScale(viewHeight / 9)
-  }, [viewHeight])
+    setScale(viewHeight / 9);
+  }, [viewHeight]);
+
   useEffect(() => {
     const handleWheel = (event: any) => {
       if (event.ctrlKey) {
@@ -85,27 +89,43 @@ const Map = () => {
       }
     };
 
-    window.addEventListener('wheel', handleWheel, { passive: false });
+    window.addEventListener("wheel", handleWheel, { passive: false });
 
     return () => {
-      window.removeEventListener('wheel', handleWheel);
+      window.removeEventListener("wheel", handleWheel);
     };
   }, []);
+
   useEffect(() => {
     const handleKeyDown = (event: any) => {
-      if (event.ctrlKey && (event.key === '-' || event.key === '=')) {
+      if (event.ctrlKey && (event.key === "-" || event.key === "=")) {
         event.preventDefault();
       }
     };
 
-    window.addEventListener('keydown', handleKeyDown, { passive: false });
+    window.addEventListener("keydown", handleKeyDown, { passive: false });
 
     return () => {
-      window.removeEventListener('keydown', handleKeyDown);
+      window.removeEventListener("keydown", handleKeyDown);
     };
   }, []);
+
+  useEffect(() => {
+    const setTechAnim = () => {
+      if (width <= 480) {
+        setIsTech(true);
+      }
+    };
+
+    const tiemr = setTimeout(() => {
+      setTechAnim();
+    }, 3000);
+
+    return () => clearTimeout(tiemr);
+  }, [width]);
+
   return (
-    <>
+    <div className="relative">
       <main>
         <div className="relative w-screen h-screen overflow-hidden">
           {/* <div className="h-1/5 bg-gradient-to-b from-black/70 fixed top-0 left-0 right-0 w-full z-[21] pointer-events-none" />
@@ -152,7 +172,7 @@ const Map = () => {
                 ref={video}
                 className="w-full h-full z-20 object-cover object-left-top"
                 style={{
-                  transform: `scale(${zoom})`
+                  transform: `scale(${zoom})`,
                 }}
                 autoPlay={true}
                 playsInline
@@ -170,12 +190,12 @@ const Map = () => {
               </video>
               <div
                 style={{
-                  position: 'absolute',
-                  top: `${9 * viewHeight / 100}px`,
-                  left: `${12.8 * viewWidth / 100}px`,
-                  transformOrigin: '0% 0%',
+                  position: "absolute",
+                  top: `${(9 * viewHeight) / 100}px`,
+                  left: `${(12.8 * viewWidth) / 100}px`,
+                  transformOrigin: "0% 0%",
                   transform: `scale(${scale}%)`,
-                  opacity: 1
+                  opacity: 1,
                 }}
                 className="cursor-pointer group"
                 onClick={handleOpenSpaceship}
@@ -200,7 +220,7 @@ const Map = () => {
                       bottom: 74,
                       left: "50%",
                       marginLeft: -8,
-                      transform: "translateX(-50%) rotate(180deg)"
+                      transform: "translateX(-50%) rotate(180deg)",
                     }}
                   >
                     <div className="bg-[#38291E] w-4 h-4 rotate-45 absolute left-0 -top-[11px] opacity-70" />
@@ -226,11 +246,11 @@ const Map = () => {
               </div>
               <div
                 style={{
-                  position: 'absolute',
-                  top: `${38.5 * viewHeight / 100}px`,
-                  left: `${40.5 * viewWidth / 100}px`,
-                  transformOrigin: '0% 0%',
-                  transform: `scale(${scale}%)`
+                  position: "absolute",
+                  top: `${(38.5 * viewHeight) / 100}px`,
+                  left: `${(40.5 * viewWidth) / 100}px`,
+                  transformOrigin: "0% 0%",
+                  transform: `scale(${scale}%)`,
                 }}
                 onClick={handleOpenSpaceship}
                 className="cursor-pointer group"
@@ -255,7 +275,7 @@ const Map = () => {
                       bottom: -10,
                       left: "53%",
                       marginLeft: -8,
-                      transform: "translateX(-50%) rotate(0deg)"
+                      transform: "translateX(-50%) rotate(0deg)",
                     }}
                   >
                     <div className="bg-[#38291E] w-4 h-4 rotate-45 absolute left-0 -top-[11px] opacity-70" />
@@ -281,15 +301,14 @@ const Map = () => {
               </div>
               <div
                 style={{
-                  position: 'absolute',
-                  top: `${37 * viewHeight / 100}px`,
-                  left: `${60.5 * viewWidth / 100}px`,
-                  transformOrigin: '0% 0%',
-                  transform: `scale(${scale}%)`
+                  position: "absolute",
+                  top: `${(37 * viewHeight) / 100}px`,
+                  left: `${(60.5 * viewWidth) / 100}px`,
+                  transformOrigin: "0% 0%",
+                  transform: `scale(${scale}%)`,
                 }}
                 onClick={handleOpenSpaceship}
                 className="cursor-pointer group"
-
               >
                 <img
                   src="/img/build-hover1.png"
@@ -311,7 +330,7 @@ const Map = () => {
                       bottom: -10,
                       left: "53%",
                       marginLeft: -8,
-                      transform: "translateX(-50%) rotate(0deg)"
+                      transform: "translateX(-50%) rotate(0deg)",
                     }}
                   >
                     <div className="bg-[#38291E] w-4 h-4 rotate-45 absolute left-0 -top-[11px] opacity-70" />
@@ -341,9 +360,11 @@ const Map = () => {
         </div>
       </main>
       <Loading />
-
-    </>
-  )
+      <div className="flex justify-center">
+        {isTech && <UserTech setIsTech={setIsTech} />}
+      </div>
+    </div>
+  );
 };
 
 export default Map;
