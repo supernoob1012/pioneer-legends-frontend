@@ -37,7 +37,7 @@ export default function WalletConnect(props: { children: any }) {
 
   return (
     <ConnectionProvider endpoint={endpoint}>
-      <WalletProvider wallets={wallets} autoConnect={true}>
+      <WalletProvider wallets={wallets} autoConnect={false}>
         {props.children}
       </WalletProvider>
     </ConnectionProvider>

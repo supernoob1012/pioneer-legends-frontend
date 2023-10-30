@@ -22,7 +22,7 @@ const ConnectWallet = () => {
     const getnon = async () => {
       if (!signMessage) return;
       const nonce = await getNonce(publicKey?.toBase58()!);
-      if (nonce) {
+      if (nonce && connected) {
         const message = new TextEncoder().encode(
           `Authorize your wallet. nonce: ${nonce}`
         );
@@ -50,41 +50,22 @@ const ConnectWallet = () => {
     }
   }, [publicKey, connected]);
 
-  const handelConnectPhantom = async () => {
-    for (let i = 0; i < wallets.length; i++) {
-      if (wallets[i].adapter.name === "Phantom") {
-        if (wallets[i].readyState === "Installed") {
-          select(wallets[i].adapter.name);
-        } else {
-          errorAlert("Cannot connect the wallet!");
+  const handleConnect = (walletName: string) => {
+    try {
+      for (let i = 0; i < wallets.length; i++) {
+        if (wallets[i].adapter.name === walletName) {
+          if (wallets[i].readyState === "Installed") {
+            select(wallets[i].adapter.name);
+          } else {
+            errorAlert("Cannot connect the wallet!");
+          }
         }
       }
+    } catch (error) {
+      console.log(error);
     }
   };
 
-  const handleConnectBackpack = () => {
-    for (let i = 0; i < wallets.length; i++) {
-      if (wallets[i].adapter.name === "Backpack") {
-        if (wallets[i].readyState === "Installed") {
-          select(wallets[i].adapter.name);
-        } else {
-          errorAlert("Cannot connect the wallet!");
-        }
-      }
-    }
-  };
-
-  const handleConnectLedger = () => {
-    for (let i = 0; i < wallets.length; i++) {
-      if (wallets[i].adapter.name === "Ledger") {
-        if (wallets[i].readyState === "Installed") {
-          select(wallets[i].adapter.name);
-        } else {
-          errorAlert("Cannot connect the wallet!");
-        }
-      }
-    }
-  };
   return (
     <div className="relative connect">
       <div className="">
@@ -121,7 +102,7 @@ const ConnectWallet = () => {
         <div className="relative z-10 mt-5">
           <button
             className="p-3 text-[16px] font-medium text-white w-full text-left hover:bg-[#e1e4cd1a] active:bg-[#1e191566]"
-            onClick={handelConnectPhantom}
+            onClick={() => handleConnect("Phantom")}
           >
             <div className="flex items-center gap-2">
               <PhantomIcon /> Phantom
@@ -129,7 +110,7 @@ const ConnectWallet = () => {
           </button>
           <button
             className="p-3 text-[16px] font-medium text-white w-full text-left hover:bg-[#e1e4cd1a] active:bg-[#1e191566]"
-            onClick={handleConnectBackpack}
+            onClick={() => handleConnect("Backpack")}
           >
             <div className="flex items-center gap-2">
               <BackpackIcon /> Backpack
@@ -137,7 +118,7 @@ const ConnectWallet = () => {
           </button>
           <button
             className="p-3 text-[16px] font-medium text-white w-full text-left hover:bg-[#e1e4cd1a] active:bg-[#1e191566]"
-            onClick={handleConnectLedger}
+            onClick={() => handleConnect("Ledger")}
           >
             <div className="flex items-center gap-2">
               <LedgerIcon />
