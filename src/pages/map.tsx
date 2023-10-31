@@ -35,39 +35,23 @@ const Map = () => {
     setTitle(title);
   };
 
-  useEffect(() => {}, [viewport]);
-
   useEffect(() => {
-    if (viewport.current) {
-      console.log(
-        viewport.current.clientWidth,
-        viewport.current.offsetWidth,
-        viewport.current.scrollWidth
-      );
+    if (viewport.current && viewWidth > 0) {
       const sb = new ScrollBooster({
         viewport: viewport.current,
         content: content.current!,
         scrollMode: "transform",
         direction: "all",
         emulateScroll: true,
-
         bounce: false, // Adds a bounce effect when content edge is reached
       });
-      // const offsetX =
-      //   content.current!.scrollWidth - viewport.current!.offsetWidth;
-      // const offsetY =
-      //   video.current!.scrollHeight - viewport.current!.offsetHeight!;
-      // sb.setPosition({
-      //   x: 500,
-      //   y: ,
-      //   // y: offsetY / 2,
-      // });
-      // // sb.setPosition({
-      // //   x: offsetX / 2,
-      // //   y: offsetY / 2,
-      // // });
+
+      sb.scrollTo({
+        x: (viewWidth - viewport.current.clientWidth) / 2,
+        y: 0,
+      });
     }
-  }, [viewport]);
+  }, [viewport, viewWidth]);
 
   useEffect(() => {
     if (width * 9 === height * 16) {
@@ -361,15 +345,15 @@ const Map = () => {
                 </div>
               </div>
 
-              <div className=" absolute top-0 h-full">
-                {isTech && (
+              {isTech && (
+                <div className=" absolute top-0 h-full w-full flex justify-center">
                   <UserTech
                     setIsTech={setIsTech}
                     width={width}
                     height={viewHeight}
                   />
-                )}
-              </div>
+                </div>
+              )}
             </div>
           </div>
         </div>

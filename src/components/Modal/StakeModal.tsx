@@ -51,7 +51,7 @@ const StakeModal: FC = () => {
       await stakeNFT(wallet, selected[i], setLoading);
     }
   };
-  const unStakeAll = async () => { };
+  const unStakeAll = async () => {};
 
   const stakedNfts = allNftList.filter((item) => item.staked);
   const walletNfts = allNftList.filter((item) => !item.staked);
@@ -110,16 +110,20 @@ const StakeModal: FC = () => {
           </div>
           <div className="">
             <div
-              className="-ml-6 relative w-[calc(100%+47px)] lg:w-[1006px] h-[248px] max-md:h-[132px]"
-            // style={{
-            //   width: 1006,
-            //   height: 132,
-            // }}
+              className={`-ml-6 relative w-[calc(100%+47px)] lg:w-[1006px] ${
+                title ? "max-md:h-[80px]" : "h-[248px] max-md:h-[132px]"
+              }`}
+              // style={{
+              //   width: 1006,
+              //   height: 132,
+              // }}
             >
               {/* eslint-disable-next-line */}
               <img
                 src={"/img/banner.png"}
-                className="w-full md:aspect-auto max-md:h-40 absolute left-0 top-0"
+                className={`w-full md:aspect-auto ${
+                  title ? "max-md:h-20" : "max-md:h-40"
+                } absolute left-0 top-0`}
                 alt=""
               />
               <div className="w-4 h-4 overflow-hidden absolute left-0 -top-4">
@@ -135,20 +139,22 @@ const StakeModal: FC = () => {
                   stakedNumber={stakedNfts.length}
                   walletNumber={walletNfts.length}
                 />
-                <div className="fixed bottom-0 h-[88px] w-full md:hidden flex justify-center items-center backdrop-blur-sm bg-[#342B2590] left-0 z-[100]">
-                  <Button
-                    onClick={stakeAll}
-                    disabled={selected.length === 0}
-                    style={{
-                      width: "calc(100vw - 40px)",
-                      marginLeft: "8px",
-                      marginRight: "8px",
-                    }}
-                  >
-                    Stake({selected.length})
-                  </Button>
-                </div>
-                <div className="flex gap-8">
+                {selectAble && (
+                  <div className="fixed bottom-0 h-[88px] w-full md:hidden flex justify-center items-center backdrop-blur-sm bg-[#342B2590] left-0 z-[100]">
+                    <Button
+                      onClick={stakeAll}
+                      disabled={selected.length === 0}
+                      style={{
+                        width: "calc(100vw - 40px)",
+                        marginLeft: "8px",
+                        marginRight: "8px",
+                      }}
+                    >
+                      Stake({selected.length})
+                    </Button>
+                  </div>
+                )}
+                <div className="flex max-md:mr-5 md:gap-8">
                   {selectAble &&
                     (isMobile ? (
                       <>
@@ -173,7 +179,7 @@ const StakeModal: FC = () => {
                       </>
                     ) : (
                       <p
-                        className={`text-sm font-medium text-white`}
+                        className={`text-sm font-medium text-white cursor-pointer`}
                         onClick={() => {
                           cancelSelect();
                         }}
@@ -195,7 +201,7 @@ const StakeModal: FC = () => {
                       </Button>
                     ) : (
                       <p
-                        className={`text-sm font-medium text-white`}
+                        className={`text-sm font-medium text-white cursor-pointer`}
                         // style={{
                         //   color: isWalletSelected ? "#ffffff" : "#29A3A9"
                         // }}
@@ -221,7 +227,7 @@ const StakeModal: FC = () => {
                       </Button>
                     ) : (
                       <p
-                        className={`text-sm font-medium text-white`}
+                        className={`text-sm font-medium text-white hover:text-[#29A3A9]`}
                         // style={{
                         //   color: isWalletSelected ? "#ffffff" : "#29A3A9"
                         // }}
@@ -249,8 +255,7 @@ const StakeModal: FC = () => {
                     {walletNfts.map((nft, index: number) => (
                       <StakeCard
                         key={index}
-                        image={"/img/avatar.png"}
-                        // image={nft.image}
+                        image={nft.image}
                         title={nft.name}
                         mint={nft.mint}
                         staked={nft.staked}
@@ -270,27 +275,29 @@ const StakeModal: FC = () => {
                       <div className="bg-[#2D2620] md:h-[220px] h-auto max-md:aspect-[264/328]"></div>
                       <div className="bg-[#2D2620] md:h-[220px] h-auto max-md:aspect-[264/328] md:block hidden"></div>
                     </div>
-                    <p className="z-10">You have no NFT,</p>
-                    <div className="whitespace-nowrap z-10">
-                      buy one from{" "}
-                      <span className="underline">
-                        <Link href="#" passHref>
-                          Magic Eden
-                        </Link>
-                      </span>{" "}
-                      now
+                    <div className="absolute top-10 max-md:top-1/2 max-md:-translate-y-[220%] left-1/2 -translate-x-1/2">
+                      <p className="z-10">You have no NFT,</p>
+                      <div className="whitespace-nowrap z-10">
+                        buy one from{" "}
+                        <span className="underline">
+                          <Link href="#" passHref>
+                            Magic Eden
+                          </Link>
+                        </span>{" "}
+                        now
+                      </div>
                     </div>
                   </div>
                 )}
               </div>
-              <div className="max-md:block hidden md:px-12 px-5 md:pt-8 pt-6 pb-12 md:h-[374px] h-[calc(100vh-320px)] overflow-y-scroll overflow-x-hidden">
+              <div className="max-md:flex hidden md:px-12 px-5 pt-8 md:pb-12 pb-6 md:h-[374px] h-[calc(100%-175px)] overflow-y-scroll overflow-x-hidden">
                 {walletNfts.length !== 0 ? (
                   <div className="grid md:grid-cols-5 grid-cols-2 gap-x-5 gap-y-4 mt-4 pb-10 min-h-[224px]">
+                    {console.log("walletNfts", walletNfts)}
                     {walletNfts.map((nft, index: number) => (
                       <StakeCard
                         key={index}
-                        image={"/img/avatar.png"}
-                        // image={nft.image}
+                        image={nft.image}
                         title={nft.name}
                         mint={nft.mint}
                         staked={nft.staked}
@@ -310,15 +317,17 @@ const StakeModal: FC = () => {
                       <div className="bg-[#2D2620] md:h-[220px] h-auto max-md:aspect-[264/328]"></div>
                       <div className="bg-[#2D2620] md:h-[220px] h-auto max-md:aspect-[264/328] md:block hidden"></div>
                     </div>
-                    <p className="z-10">You have no NFT,</p>
-                    <div className="whitespace-nowrap z-10">
-                      buy one from{" "}
-                      <span className="underline">
-                        <Link href="#" passHref>
-                          Magic Eden
-                        </Link>
-                      </span>{" "}
-                      now
+                    <div className="absolute top-10 max-md:top-1/2 max-md:-translate-y-[220%] left-1/2 -translate-x-1/2">
+                      <p className="z-10">You have no NFT,</p>
+                      <div className="whitespace-nowrap z-10">
+                        buy one from{" "}
+                        <span className="underline">
+                          <Link href="#" passHref>
+                            Magic Eden
+                          </Link>
+                        </span>{" "}
+                        now
+                      </div>
                     </div>
                   </div>
                 )}
@@ -332,8 +341,7 @@ const StakeModal: FC = () => {
                   {stakedNfts.map((nft, index: number) => (
                     <StakeCard
                       key={index}
-                      image={"/img/avatar.png"}
-                      // image={nft.image}
+                      image={nft.image}
                       title={nft.name}
                       mint={nft.mint}
                       staked={nft.staked}
@@ -353,15 +361,17 @@ const StakeModal: FC = () => {
                     <div className="bg-[#2D2620] md:h-[220px] h-auto max-md:aspect-[264/328]"></div>
                     <div className="bg-[#2D2620] md:h-[220px] h-auto max-md:aspect-[264/328] md:block hidden"></div>
                   </div>
-                  <p className="z-10">You have no NFT,</p>
-                  <div className="whitespace-nowrap z-10">
-                    buy one from{" "}
-                    <span className="underline">
-                      <Link href="#" passHref>
-                        Magic Eden
-                      </Link>
-                    </span>{" "}
-                    now
+                  <div className="absolute top-10 max-md:top-1/2 max-md:-translate-y-[220%] left-1/2 -translate-x-1/2">
+                    <p className="z-10">You have no NFT,</p>
+                    <div className="whitespace-nowrap z-10">
+                      buy one from{" "}
+                      <span className="underline">
+                        <Link href="#" passHref>
+                          Magic Eden
+                        </Link>
+                      </span>{" "}
+                      now
+                    </div>
                   </div>
                 </div>
               )}

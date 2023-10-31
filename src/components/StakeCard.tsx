@@ -132,11 +132,27 @@ const StakeCard: FC<ItemProps> = ({
             <p className="text-[#AFABA8] text-[11px] font-normal flex items-center pb-2">
               Rarity multiplier: 1x
             </p>
+            <div className="flex justify-center w-full">
+              {!staked && !selectAble ? (
+                <div
+                  className="stake_button cursor-pointer"
+                  onClick={() => {
+                    console.log("Stake");
+                  }}
+                >
+                  <h1 className="absolute font-medium text-xs leading-[18px] text-white top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+                    Stake
+                  </h1>
+                </div>
+              ) : (
+                ""
+              )}
+            </div>
           </div>
         </div>
       )}
 
-      {isShowOrigin && (
+      {isShowOrigin && selectAble && (
         <div className="fixed left-0 top-0 w-screen h-screen backdrop-blur-[10px] z-50 bg-[#000000CC]">
           <img
             src={image}

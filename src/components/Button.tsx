@@ -17,7 +17,7 @@ const Button: FC<ButtonProps> = ({
 }) => {
   return (
     <button
-      className="h-10 relative min-w-[128px] group outline-none disabled:opacity-[0.35] disabled:pointer-events-none"
+      className="h-10 relative min-w-[128px] group outline-none disabled:opacity-[0.35] disabled:pointer-events-none cursor-pointer"
       style={style}
       disabled={disabled}
       onClick={onClick}

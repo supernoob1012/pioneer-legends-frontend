@@ -40,20 +40,22 @@ const NftCard: FC<ItemProps> = ({ title, image, mint, staked }) => {
           {names.name}{" "}
           <span className="text-[12px] font-normal ml-1">#{names.id}</span>
         </p>
-        <button className="uppercase text-primary-100 text-[10px] font-medium bg-secondary-200 py-0.5 px-[7px] relative">
-          staked
-          <span className="absolute right-[0.5px] top-[0.5px]">
-            <BtnCorner color="#FFD774" />
-          </span>
-          <span
-            className="absolute -left-[0.5px] -bottom-[0.5px]"
-            style={{
-              transform: "rotateZ(180deg)",
-            }}
-          >
-            <BtnCorner color="#FFD774" />
-          </span>
-        </button>
+        {staked && (
+          <button className="uppercase text-primary-100 text-[10px] font-medium bg-secondary-200 py-0.5 px-[7px] relative">
+            staked
+            <span className="absolute right-[0.5px] top-[0.5px]">
+              <BtnCorner color="#FFD774" />
+            </span>
+            <span
+              className="absolute -left-[0.5px] -bottom-[0.5px]"
+              style={{
+                transform: "rotateZ(180deg)",
+              }}
+            >
+              <BtnCorner color="#FFD774" />
+            </span>
+          </button>
+        )}
       </div>
       {isShowOrigin && (
         <div className="fixed left-0 top-0 w-screen h-screen backdrop-blur-[10px] z-50 bg-[#000000CC]">
