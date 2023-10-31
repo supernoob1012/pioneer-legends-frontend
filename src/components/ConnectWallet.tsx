@@ -48,7 +48,7 @@ const ConnectWallet = () => {
           <>
             {publicKey ? (
               <Button variant="primary" onClick={handleSign}>
-                Sign user
+                Connect wallet
               </Button>
             ) : (
               <Button variant="primary">Connect wallet</Button>
@@ -69,9 +69,9 @@ const ConnectWallet = () => {
             <button
               className="p-3 text-[16px] font-medium text-white w-full text-left hover:bg-[#e1e4cd1a] active:bg-[#1e191566]"
               onClick={() => handleConnect("Phantom")}
-              // onClick={() => {
-              //   setModalVisible(true);
-              // }}
+            // onClick={() => {
+            //   setModalVisible(true);
+            // }}
             >
               <div className="flex items-center gap-2">
                 <PhantomIcon /> Phantom
