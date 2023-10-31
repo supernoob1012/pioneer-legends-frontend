@@ -23,7 +23,6 @@ const Map = () => {
   const content = useRef<HTMLDivElement>(null);
   const video = useRef<HTMLVideoElement>(null);
   const { setIsStakeModal } = useContext<any>(ModalContext);
-  const [zoom, setZoom] = useState(1);
   const [viewWidth, setViewWidth] = useState(0);
   const [viewHeight, setViewHeight] = useState(0);
   const [scale, setScale] = useState(1);
@@ -34,6 +33,7 @@ const Map = () => {
   const handleOpenSpaceship = () => {
     setIsStakeModal(true);
   };
+
   useEffect(() => {
     if (viewport.current) {
       const sb = new ScrollBooster({
@@ -85,6 +85,7 @@ const Map = () => {
       window.removeEventListener("wheel", handleWheel);
     };
   }, []);
+
   useEffect(() => {
     const handleKeyDown = (event: any) => {
       if (event.ctrlKey && (event.key === "-" || event.key === "=")) {
@@ -168,9 +169,6 @@ const Map = () => {
                 <video
                   ref={video}
                   className="w-full h-full z-20 object-cover object-left-top"
-                  style={{
-                    transform: `scale(${zoom})`,
-                  }}
                   autoPlay={true}
                   playsInline
                   loop
