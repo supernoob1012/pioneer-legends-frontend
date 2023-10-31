@@ -108,7 +108,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
     });
 
     const nfts = new Array(nftList.length); // Initialize with a reasonable capacity
-
+    console.log("nfts----->", nfts);
     await Promise.all(
       nftList.map(async (item, index) => {
         if (
@@ -118,7 +118,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
           const data = await getNftDetail(item.data.uri);
           if (data) {
             const stakedNft = stakedData.find(
-              nft =>
+              (nft) =>
                 nft.mint === item.mint &&
                 nft.user === wallet.publicKey?.toBase58()
             );

@@ -345,15 +345,15 @@ const Map = () => {
                 </div>
               </div>
 
-              <div className=" absolute top-0 h-full w-full flex justify-center">
-                {isTech && (
+              {isTech && (
+                <div className=" absolute top-0 h-full w-full flex justify-center">
                   <UserTech
                     setIsTech={setIsTech}
                     width={width}
                     height={viewHeight}
                   />
-                )}
-              </div>
+                </div>
+              )}
             </div>
           </div>
         </div>

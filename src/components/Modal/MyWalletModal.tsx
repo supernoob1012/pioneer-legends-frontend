@@ -140,7 +140,7 @@ const MyWalletModal: FC = () => {
                   </Button>
                 </div>
               </div>
-              <div className="md:hidden block md:px-12 px-5 md:pt-8 pt-[180px] md:pb-12 pb-6 h-[calc(100vh-320px)] md:mx-0 mx-5">
+              <div className="md:hidden block md:px-12 px-5 md:pt-8 pt-16 md:pb-12 pb-6 h-[calc(100vh-320px)] md:mx-0 mx-5">
                 <p className="text-[14px] text-[white] font-medium flex gap-1">
                   {allNftList.length !== 0 && <p>My NFT</p>}
                   {allNftList.length !== 0 && <>({allNftList.length})</>}{" "}
@@ -153,6 +153,7 @@ const MyWalletModal: FC = () => {
                         image={nft.image}
                         title={nft.name}
                         mint={nft.mint}
+                        staked={false}
                       />
                     ))}
                   </div>
