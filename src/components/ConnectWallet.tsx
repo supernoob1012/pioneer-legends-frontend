@@ -97,21 +97,7 @@ const ConnectWallet = () => {
             )}
           </>
         ) : (
-          <>
-            {connecting ? (
-              <Skeleton
-                baseColor="#828282"
-                highlightColor="#999999"
-                style={{
-                  width: 136,
-                  height: 40,
-                  borderRadius: 6,
-                }}
-              />
-            ) : (
-              <Button variant="primary">Connect wallet</Button>
-            )}
-          </>
+          <Button variant="primary">Connect wallet</Button>
         )}
       </div>
       <div className="min-w-[238px] py-3 px-4 absolute right-auto left-0 lg:left-auto lg:right-0 top-[40px] connect-drop">
