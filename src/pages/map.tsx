@@ -34,8 +34,15 @@ const Map = () => {
     setIsStakeModal(true);
   };
 
+  useEffect(() => {}, [viewport]);
+
   useEffect(() => {
     if (viewport.current) {
+      console.log(
+        viewport.current.clientWidth,
+        viewport.current.offsetWidth,
+        viewport.current.scrollWidth
+      );
       const sb = new ScrollBooster({
         viewport: viewport.current,
         content: content.current!,
@@ -45,14 +52,19 @@ const Map = () => {
 
         bounce: false, // Adds a bounce effect when content edge is reached
       });
-      const offsetX =
-        content.current!.scrollWidth - viewport.current!.offsetWidth;
-      const offsetY =
-        video.current!.scrollHeight - viewport.current!.offsetHeight!;
-      sb.setPosition({
-        x: offsetX / 2,
-        y: offsetY / 2,
-      });
+      // const offsetX =
+      //   content.current!.scrollWidth - viewport.current!.offsetWidth;
+      // const offsetY =
+      //   video.current!.scrollHeight - viewport.current!.offsetHeight!;
+      // sb.setPosition({
+      //   x: 500,
+      //   y: ,
+      //   // y: offsetY / 2,
+      // });
+      // // sb.setPosition({
+      // //   x: offsetX / 2,
+      // //   y: offsetY / 2,
+      // // });
     }
   }, [viewport]);
 
@@ -154,7 +166,7 @@ const Map = () => {
               </div>
             </Link>
             <div
-              className="relative"
+              className="relative object-center"
               ref={content}
               style={{
                 width: viewWidth,
@@ -165,7 +177,7 @@ const Map = () => {
             >
               <video
                 ref={video}
-                className="w-full h-full z-20 object-cover object-left-top"
+                className="w-full h-full z-20 object-cover object-center"
                 autoPlay={true}
                 playsInline
                 loop
@@ -348,12 +360,12 @@ const Map = () => {
                 </div>
               </div>
 
-              <div className="flex justify-center">
+              <div className=" absolute top-0 h-full">
                 {isTech && (
                   <UserTech
                     setIsTech={setIsTech}
                     width={width}
-                    height={height}
+                    height={viewHeight}
                   />
                 )}
               </div>
