@@ -29,27 +29,31 @@ const ConnectWallet = () => {
   useEffect(() => {
     const getnon = async () => {
       if (!signMessage) return;
-      const nonce = await getNonce(publicKey?.toBase58()!);
-      if (nonce && connected) {
-        const message = new TextEncoder().encode(
-          `Authorize your wallet. nonce: ${nonce}`
-        );
-        const sig = await signMessage(message);
-
-        if (sig) {
-          const ret = await authorizeUser(
-            publicKey?.toBase58()!,
-            bs58.encode(new Uint8Array(sig as unknown as ArrayBuffer)),
-            nonce as string
+      try {
+        const nonce = await getNonce(publicKey?.toBase58()!);
+        if (nonce && connected) {
+          const message = new TextEncoder().encode(
+            `Authorize your wallet. nonce: ${nonce}`
           );
+          const sig = await signMessage(message);
 
-          if (ret) {
-            router.push("/map");
-            setIsAuthrized(true);
-          } else {
-            router.push("/");
+          if (sig) {
+            const ret = await authorizeUser(
+              publicKey?.toBase58()!,
+              bs58.encode(new Uint8Array(sig as unknown as ArrayBuffer)),
+              nonce as string
+            );
+
+            if (ret) {
+              router.push("/map");
+              setIsAuthrized(true);
+            } else {
+              router.push("/");
+            }
           }
         }
+      } catch (error) {
+        console.log("sign error", error);
       }
     };
 
