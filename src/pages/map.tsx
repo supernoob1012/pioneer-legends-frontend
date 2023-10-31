@@ -356,7 +356,7 @@ const Map = () => {
         </main>
         <Loading />
         <div className="flex justify-center">
-          {isTech && <UserTech setIsTech={setIsTech} />}
+          {isTech && <UserTech setIsTech={setIsTech} width={width} height={height} />}
         </div>
       </div>
     </>
