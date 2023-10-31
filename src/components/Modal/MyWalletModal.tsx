@@ -117,9 +117,10 @@ const MyWalletModal: FC = () => {
                     >
                       <Image
                         src={"/img/default-avatar.svg"}
-                        width={100}
-                        height={100}
+                        width={98}
+                        height={98}
                         alt="profile icon"
+                        className="rounded-full"
                       />
                     </div>
                     <div className="">

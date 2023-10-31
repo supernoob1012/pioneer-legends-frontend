@@ -22,7 +22,7 @@ const Map = () => {
   const viewport = useRef<HTMLDivElement>(null);
   const content = useRef<HTMLDivElement>(null);
   const video = useRef<HTMLVideoElement>(null);
-  const { setIsStakeModal } = useContext<any>(ModalContext);
+  const { setIsStakeModal, setTitle } = useContext<any>(ModalContext);
   const [viewWidth, setViewWidth] = useState(0);
   const [viewHeight, setViewHeight] = useState(0);
   const [scale, setScale] = useState(1);
@@ -30,8 +30,9 @@ const Map = () => {
 
   const wallet = useWallet();
 
-  const handleOpenSpaceship = () => {
+  const handleOpenSpaceship = (title: string) => {
     setIsStakeModal(true);
+    setTitle(title);
   };
 
   useEffect(() => {}, [viewport]);
@@ -202,7 +203,7 @@ const Map = () => {
                   opacity: 1,
                 }}
                 className="cursor-pointer group"
-                onClick={handleOpenSpaceship}
+                onClick={() => handleOpenSpaceship("airship")}
               >
                 <img
                   src="/img/build-hover.png"
@@ -256,7 +257,7 @@ const Map = () => {
                   transformOrigin: "0% 0%",
                   transform: `scale(${scale}%)`,
                 }}
-                onClick={handleOpenSpaceship}
+                onClick={() => handleOpenSpaceship("townhall")}
                 className="cursor-pointer group"
               >
                 <img
@@ -311,7 +312,7 @@ const Map = () => {
                   transformOrigin: "0% 0%",
                   transform: `scale(${scale}%)`,
                 }}
-                onClick={handleOpenSpaceship}
+                onClick={() => handleOpenSpaceship("mining")}
                 className="cursor-pointer group"
               >
                 <img
