@@ -14,8 +14,8 @@ import Link from "next/link";
 import useWindowSize from "../utils/useWindowSize";
 import Loading from "../components/Loading";
 import ScrollBooster from "scrollbooster";
-import { UserTech } from "../components/UserTech";
 import Head from "next/head";
+import { UserTech } from "../components/UserTech";
 
 const Map = () => {
   const { width, height } = useWindowSize();
@@ -356,7 +356,7 @@ const Map = () => {
         </main>
         <Loading />
         <div className="flex justify-center">
-          {isTech && <UserTech setIsTech={setIsTech} />}
+          {isTech && <UserTech setIsTech={setIsTech} width={width} height={height} />}
         </div>
       </div>
     </>

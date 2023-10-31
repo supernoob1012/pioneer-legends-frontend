@@ -2,17 +2,21 @@ import Image from "next/image";
 
 export const UserTech = ({
   setIsTech,
+  width,
+  height
 }: {
   setIsTech: (data: boolean) => void;
+  width: number;
+  height: number;
 }) => {
   return (
     <div className="absolute bottom-10">
-      <div className="w-[199px] h-[118px] bg-[linear-gradient(180deg,rgba(15,9,2,0.7)_0%,rgba(38,33,30,0.7)_102.54%)] [clip-path:polygon(7px_0px,100%_0,100%_100%,0_100%,0_7px)] backdrop-blur-[4.5px] flex flex-col gap-4 items-center justify-center">
+      <div className="w-[199px] h-[118px] bg-[linear-gradient(180deg,rgba(15,9,2,0.7)_0%,rgba(38,33,30,0.7)_102.54%)] [clip-path:polygon(7px_0px,100%_0,100%_100%,0_100%,0_7px)] backdrop-blur-[4.5px] flex flex-col gap-4 items-center pt-5">
         <div className="hand_anim">
           <Image src="/img/hand.svg" width={60} height={52} alt="Mouse hand" />
         </div>
         <h1 className="font-medium text-[12px] leading-[18px] text-center text-white">
-          Drag map to see more
+          Drag map to see more{width}---{height}
         </h1>
       </div>
       <div
