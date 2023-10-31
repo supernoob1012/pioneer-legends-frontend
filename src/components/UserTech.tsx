@@ -2,8 +2,12 @@ import Image from "next/image";
 
 export const UserTech = ({
   setIsTech,
+  width,
+  height
 }: {
   setIsTech: (data: boolean) => void;
+  width: number;
+  height: number;
 }) => {
   return (
     <div className="absolute bottom-10">
@@ -12,7 +16,7 @@ export const UserTech = ({
           <Image src="/img/hand.svg" width={60} height={52} alt="Mouse hand" />
         </div>
         <h1 className="font-medium text-[12px] leading-[18px] text-center text-white">
-          Drag map to see more
+          Drag map to see more{width}---{height}
         </h1>
       </div>
       <div
