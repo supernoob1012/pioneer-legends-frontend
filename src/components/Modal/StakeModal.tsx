@@ -9,10 +9,13 @@ import StakeCard from "../StakeCard";
 import StakeTab from "../StakeTab";
 import ModalEdges from "./ModalCorner";
 import CloseButton from "./CloseButton";
+import { stakeNFT } from "../../solana/util";
 import useWindowSize from "../../utils/useWindowSize";
 import { CrossIcon } from "../SvgIcons";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { stake, unStake } from "../../utils/api";
+
 const StakeModal: FC = () => {
   const { isStakeModal, setIsStakeModal } = useContext<any>(ModalContext);
   const [tab, setTab] = useState<"staked" | "wallet">("wallet");
@@ -29,9 +32,25 @@ const StakeModal: FC = () => {
     );
 
   const allNftList = useData ? useData.allNftList : [];
+  const [loading, setLoading] = useState(false);
+  const { getNfts } = useContext<UserContextProps>(UserContext);
 
-  const stakeAll = async () => {};
-  const unStakeAll = async () => {};
+  const handleNftStake = async (mint: string, setLoading: Function) => {
+    if (!mint) return;
+    try {
+      const tx = await stakeNFT(wallet, mint, setLoading);
+      if (!tx || !wallet.publicKey) return;
+      await stake(tx, wallet.publicKey?.toBase58(), setLoading, getNfts);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  const stakeAll = async () => {
+    for (let i = 0; i < selected.length; i++) {
+      await stakeNFT(wallet, selected[i], setLoading);
+    }
+  };
+  const unStakeAll = async () => { };
 
   const stakedNfts = allNftList.filter((item) => item.staked);
   const walletNfts = allNftList.filter((item) => !item.staked);
@@ -92,10 +111,10 @@ const StakeModal: FC = () => {
           <div className="">
             <div
               className="-ml-6 relative w-[calc(100%+47px)] lg:w-[1006px] h-[248px] max-md:h-[132px]"
-              // style={{
-              //   width: 1006,
-              //   height: 132,
-              // }}
+            // style={{
+            //   width: 1006,
+            //   height: 132,
+            // }}
             >
               {/* eslint-disable-next-line */}
               <img
