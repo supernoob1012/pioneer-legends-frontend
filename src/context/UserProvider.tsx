@@ -7,12 +7,14 @@ import React, {
 } from "react";
 import { NftItem, User } from "../utils/type";
 import { useWallet } from "@solana/wallet-adapter-react";
-import { getNft } from "../utils/api";
+import { authorizeUser, getNft, getNonce } from "../utils/api";
 import { getParsedNftAccountsByOwner } from "@nfteyez/sol-rayz";
 import { solConnection } from "../solana/util";
 import { BACKEND_URL, CREATOR_ADDRESS } from "../config";
 import { getNftDetail } from "../utils/util";
 import axios from "axios";
+import bs58 from "bs58";
+import { useRouter } from "next/router";
 
 export interface UserContextProps {
   allNftList: NftItem[];
@@ -23,6 +25,10 @@ export interface UserContextProps {
   userData: User;
   setUserData: Function;
   getUserData: Function;
+  isAuthrized: boolean;
+  setIsAuthrized: Function;
+  sign: Function;
+  isSignning: boolean;
 }
 
 const defaultContext: UserContextProps = {
@@ -38,6 +44,10 @@ const defaultContext: UserContextProps = {
   },
   setUserData: () => {},
   getUserData: () => {},
+  isAuthrized: false,
+  setIsAuthrized: () => {},
+  sign: () => {},
+  isSignning: false,
 };
 
 export const UserContext = createContext<UserContextProps>(defaultContext);
@@ -47,16 +57,43 @@ export const useUserData = (): {
   getUserData: UserContextProps["getUserData"];
   isDataLoading: boolean;
   setIsDataLoading: Function;
+  isAuthrized: boolean;
+  setIsAuthrized: Function;
+  sign: Function;
+  isSignning: boolean;
 } => {
-  const { userData, getUserData, isDataLoading, setIsDataLoading } =
-    useContext(UserContext);
-  return { userData, getUserData, isDataLoading, setIsDataLoading };
+  const {
+    userData,
+    getUserData,
+    isDataLoading,
+    setIsDataLoading,
+    isAuthrized,
+    setIsAuthrized,
+    sign,
+    isSignning,
+  } = useContext(UserContext);
+  return {
+    userData,
+    getUserData,
+    isDataLoading,
+    setIsDataLoading,
+    isAuthrized,
+    setIsAuthrized,
+    sign,
+    isSignning,
+  };
 };
 
 export const UserProvider = ({ children }: { children: ReactNode }) => {
   const [isDataLoading, setIsDataLoading] = useState(false);
   const [allNftList, setAllNftList] = useState<NftItem[]>([]);
   const [userData, setUserData] = useState<User>(defaultContext.userData);
+  const [isAuthrized, setIsAuthrized] = useState<boolean>(false);
+  const [isSignning, setIsSignning] = useState(false);
+
+  const router = useRouter();
+
+  const { signMessage, publicKey, connected } = useWallet();
 
   const wallet = useWallet();
 
@@ -100,7 +137,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
       })
     );
     setAllNftList(nfts.filter(Boolean));
-    
+
     if (once) {
       setIsDataLoading(false);
     }
@@ -133,10 +170,45 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
     setIsDataLoading(false);
   };
 
+  const sign = async () => {
+    if (!signMessage) return;
+    setIsSignning(true);
+    try {
+      const nonce = await getNonce(publicKey?.toBase58()!);
+      if (nonce && connected) {
+        const message = new TextEncoder().encode(
+          `Authorize your wallet. nonce: ${nonce}`
+        );
+        const sig = await signMessage(message);
+
+        if (sig) {
+          const ret = await authorizeUser(
+            publicKey?.toBase58()!,
+            bs58.encode(new Uint8Array(sig as unknown as ArrayBuffer)),
+            nonce as string
+          );
+
+          if (ret) {
+            router.push("/map");
+            setIsAuthrized(true);
+          } else {
+            router.push("/");
+          }
+        }
+      }
+    } catch (error) {
+      console.log("sign error", error);
+    } finally {
+      setIsSignning(false);
+    }
+  };
+
   useEffect(() => {
-    getUserData();
-    getNfts();
-  }, [wallet.publicKey, wallet.connected]);
+    if (isAuthrized) {
+      getUserData();
+      getNfts();
+    }
+  }, [wallet.publicKey, wallet.connected, isAuthrized]);
 
   return (
     <UserContext.Provider
@@ -149,6 +221,10 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
         setUserData,
         userData,
         getUserData,
+        isAuthrized,
+        setIsAuthrized,
+        sign,
+        isSignning,
       }}
     >
       {children}
