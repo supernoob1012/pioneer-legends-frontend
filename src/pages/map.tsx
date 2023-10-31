@@ -1,16 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
-import React, {
-  useCallback,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import {
   MiningIcon,
-  MinusIcon,
-  PlusIcon,
   SolanaIcon,
   SpaceshipIcon,
   TownhallIcon,
@@ -18,30 +10,40 @@ import {
 import { useWallet } from "@solana/wallet-adapter-react";
 import TopProfile from "../components/TopProfile";
 import { ModalContext } from "../context/ModalProvider";
-import TitleBox from "../components/TitleBox";
 import Link from "next/link";
 import useWindowSize from "../utils/useWindowSize";
 import Loading from "../components/Loading";
 import ScrollBooster from "scrollbooster";
+import Head from "next/head";
+import { UserTech } from "../components/UserTech";
 
 const Map = () => {
   const { width, height } = useWindowSize();
   const viewport = useRef<HTMLDivElement>(null);
   const content = useRef<HTMLDivElement>(null);
   const video = useRef<HTMLVideoElement>(null);
-  const { setIsStakeModal } = useContext<any>(ModalContext);
-  const [zoom, setZoom] = useState(1);
+  const { setIsStakeModal, setTitle } = useContext<any>(ModalContext);
   const [viewWidth, setViewWidth] = useState(0);
   const [viewHeight, setViewHeight] = useState(0);
-  const [scale, setScale] = useState(1)
+  const [scale, setScale] = useState(1);
+  const [isTech, setIsTech] = useState<boolean>(false);
 
   const wallet = useWallet();
 
-  const handleOpenSpaceship = () => {
+  const handleOpenSpaceship = (title: string) => {
     setIsStakeModal(true);
+    setTitle(title);
   };
+
+  useEffect(() => {}, [viewport]);
+
   useEffect(() => {
     if (viewport.current) {
+      console.log(
+        viewport.current.clientWidth,
+        viewport.current.offsetWidth,
+        viewport.current.scrollWidth
+      );
       const sb = new ScrollBooster({
         viewport: viewport.current,
         content: content.current!,
@@ -51,33 +53,38 @@ const Map = () => {
 
         bounce: false, // Adds a bounce effect when content edge is reached
       });
-      const offsetX =
-        content.current!.scrollWidth - viewport.current!.offsetWidth;
-      const offsetY =
-        video.current!.scrollHeight - viewport.current!.offsetHeight!;
-      sb.setPosition({
-        x: offsetX / 2,
-        y: offsetY / 2,
-      });
+      // const offsetX =
+      //   content.current!.scrollWidth - viewport.current!.offsetWidth;
+      // const offsetY =
+      //   video.current!.scrollHeight - viewport.current!.offsetHeight!;
+      // sb.setPosition({
+      //   x: 500,
+      //   y: ,
+      //   // y: offsetY / 2,
+      // });
+      // // sb.setPosition({
+      // //   x: offsetX / 2,
+      // //   y: offsetY / 2,
+      // // });
     }
   }, [viewport]);
 
   useEffect(() => {
     if (width * 9 === height * 16) {
       setViewHeight(height);
-      setViewWidth(width)
+      setViewWidth(width);
     } else if (width * 9 > height * 16) {
-      setViewHeight(width * 9 / 16);
-      setViewWidth(width)
+      setViewHeight((width * 9) / 16);
+      setViewWidth(width);
     } else {
       setViewHeight(height);
-      setViewWidth(height * 16 / 9)
+      setViewWidth((height * 16) / 9);
     }
-  }, [width, height])
+  }, [width, height]);
 
   useEffect(() => {
-    setScale(viewHeight / 9)
-  }, [viewHeight])
+    setScale(viewHeight / 9);
+  }, [viewHeight]);
   useEffect(() => {
     const handleWheel = (event: any) => {
       if (event.ctrlKey) {
@@ -85,27 +92,48 @@ const Map = () => {
       }
     };
 
-    window.addEventListener('wheel', handleWheel, { passive: false });
+    window.addEventListener("wheel", handleWheel, { passive: false });
 
     return () => {
-      window.removeEventListener('wheel', handleWheel);
+      window.removeEventListener("wheel", handleWheel);
     };
   }, []);
+
   useEffect(() => {
     const handleKeyDown = (event: any) => {
-      if (event.ctrlKey && (event.key === '-' || event.key === '=')) {
+      if (event.ctrlKey && (event.key === "-" || event.key === "=")) {
         event.preventDefault();
       }
     };
 
-    window.addEventListener('keydown', handleKeyDown, { passive: false });
+    window.addEventListener("keydown", handleKeyDown, { passive: false });
 
     return () => {
-      window.removeEventListener('keydown', handleKeyDown);
+      window.removeEventListener("keydown", handleKeyDown);
     };
   }, []);
+
+  useEffect(() => {
+    const setTechAnim = () => {
+      if (width <= 480) {
+        setIsTech(true);
+      } else {
+        setIsTech(false);
+      }
+    };
+
+    const tiemr = setTimeout(() => {
+      setTechAnim();
+    }, 3000);
+
+    return () => clearTimeout(tiemr);
+  }, [width]);
+
   return (
     <>
+      <Head>
+        <title>Map | Pioneer Legends</title>
+      </Head>
       <main>
         <div className="relative w-screen h-screen overflow-hidden">
           {/* <div className="h-1/5 bg-gradient-to-b from-black/70 fixed top-0 left-0 right-0 w-full z-[21] pointer-events-none" />
@@ -139,7 +167,7 @@ const Map = () => {
               </div>
             </Link>
             <div
-              className="relative"
+              className="relative object-center"
               ref={content}
               style={{
                 width: viewWidth,
@@ -150,10 +178,7 @@ const Map = () => {
             >
               <video
                 ref={video}
-                className="w-full h-full z-20 object-cover object-left-top"
-                style={{
-                  transform: `scale(${zoom})`
-                }}
+                className="w-full h-full z-20 object-cover object-center"
                 autoPlay={true}
                 playsInline
                 loop
@@ -170,15 +195,15 @@ const Map = () => {
               </video>
               <div
                 style={{
-                  position: 'absolute',
-                  top: `${9 * viewHeight / 100}px`,
-                  left: `${12.8 * viewWidth / 100}px`,
-                  transformOrigin: '0% 0%',
+                  position: "absolute",
+                  top: `${(9 * viewHeight) / 100}px`,
+                  left: `${(12.8 * viewWidth) / 100}px`,
+                  transformOrigin: "0% 0%",
                   transform: `scale(${scale}%)`,
-                  opacity: 1
+                  opacity: 1,
                 }}
                 className="cursor-pointer group"
-                onClick={handleOpenSpaceship}
+                onClick={() => handleOpenSpaceship("airship")}
               >
                 <img
                   src="/img/build-hover.png"
@@ -200,7 +225,7 @@ const Map = () => {
                       bottom: 74,
                       left: "50%",
                       marginLeft: -8,
-                      transform: "translateX(-50%) rotate(180deg)"
+                      transform: "translateX(-50%) rotate(180deg)",
                     }}
                   >
                     <div className="bg-[#38291E] w-4 h-4 rotate-45 absolute left-0 -top-[11px] opacity-70" />
@@ -226,13 +251,13 @@ const Map = () => {
               </div>
               <div
                 style={{
-                  position: 'absolute',
-                  top: `${38.5 * viewHeight / 100}px`,
-                  left: `${40.5 * viewWidth / 100}px`,
-                  transformOrigin: '0% 0%',
-                  transform: `scale(${scale}%)`
+                  position: "absolute",
+                  top: `${(38.5 * viewHeight) / 100}px`,
+                  left: `${(40.5 * viewWidth) / 100}px`,
+                  transformOrigin: "0% 0%",
+                  transform: `scale(${scale}%)`,
                 }}
-                onClick={handleOpenSpaceship}
+                onClick={() => handleOpenSpaceship("townhall")}
                 className="cursor-pointer group"
               >
                 <img
@@ -255,7 +280,7 @@ const Map = () => {
                       bottom: -10,
                       left: "53%",
                       marginLeft: -8,
-                      transform: "translateX(-50%) rotate(0deg)"
+                      transform: "translateX(-50%) rotate(0deg)",
                     }}
                   >
                     <div className="bg-[#38291E] w-4 h-4 rotate-45 absolute left-0 -top-[11px] opacity-70" />
@@ -281,15 +306,14 @@ const Map = () => {
               </div>
               <div
                 style={{
-                  position: 'absolute',
-                  top: `${37 * viewHeight / 100}px`,
-                  left: `${60.5 * viewWidth / 100}px`,
-                  transformOrigin: '0% 0%',
-                  transform: `scale(${scale}%)`
+                  position: "absolute",
+                  top: `${(37 * viewHeight) / 100}px`,
+                  left: `${(60.5 * viewWidth) / 100}px`,
+                  transformOrigin: "0% 0%",
+                  transform: `scale(${scale}%)`,
                 }}
-                onClick={handleOpenSpaceship}
+                onClick={() => handleOpenSpaceship("mining")}
                 className="cursor-pointer group"
-
               >
                 <img
                   src="/img/build-hover1.png"
@@ -311,7 +335,7 @@ const Map = () => {
                       bottom: -10,
                       left: "53%",
                       marginLeft: -8,
-                      transform: "translateX(-50%) rotate(0deg)"
+                      transform: "translateX(-50%) rotate(0deg)",
                     }}
                   >
                     <div className="bg-[#38291E] w-4 h-4 rotate-45 absolute left-0 -top-[11px] opacity-70" />
@@ -336,14 +360,23 @@ const Map = () => {
                   </div>
                 </div>
               </div>
+
+              <div className=" absolute top-0 h-full">
+                {isTech && (
+                  <UserTech
+                    setIsTech={setIsTech}
+                    width={width}
+                    height={viewHeight}
+                  />
+                )}
+              </div>
             </div>
           </div>
         </div>
       </main>
       <Loading />
-
     </>
-  )
+  );
 };
 
 export default Map;

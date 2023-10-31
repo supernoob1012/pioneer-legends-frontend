@@ -17,7 +17,8 @@ import "react-toastify/dist/ReactToastify.css";
 import { stake, unStake } from "../../utils/api";
 
 const StakeModal: FC = () => {
-  const { isStakeModal, setIsStakeModal } = useContext<any>(ModalContext);
+  const { isStakeModal, setIsStakeModal, title } =
+    useContext<any>(ModalContext);
   const [tab, setTab] = useState<"staked" | "wallet">("wallet");
   const [selected, setSelected] = useState<string[]>([]);
   const [selectAble, setSelectAble] = useState(false);
@@ -81,14 +82,13 @@ const StakeModal: FC = () => {
       <div className="md:w-[974px] md:h-auto h-screen w-full bg-gradient-to-b from-[#0F0902] to-[#26211E] rounded-none md:rounded-2xl relative p-2">
         {isMobile && <ModalEdges />}
         <div className="bg-gradient-to-b from-[#1F1B18] to-[#393028] md:h-auto h-full">
-          <div className="px-6 py-7 flex justify-between items-center">
+          <div className="px-6 py-10 flex justify-between items-center">
             <p className="text-[24px] font-secondary text-primary-100 leading-[1.33] uppercase">
-              spaceship
+              {title}
             </p>
-
             {isMobile ? (
               <CloseButton
-                className="absolute right-5 top-[34px]"
+                className="absolute right-5 top-[34px] z-50"
                 onClose={closeModal}
               />
             ) : (
@@ -119,7 +119,7 @@ const StakeModal: FC = () => {
               {/* eslint-disable-next-line */}
               <img
                 src={"/img/banner.png"}
-                className="w-full h-full absolute left-0 top-0"
+                className="w-full md:aspect-auto max-md:h-40 absolute left-0 top-0"
                 alt=""
               />
               <div className="w-4 h-4 overflow-hidden absolute left-0 -top-4">

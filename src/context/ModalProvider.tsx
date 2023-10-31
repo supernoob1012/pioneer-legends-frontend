@@ -14,6 +14,8 @@ interface ModalContextProps {
   setIsMyWalletModal: Function;
   isStakeModal: boolean;
   setIsStakeModal: Function;
+  title: string;
+  setTitle: Function;
 }
 
 // Create the Modal context
@@ -27,6 +29,7 @@ export const ModalProvider = ({ children }: { children: ReactNode }) => {
   const [isAboutModal, setIsAboutModal] = useState(false);
   const [isMyWalletModal, setIsMyWalletModal] = useState(false);
   const [isStakeModal, setIsStakeModal] = useState(false);
+  const [title, setTitle] = useState<string>("");
   return (
     <ModalContext.Provider
       value={{
@@ -42,6 +45,8 @@ export const ModalProvider = ({ children }: { children: ReactNode }) => {
         setIsMyWalletModal,
         isStakeModal,
         setIsStakeModal,
+        title,
+        setTitle,
       }}
     >
       {children}

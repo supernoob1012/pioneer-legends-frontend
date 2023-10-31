@@ -1,12 +1,11 @@
-/* eslint-disable @next/next/no-img-element */
-import { FC, useState, useContext, useEffect } from "react";
+import { FC, useState, useContext } from "react";
 import { getShortAddress } from "../utils/util";
 import { HamburgerIcon } from "./SvgIcons";
-import Image from "next/image";
 import { ModalContext } from "../context/ModalProvider";
 import ClickAwayComponent from "./ClickAwayComponent";
 import { useUserData } from "../context/UserProvider";
 import Skeleton from "react-loading-skeleton";
+import Image from "next/image";
 
 interface Props {
   pfp?: string;
@@ -19,10 +18,6 @@ const TopProfile: FC<Props> = ({ address }) => {
   const {
     isDisconnectWalletModal,
     setIsDisconnectWalletModal,
-    isShareModal,
-    setIsShareModal,
-    isAboutModal,
-    setIsAboutModal,
     isMyWalletModal,
     setIsMyWalletModal,
   } = useContext<any>(ModalContext);
@@ -31,14 +26,6 @@ const TopProfile: FC<Props> = ({ address }) => {
 
   const handleDisconnectWalletModal = () => {
     setIsDisconnectWalletModal(!isDisconnectWalletModal);
-  };
-
-  const handleShareModal = () => {
-    setIsShareModal(!isShareModal);
-  };
-
-  const handleAboutModal = () => {
-    setIsAboutModal(!isAboutModal);
   };
 
   const hanleMyWalletModal = () => {
@@ -100,13 +87,15 @@ const TopProfile: FC<Props> = ({ address }) => {
             <>
               <div className="w-12 h-12 rounded-full z-20 relative ml-4 lg:ml-6 overflow-hidden bg-[radial-gradient(115.57%_115.57%_at_-3.5%_-16%,#3F434B_0%,#2D2721_100%)] after:absolute after:top-0 after:left-0 after:right-0 after:bottom-0 after:rounded-full hover:after:bg-[rgba(225,228,205,0.30)] flex items-center justify-center">
                 <div className="w-10 h-10 overflow-hidden rounded-full">
-                  <img
+                  <Image
                     src={
                       userData.image !== ""
                         ? userData.image
                         : "/img/default-avatar.svg"
                     }
-                    className=" object-none"
+                    width={40}
+                    height={40}
+                    className="object-content"
                     alt="user avartar"
                   />
                 </div>

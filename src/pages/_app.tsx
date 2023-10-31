@@ -1,4 +1,5 @@
 import { AppProps } from "next/app";
+import { useEffect } from "react";
 import "../styles/globals.scss";
 import { WalletModalProvider } from "@solana/wallet-adapter-react-ui";
 import { ToastContainer } from "react-toastify";
@@ -12,9 +13,28 @@ import AboutModal from "../components/Modal/AboutModal";
 import MyWalletModal from "../components/Modal/MyWalletModal";
 import { UserProvider } from "../context/UserProvider";
 import StakeModal from "../components/Modal/StakeModal";
+import TagManager from "react-gtm-module";
 import "react-loading-skeleton/dist/skeleton.css";
 
+const tagManagerArgs = {
+  gtmId: "G-7PRF0Q1K9J",
+  dataLayer: {
+    userId: "001",
+    userProject: "project",
+  },
+};
+
+function initializeGTM() {
+  if (typeof window !== "undefined") {
+    console.log("Initialize GTM");
+    TagManager.initialize(tagManagerArgs);
+  }
+}
+
 export default function App({ Component, pageProps }: AppProps) {
+  useEffect(() => {
+    initializeGTM();
+  }, []);
   return (
     <WalletConnect>
       <WalletModalProvider>
