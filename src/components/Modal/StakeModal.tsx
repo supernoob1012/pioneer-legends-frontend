@@ -251,7 +251,7 @@ const StakeModal: FC = () => {
             <>
               <div className="md:block hidden md:px-12 px-5 md:pt-8 pt-6 pb-12 md:h-[374px] h-[calc(100vh-320px)] overflow-y-scroll overflow-x-hidden">
                 {walletNfts.length !== 0 ? (
-                  <div className="grid md:grid-cols-5 grid-cols-2 gap-x-5 gap-y-4 mt-4 pb-10 min-h-[224px]">
+                  <div className="grid md:grid-cols-5 grid-cols-2 gap-x-5 gap-y-4 mt-4 pb-10 min-h-[224px] max-h-[224px]">
                     {walletNfts.map((nft, index: number) => (
                       <StakeCard
                         key={index}
@@ -292,8 +292,7 @@ const StakeModal: FC = () => {
               </div>
               <div className="max-md:flex hidden md:px-12 px-5 pt-8 md:pb-12 pb-6 md:h-[374px] h-[calc(100%-175px)] overflow-y-scroll overflow-x-hidden">
                 {walletNfts.length !== 0 ? (
-                  <div className="grid md:grid-cols-5 grid-cols-2 gap-x-5 gap-y-4 mt-4 pb-10 min-h-[224px]">
-                    {console.log("walletNfts", walletNfts)}
+                  <div className="grid md:grid-cols-5 grid-cols-2 gap-x-5 gap-y-4 mt-4 pb-10 min-h-[224px] max-h-[224px]">
                     {walletNfts.map((nft, index: number) => (
                       <StakeCard
                         key={index}
@@ -337,7 +336,7 @@ const StakeModal: FC = () => {
           {tab === "staked" && (
             <div className="md:px-12 px-5 pt-8 md:pb-12 flex pb-6 md:h-[374px] h-[calc(100%-175px)] overflow-auto">
               {stakedNfts.length !== 0 ? (
-                <div className="grid grid-cols-2 w-full md:grid-cols-5 gap-x-5 gap-y-4 pb-10 md:min-h-[224px] min-h-[calc(100%-175px)]">
+                <div className="grid grid-cols-2 w-full md:grid-cols-5 gap-x-5 gap-y-4 pb-10 md:min-h-[224px] md:max-h-[224px] min-h-[calc(100%-175px)]">
                   {stakedNfts.map((nft, index: number) => (
                     <StakeCard
                       key={index}
@@ -353,8 +352,8 @@ const StakeModal: FC = () => {
                   ))}
                 </div>
               ) : (
-                <div className="grid w-full place-content-center mx-auto min-h-[224px] pb-12 text-center text-[#E4DECD] font-medium relative">
-                  <div className="grid grid-cols-2 w-full md:grid-cols-5 gap-x-5 gap-y-4 pb-10 md:min-h-[224px] min-h-[calc(100%-35px)] absolute left-0 top-0 md:mt-10 mt-0">
+                <div className="grid w-full place-content-center mx-auto min-h-[224px] max-h-[224px] pb-12 text-center text-[#E4DECD] font-medium relative">
+                  <div className="grid grid-cols-2 w-full md:grid-cols-5 gap-x-5 gap-y-4 pb-10 md:min-h-[224px] md:max-h-[224px] min-h-[calc(100%-35px)] max-h-[calc(100%-35px)] absolute left-0 top-0 md:mt-10 mt-0">
                     <div className="bg-[#2D2620] md:h-[220px] h-auto max-md:aspect-[264/328]"></div>
                     <div className="bg-[#2D2620] md:h-[220px] h-auto max-md:aspect-[264/328]"></div>
                     <div className="bg-[#2D2620] md:h-[220px] h-auto max-md:aspect-[264/328]"></div>

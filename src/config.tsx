@@ -3,22 +3,21 @@ export const CREATOR_ADDRESS = "G2sc5mU3eLRkbRupnupzB3NTzZ85bnc9L1ReAre9dzFU";
 
 export const HOME_INTRO_CONTENT = [
   {
-    title: "Mining",
-    desciption:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Diam imperdiet sem id venenatis, massa ornare. Odio diam lectus laoreet semper tortor non. In risus, proin purus a sit. ",
-    media: "/images/home-1.png",
+    title: "Miner",
+    desciption: `The lifeblood of this ecosystem.\n\nThey earn their way directly through labor, receiving a cut of the resources they mine.`,
+    media: "/img/miner.jpg",
   },
   {
-    title: "Trading",
+    title: "Outlaw",
     desciption:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Diam imperdiet sem id venenatis, massa ornare. Odio diam lectus laoreet semper tortor non. In risus, proin purus a sit. ",
-    media: "/images/home-2.png",
+      "A necessary byproduct of evolution.\n\nThey earn their way through the decentralization of finance, stealing power from the Governors.",
+    media: "/img/outlaw.jpg",
   },
   {
-    title: "Defi",
+    title: "Governor",
     desciption:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Diam imperdiet sem id venenatis, massa ornare. Odio diam lectus laoreet semper tortor non. In risus, proin purus a sit. ",
-    media: "/images/home-3.png",
+      "The brains to the Miners' brawn.\n\nThey earn their way through taxes and royalties, this is the price for upholding the peace.",
+    media: "/img/governor.jpg",
   },
 ];
 

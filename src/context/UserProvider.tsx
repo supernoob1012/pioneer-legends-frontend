@@ -108,7 +108,6 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
     });
 
     const nfts = new Array(nftList.length); // Initialize with a reasonable capacity
-    console.log("nfts----->", nfts);
     await Promise.all(
       nftList.map(async (item, index) => {
         if (

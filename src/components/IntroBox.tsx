@@ -8,8 +8,16 @@ interface BoxProps {
 
 const IntroBox: FC<BoxProps> = ({ image, title, description }) => {
   return (
-    <div className="backdrop-blur-[10px]">
-      <div className="w-full lg:w-[974px] h-[288px] lg:h-[360px] bg-gradient-to-b from-[#0F0902] to-[#26211E]  rounded-2xl relative p-2">
+    <div className="flex justify-center max-lg:flex-col max-lg:items-center max-lg:gap-4">
+      <div className="flex flex-col gap-6 lg:hidden">
+        <h5 className="font-medium text-4xl text-[#FFD15F] text-center">
+          {title}
+        </h5>
+        <p className="font-medium text-xl text-white whitespace-break-spaces text-center">
+          {description}
+        </p>
+      </div>
+      <div className="max-w-[calc(100vw-32px)] w-[316px] lg:w-[974px] h-[316px] lg:h-[360px] bg-[linear-gradient(180deg,#1F1B18_0%,#393028_100%)] rounded-2xl relative p-2">
         <div className="absolute -right-1 -bottom-3">
           <Image
             src={"/img/Deco_rightbottom.png"}
@@ -34,19 +42,30 @@ const IntroBox: FC<BoxProps> = ({ image, title, description }) => {
         </div>
 
         <div className="items-center h-full hidden lg:flex">
-          <div className="h-full w-[360px] bg-[#54504C]"></div>
+          <Image
+            src={image}
+            width={344}
+            height={344}
+            alt=""
+            className="object-contain"
+          />
           <div className="h-full w-[calc(100%-360px)] text-[#fff] px-[60px] flex flex-col justify-center">
-            <h5 className="text-[24px]">{title}</h5>
-            <p className="text-[20px] mt-4">{description}</p>
+            <h5 className="font-medium text-4xl text-white">{title}</h5>
+            <p className="font-medium text-xl mt-9 text-[#E1E4CD] whitespace-break-spaces ">
+              {description}
+            </p>
           </div>
         </div>
+        <div className="items-center h-full flex lg:hidden">
+          <Image
+            src={image}
+            width={344}
+            height={344}
+            alt=""
+            className="object-contain"
+          />
+        </div>
       </div>
-      <h2 className="text-[24px] mt-[30px] font-normal text-center leading-[1.5] text-center">
-        {title}
-      </h2>
-      <p className="mt-4 text-[16px] lg:text-[20px] font-medium leading-[1.5] text-center lg:text-left text-center">
-        {description}
-      </p>
     </div>
   );
 };

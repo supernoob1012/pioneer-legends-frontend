@@ -6,6 +6,7 @@ import ClickAwayComponent from "./ClickAwayComponent";
 import { useUserData } from "../context/UserProvider";
 import Skeleton from "react-loading-skeleton";
 import Image from "next/image";
+import { BiLinkExternal } from "react-icons/bi";
 
 interface Props {
   pfp?: string;
@@ -125,7 +126,7 @@ const TopProfile: FC<Props> = ({ address }) => {
             }}
           ></div>
           <ul className="relative z-10" onClick={() => setOpened(false)}>
-            <li className="">
+            <li>
               <button
                 className="p-3 text-[16px] font-medium text-white w-full text-left hover:bg-[#e1e4cd1a] active:bg-[#1e191566]"
                 onClick={hanleMyWalletModal}
@@ -133,7 +134,16 @@ const TopProfile: FC<Props> = ({ address }) => {
                 My wallet
               </button>
             </li>
-            <li className="">
+            <li>
+              <a
+                href="https://www.pioneerlegends.com/"
+                className="p-3 text-[16px] font-medium text-white w-full text-left hover:bg-[#e1e4cd1a] active:bg-[#1e191566] flex gap-2 items-center"
+              >
+                Whitepaper
+                <BiLinkExternal />
+              </a>
+            </li>
+            <li>
               <button
                 className="p-3 text-[16px] font-medium text-white w-full text-left hover:bg-[#e1e4cd1a] active:bg-[#1e191566]"
                 onClick={handleDisconnectWalletModal}

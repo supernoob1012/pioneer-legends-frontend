@@ -19,7 +19,6 @@ const DisplayNamebox: FC<BoxProps> = ({
   const { userData } = useUserData();
   const { publicKey } = useWallet();
   const handleUsername = (value: string) => {
-    console.log("username", userData.username);
     setUsername(value);
     if (userData.username === value) {
       setIsChanged(false);
@@ -77,8 +76,9 @@ const DisplayNamebox: FC<BoxProps> = ({
             </>
           )}
           <button
-            className={`absolute top-[12px] right-[15px] w-4 h-4 z-[5] ${username === "" ? "hidden" : "block"
-              }`}
+            className={`absolute top-[12px] right-[15px] w-4 h-4 z-[5] ${
+              username === "" ? "hidden" : "block"
+            }`}
             onClick={() => {
               handleUsername("");
             }}
