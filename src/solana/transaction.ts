@@ -310,3 +310,89 @@ export const createUnlockPnftTx = async (
     return txData.serialize({ requireAllSignatures: false });
   }
 };
+export const createUnlockPnftMultiTx = async (
+  wallet: WalletContextState,
+  nftMints: string[],
+  program: anchor.Program,
+  connection: Connection,
+  getNfts: Function
+) => {
+  const userAddress = wallet.publicKey;
+  if (!userAddress) return;
+
+  const [globalPool, bump] = PublicKey.findProgramAddressSync(
+    [Buffer.from(GLOBAL_AUTHORITY_SEED)],
+    program.programId
+  );
+  console.log("globalPool: ", globalPool.toBase58());
+
+  const [userPool, _user_bump] = PublicKey.findProgramAddressSync(
+    [userAddress.toBuffer(), Buffer.from(USER_POOL_SEED)],
+    program.programId
+  );
+  console.log("userPool: ", userPool.toBase58());
+  const txs: Transaction[] = [];
+  for (let mint of nftMints) {
+
+    const nftEdition = await getMasterEdition(new PublicKey(mint));
+    console.log("nftEdition: ", nftEdition.toBase58());
+
+    let tokenAccount = await getAssociatedTokenAccount(userAddress, new PublicKey(mint));
+    console.log("tokenAccount: ", tokenAccount.toBase58());
+
+    const mintMetadata = await getMetadata(new PublicKey(mint));
+    console.log("mintMetadata: ", mintMetadata.toBase58());
+
+    const tokenMintRecord = findTokenRecordPda(new PublicKey(mint), tokenAccount);
+    console.log("tokenMintRecord: ", tokenMintRecord.toBase58());
+
+    const tx = new Transaction();
+
+    const txId = await program.methods
+      .unlockPnft()
+      .accounts({
+        admin: ADMIN_ADDRESS,
+        globalPool,
+        tokenAccount,
+        tokenMint: new PublicKey(mint),
+        tokenMintEdition: nftEdition,
+        tokenMintRecord,
+        mintMetadata,
+        authRules: MPL_DEFAULT_RULE_SET,
+        sysvarInstructions: SYSVAR_INSTRUCTIONS_PUBKEY,
+        signer: userAddress,
+        userPool,
+        tokenProgram: TOKEN_PROGRAM_ID,
+        tokenMetadataProgram: METAPLEX,
+        authRulesProgram: TOKEN_AUTH_RULES_ID,
+        systemProgram: SystemProgram.programId,
+      })
+      .transaction();
+
+    tx.add(txId);
+
+    tx.feePayer = userAddress;
+    tx.recentBlockhash = (await connection.getLatestBlockhash()).blockhash;
+    txs.push(tx);
+  }
+  let confirmed = 0;
+
+  if (wallet.signAllTransactions) {
+    const signedTxs = await wallet.signAllTransactions(txs);
+    await Promise.all(
+      signedTxs.map(async o => {
+        const encodedTx = Buffer.from(
+          o.serialize({ requireAllSignatures: false })
+        ).toString("base64");
+        const res = await axios.post(`${BACKEND_URL}/stake/unlock`, {
+          encodedTx: encodedTx,
+          user: wallet.publicKey?.toBase58(),
+        });
+
+        if (res.status == 200) confirmed += 1;
+      })
+    );
+    await getNfts();
+    toast.success(`Successfully unlocked ${confirmed} NFTs`);
+  }
+}

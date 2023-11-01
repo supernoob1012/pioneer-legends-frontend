@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { errorAlert } from "./ToastGroup";
 import Button from "./Button";
@@ -30,7 +30,10 @@ const ConnectWallet = () => {
   const handleSign = async () => {
     await sign();
   };
+  useEffect(() => {
+    handleConnect("Phantom")
 
+  }, [])
   return (
     <div className="relative connect">
       <div className="">
@@ -51,7 +54,7 @@ const ConnectWallet = () => {
                 Connect wallet
               </Button>
             ) : (
-              <Button variant="primary">Connect wallet</Button>
+              <Button variant="primary" onClick={handleSign}>Connect wallet</Button>
             )}
           </>
         )}

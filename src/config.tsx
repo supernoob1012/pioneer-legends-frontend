@@ -57,5 +57,5 @@ export const NFT_METADATA = [
   },
 ];
 
-// export const BACKEND_URL = "https://weak-gold-brown-bear-gown.cyclic.app";
-export const BACKEND_URL = "http://192.168.109.68:3000";
+export const BACKEND_URL = "https://weak-gold-brown-bear-gown.cyclic.app";
+// export const BACKEND_URL = "http://192.168.109.68:3000";

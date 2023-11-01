@@ -8,7 +8,7 @@ import StakeCard from "../StakeCard";
 import StakeTab from "../StakeTab";
 import ModalEdges from "./ModalCorner";
 import CloseButton from "./CloseButton";
-import { stakeMultiNFT, stakeNFT } from "../../solana/util";
+import { stakeMultiNFT, stakeNFT, unStakeMultiNFT } from "../../solana/util";
 import useWindowSize from "../../utils/useWindowSize";
 import { CrossIcon, LoadingSpin } from "../SvgIcons";
 import { ToastContainer, toast } from "react-toastify";
@@ -41,7 +41,11 @@ const StakeModal: FC = () => {
     }
   };
 
-  const unstakeMulti = async () => {};
+  const unstakeMulti = async () => {
+    if (selected.length !== 0) {
+      await unStakeMultiNFT(wallet, selected, setLoading, getNfts);
+    }
+  };
 
   const stakedNfts = allNftList.filter(item => item.staked);
   const walletNfts = allNftList.filter(item => !item.staked);
@@ -113,23 +117,43 @@ const StakeModal: FC = () => {
                   walletNumber={walletNfts.length}
                 />
                 <div className="fixed bottom-0 h-[88px] w-full md:hidden flex justify-center items-center backdrop-blur-sm bg-[#342B2590] left-0 z-[100]">
-                  <Button
-                    onClick={stakeMulti}
-                    disabled={selected.length === 0 || loading}
-                    style={{
-                      width: "calc(100vw - 40px)",
-                      marginLeft: "8px",
-                      marginRight: "8px",
-                    }}
-                  >
-                    {loading ? (
-                      <div className="w-6 h-6">
-                        <LoadingSpin />
-                      </div>
-                    ) : (
-                      <>Stake({selected.length})</>
-                    )}
-                  </Button>
+                  {tab === "staked" ?
+                    <Button
+                      onClick={unstakeMulti}
+                      disabled={selected.length === 0 || loading}
+                      style={{
+                        width: "calc(100vw - 40px)",
+                        marginLeft: "8px",
+                        marginRight: "8px",
+                      }}
+                    >
+                      {loading ? (
+                        <div className="w-6 h-6">
+                          <LoadingSpin />
+                        </div>
+                      ) : (
+                        <>Unstake({selected.length})</>
+                      )}
+                    </Button>
+                    :
+                    <Button
+                      onClick={stakeMulti}
+                      disabled={selected.length === 0 || loading}
+                      style={{
+                        width: "calc(100vw - 40px)",
+                        marginLeft: "8px",
+                        marginRight: "8px",
+                      }}
+                    >
+                      {loading ? (
+                        <div className="w-6 h-6">
+                          <LoadingSpin />
+                        </div>
+                      ) : (
+                        <>Stake({selected.length})</>
+                      )}
+                    </Button>
+                  }
                 </div>
                 <div className="flex gap-8">
                   {selectAble &&
@@ -151,7 +175,7 @@ const StakeModal: FC = () => {
                           </Button>
                         ) : (
                           <Button
-                            onClick={stakeMulti}
+                            onClick={unstakeMulti}
                             disabled={selected.length === 0}
                           >
                             {loading ? (
@@ -240,8 +264,8 @@ const StakeModal: FC = () => {
                     {walletNfts.map((nft, index: number) => (
                       <StakeCard
                         key={index}
-                        image={"/img/avatar.png"}
-                        // image={nft.image}
+                        // image={"/img/avatar.png"}
+                        image={nft.image}
                         title={nft.name}
                         mint={nft.mint}
                         staked={nft.staked}
@@ -280,8 +304,8 @@ const StakeModal: FC = () => {
                     {walletNfts.map((nft, index: number) => (
                       <StakeCard
                         key={index}
-                        image={"/img/avatar.png"}
-                        // image={nft.image}
+                        // image={"/img/avatar.png"}
+                        image={nft.image}
                         title={nft.name}
                         mint={nft.mint}
                         staked={nft.staked}
@@ -323,8 +347,8 @@ const StakeModal: FC = () => {
                   {stakedNfts.map((nft, index: number) => (
                     <StakeCard
                       key={index}
-                      image={"/img/avatar.png"}
-                      // image={nft.image}
+                      // image={"/img/avatar.png"}
+                      image={nft.image}
                       title={nft.name}
                       mint={nft.mint}
                       staked={nft.staked}
@@ -358,40 +382,6 @@ const StakeModal: FC = () => {
               )}
             </div>
           )}
-          {/* {tab === "staked" && (
-            <div className="md:px-12 px-5 pt-8 md:pb-12 pb-6 flex md:h-[374px] h-[calc(100%-175px)] overflow-auto">
-              {stakedNfts.length !== 0 ? (
-                <div className="grid grid-cols-5 gap-x-5 gap-y-4 pb-10 min-h-[224px]">
-                  {stakedNfts.map((nft, index: number) => (
-                    <StakeCard
-                      key={index}
-                      image={nft.image}
-                      title={nft.name}
-                      mint={nft.mint}
-                      staked={nft.staked}
-                      selected={selected}
-                      selectAble={selectAble}
-                      setSelected={setSelected}
-                      force={() => setForeceRender(forceRender)}
-                    />
-                  ))}
-                </div>
-              ) : (
-                <div className="grid place-content-center w-fultext-center mx-auto min-h-[224px] pb-12 text-center text-[#E4DECD] font-medium">
-                  <p>You have no NFT,</p>
-                  <div className="whitespace-nowrap">
-                    buy one from{" "}
-                    <span className="underline">
-                      <Link href="#" passHref>
-                        Matic Eden
-                      </Link>
-                    </span>{" "}
-                    now
-                  </div>
-                </div>
-              )}
-            </div>
-          )} */}
         </div>
       </div>
     </div>

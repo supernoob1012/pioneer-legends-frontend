@@ -13,6 +13,7 @@ import {
   createLockMultiPnftTx,
   createLockPnftTx,
   createUnlockPnftTx,
+  createUnlockPnftMultiTx
 } from "./transaction";
 
 export const METAPLEX = new PublicKey(
@@ -225,7 +226,23 @@ export const unStakeNFT = async (
   setLoading(false);
   return unStakeTransaction;
 };
-
+export const unStakeMultiNFT = async (
+  wallet: WalletContextState,
+  mints: string[],
+  setLoading: Function,
+  getNfts: Function
+) => {
+  if (!wallet.publicKey) return;
+  setLoading(true);
+  let cloneWindow: any = window;
+  let provider = new anchor.AnchorProvider(
+    solConnection,
+    cloneWindow["solana"],
+    anchor.AnchorProvider.defaultOptions()
+  );
+  const program = new anchor.Program(IDL as anchor.Idl, PROGRAM_ID, provider);
+  await createUnlockPnftMultiTx(wallet, mints, program, solConnection, getNfts);
+};
 export {
   getAssociatedTokenAccount,
   getATokenAccountsNeedCreate,
