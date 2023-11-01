@@ -1,13 +1,18 @@
 import Image from "next/image";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext, useRef } from "react";
+import { UserContext, UserContextProps } from "../context/UserProvider";
 import { EclipsSymbol } from "./SvgIcons";
+import useSound from "use-sound";
 
 const Loading = () => {
   const [mountingProgress, setMountingProgress] = useState(0);
+  const { isNetSpeed } = useContext<UserContextProps>(UserContext);
+  const audio = useRef<HTMLAudioElement>(null);
+
   useEffect(() => {
     // Simulate a loading process that increments the mounting progress.
     const loadingInterval = setInterval(() => {
-      setMountingProgress(prevProgress => {
+      setMountingProgress((prevProgress) => {
         if (prevProgress < 110) {
           return prevProgress + 10;
         } else {
@@ -16,16 +21,24 @@ const Loading = () => {
         }
       });
     }, 300);
-
     return () => {
       clearInterval(loadingInterval);
     };
   }, []);
-  if (mountingProgress === 110) {
+
+  useEffect(() => {
+    if (audio.current) {
+      audio.current.load();
+      audio.current.play();
+    }
+  }, [audio]);
+
+  if (mountingProgress === 110 || !isNetSpeed) {
     return <></>;
   } else {
     return (
       <div className="fixed left-0 top-0 w-screen h-screen z-[9999] bg-[#00000066] backdrop-blur-[20px] flex items-center justify-center">
+        <audio autoPlay src="/music/landing_bg_music.wav" ref={audio}></audio>
         <div className="">
           <div className="flex items-center flex-col justify-center">
             <div className="relative w-[213px] h-[43px] bg-[#1e191599] backdrop-blur-[2px]">

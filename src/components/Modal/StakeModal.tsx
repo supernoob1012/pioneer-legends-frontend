@@ -1,5 +1,7 @@
-import React, { FC, useContext, useEffect, useMemo, useState } from "react";
+/* eslint-disable @next/next/no-img-element */
 import { useWallet } from "@solana/wallet-adapter-react";
+import { useContext, useState, useEffect, useMemo } from "react";
+
 import { ModalContext } from "../../context/ModalProvider";
 import { UserContext, UserContextProps } from "../../context/UserProvider";
 import Button from "../Button";
@@ -14,26 +16,30 @@ import { CrossIcon, LoadingSpin } from "../SvgIcons";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { stake, unStake } from "../../utils/api";
+import { NftLoading } from "../Nftloading";
 
-const StakeModal: FC = () => {
+const StakeModal = () => {
   const { isStakeModal, setIsStakeModal, title } =
     useContext<any>(ModalContext);
   const [tab, setTab] = useState<"staked" | "wallet">("wallet");
   const [selected, setSelected] = useState<string[]>([]);
   const [selectAble, setSelectAble] = useState(false);
   const [forceRender, setForeceRender] = useState(false);
-  const { width, height } = useWindowSize();
+  const [loading, setLoading] = useState(false);
+
+  const { width } = useWindowSize();
   const isMobile = width > 768;
   const wallet = useWallet();
   const useData = useContext<UserContextProps>(UserContext);
+  const { getNfts } = useContext<UserContextProps>(UserContext);
+  const [isWalletSelected, setWalletSelected] = useState(false);
+
   const notify = () =>
     toast(
       "!\u00A0\u00A0\u00A0\u00A0\u00A0You have reached your selection limit."
     );
 
   const allNftList = useData ? useData.allNftList : [];
-  const [loading, setLoading] = useState(false);
-  const { getNfts } = useContext<UserContextProps>(UserContext);
 
   const stakeMulti = async () => {
     if (selected.length !== 0) {
@@ -47,19 +53,21 @@ const StakeModal: FC = () => {
     }
   };
 
-  const stakedNfts = allNftList.filter(item => item.staked);
-  const walletNfts = allNftList.filter(item => !item.staked);
-  const [isWalletSelected, setWalletSelected] = useState(false);
+  const stakedNfts = allNftList.filter((item) => item.staked);
+  const walletNfts = allNftList.filter((item) => !item.staked);
+
   const cancelSelect = () => {
     setSelected([]);
     setSelectAble(false);
   };
+
   useMemo(() => {
     console.log(stakedNfts.length);
     if (selected.length === 3) {
       notify();
     }
   }, [selected]);
+
   useEffect(() => {
     cancelSelect();
   }, [tab]);
@@ -73,320 +81,246 @@ const StakeModal: FC = () => {
     getNfts();
   }, [isStakeModal]);
 
-  if (!wallet.publicKey) return <></>;
+  if (!wallet.publicKey || !isStakeModal) return <></>;
 
-  return isStakeModal ? (
-    <div className="fixed left-0 top-0 w-screen h-screen z-[200] flex items-center justify-center backdrop-blur-[20px] bg-[#000000]/40">
-      <div className="md:w-[974px] md:h-auto h-screen w-full bg-gradient-to-b from-[#0F0902] to-[#26211E] rounded-none md:rounded-2xl relative p-2">
-        {isMobile && <ModalEdges />}
-        <div className="bg-gradient-to-b from-[#1F1B18] to-[#393028] md:h-auto h-full">
-          <div className="px-6 py-10 flex justify-between items-center">
-            <p className="text-[24px] font-secondary text-primary-100 leading-[1.33] uppercase">
-              {title}
-            </p>
-            {isMobile ? (
-              <CloseButton
-                className="absolute right-5 top-[34px] z-50"
-                onClose={closeModal}
-              />
-            ) : (
-              <button onClick={closeModal}>
-                <CrossIcon color="white" />
-              </button>
-            )}
-          </div>
-          <div className="">
-            <div className="-ml-6 relative w-[calc(100%+47px)] lg:w-[1006px] h-[248px] max-md:h-[132px]">
-              {/* eslint-disable-next-line */}
-              <img
-                src={"/img/banner.png"}
-                className="w-full md:aspect-auto max-md:h-40 absolute left-0 top-0"
-                alt=""
-              />
-              <div className="w-4 h-4 overflow-hidden absolute left-0 -top-4">
-                <div className="w-6 h-6 bg-[#161311] rotate-45 mt-1 ml-1" />
-              </div>
-              <div className="w-4 h-4 overflow-hidden absolute right-0 -top-4">
-                <div className="w-6 h-6 bg-[#161311] rotate-45 mt-1 -ml-3" />
-              </div>
-              <div className="flex items-center z-20 relative py-4 md:pl-12 md:pr-8 px-5 justify-between md:h-[120px] h-[88px]">
-                <StakeTab
-                  tab={tab}
-                  setTab={setTab}
-                  stakedNumber={stakedNfts.length}
-                  walletNumber={walletNfts.length}
-                />
-                <div className="fixed bottom-0 h-[88px] w-full md:hidden flex justify-center items-center backdrop-blur-sm bg-[#342B2590] left-0 z-[100]">
-                  {tab === "staked" ?
-                    <Button
-                      onClick={unstakeMulti}
-                      disabled={selected.length === 0 || loading}
-                      style={{
-                        width: "calc(100vw - 40px)",
-                        marginLeft: "8px",
-                        marginRight: "8px",
-                      }}
-                    >
-                      {loading ? (
-                        <div className="w-6 h-6">
-                          <LoadingSpin />
-                        </div>
-                      ) : (
-                        <>Unstake({selected.length})</>
-                      )}
-                    </Button>
-                    :
+  const BlankCards = () => {
+    return (
+      <>
+        <div className="w-[154px] h-[220px] shadow-[6px_6px_0_#1E1915] opacity-10">
+          <div className="blank_card"></div>
+        </div>
+        <div className="w-[154px] h-[220px] shadow-[6px_6px_0_#1E1915] opacity-10">
+          <div className="blank_card"></div>
+        </div>
+        <div className="w-[154px] h-[220px] shadow-[6px_6px_0_#1E1915] opacity-10">
+          <div className="blank_card"></div>
+        </div>
+        <div className="w-[154px] h-[220px] shadow-[6px_6px_0_#1E1915] opacity-10">
+          <div className="blank_card"></div>
+        </div>
+        <div className="w-[154px] h-[220px] shadow-[6px_6px_0_#1E1915] opacity-10">
+          <div className="blank_card"></div>
+        </div>
+        <h1 className="absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 font-medium text-center text-[#E4DECD]">
+          You have no NFT,
+          <br />
+          buy one from{" "}
+          <span className="underline cursor-pointer">
+            <a>Magic Eden</a>
+          </span>{" "}
+          now!
+        </h1>
+      </>
+    );
+  };
+
+  return (
+    <div className="fixed left-0 top-0 bottom-0 right-0 z-[200] flex items-center justify-center backdrop-blur-[20px] bg-[#000000]/40">
+      <div className="w-[974px] h-[590px] max-lg:w-[calc(100%-32px)] max-md:w-screen max-md:h-screen bg-[linear-gradient(180deg,#0F0902_0%,#26211E_100%)] relative after:absolute after:top-2 after:left-2 after:bottom-2 after:right-2 max-md:after:top-0 max-md:after:left-0 max-md:after:bottom-0 max-md:after:right-0 after:bg-[linear-gradient(180deg,#1F1B18_0%,#393028_100%)] after:shadow-[0_0_4px_0_rgba(0,0,0,0.80),1px_1px_2px_0_#37322F_inset]">
+        <img
+          src="/img/Deco_leftbottom.png"
+          alt="B_L"
+          className="absolute -bottom-1 -left-1 z-[2] max-md:hidden"
+        />
+        <img
+          src="/img/Deco_rightbottom.png"
+          alt="B_R"
+          className="absolute -bottom-1 -right-1 z-[2] max-md:hidden"
+        />
+        <img
+          src="/img/Deco_lefttop.png"
+          alt="T_L"
+          className="absolute -top-1 -left-1 z-[2] max-md:hidden"
+        />
+        <img
+          src="/img/Deco_righttop.png"
+          alt="T_R"
+          className="absolute -top-1 -right-1 z-[2] max-md:hidden"
+        />
+        <img
+          src="/img/banner.png"
+          alt="Banner"
+          className="absolute top-24 -left-4 max-lg:-left-[1%] z-[3] !max-w-[calc(100%+32px)] max-lg:!max-w-[102%] max-sm:h-[90px]"
+        />
+        <div className="w-4 h-4 border-t-[#0000] border-l-[#0000] border-[8px] max-lg:border-[0.5%] border-[#161311] absolute top-20 z-[2] -left-4 max-lg:hidden" />
+        <div className="w-4 h-4 border-t-[#0000] border-r-[#0000] border-[8px] max-lg:border-[0.5%] border-[#161311] absolute top-20 z-[2] -right-4 max-lg:hidden" />
+        <div className="px-6 py-10 flex justify-between items-center relative z-[2]">
+          <p className="text-[24px] font-secondary text-primary-100 leading-[1.33] uppercase">
+            {title}
+          </p>
+          {isMobile ? (
+            <CloseButton
+              className="absolute right-5 top-[34px] z-50"
+              onClose={closeModal}
+            />
+          ) : (
+            <button onClick={closeModal}>
+              <CrossIcon color="white" />
+            </button>
+          )}
+        </div>
+        <div className="flex items-center z-20 relative py-4 md:pl-12 md:pr-8 px-5 justify-between">
+          <StakeTab
+            tab={tab}
+            setTab={setTab}
+            stakedNumber={stakedNfts.length}
+            walletNumber={walletNfts.length}
+          />
+          {selectAble && (
+            <div className="fixed bottom-0 h-[88px] w-full md:hidden flex justify-center items-center backdrop-blur-sm bg-[#342B2590] left-0 z-[100]">
+              <Button
+                onClick={tab === "wallet" ? stakeMulti : unstakeMulti}
+                disabled={selected.length === 0}
+                style={{
+                  width: "calc(100vw - 40px)",
+                  marginLeft: "8px",
+                  marginRight: "8px",
+                }}
+              >
+                {tab === "wallet"
+                  ? "Stake(" + selected.length + ")"
+                  : "Unstake(" + selected.length + ")"}
+              </Button>
+            </div>
+          )}
+          <div className="flex max-md:mr-5 md:gap-8">
+            {selectAble &&
+              (isMobile ? (
+                <>
+                  <Button onClick={cancelSelect} variant="secondary">
+                    Cancel
+                  </Button>
+                  {tab === "wallet" ? (
                     <Button
                       onClick={stakeMulti}
-                      disabled={selected.length === 0 || loading}
-                      style={{
-                        width: "calc(100vw - 40px)",
-                        marginLeft: "8px",
-                        marginRight: "8px",
-                      }}
+                      disabled={selected.length === 0}
                     >
-                      {loading ? (
-                        <div className="w-6 h-6">
-                          <LoadingSpin />
-                        </div>
-                      ) : (
-                        <>Stake({selected.length})</>
-                      )}
+                      Stake({selected.length})
                     </Button>
-                  }
-                </div>
-                <div className="flex gap-8">
-                  {selectAble &&
-                    (isMobile ? (
-                      <>
-                        <Button onClick={cancelSelect} variant="secondary">
-                          Cancel
-                        </Button>
-                        {tab === "wallet" ? (
-                          <Button
-                            onClick={stakeMulti}
-                            disabled={selected.length === 0}
-                          >
-                            {loading ? (
-                              <LoadingSpin />
-                            ) : (
-                              <>Stake({selected.length})</>
-                            )}
-                          </Button>
-                        ) : (
-                          <Button
-                            onClick={unstakeMulti}
-                            disabled={selected.length === 0}
-                          >
-                            {loading ? (
-                              <LoadingSpin />
-                            ) : (
-                              <>Unstake({selected.length})</>
-                            )}
-                          </Button>
-                        )}
-                      </>
-                    ) : (
-                      <p
-                        className={`text-sm font-medium text-white`}
-                        onClick={() => {
-                          cancelSelect();
-                        }}
-                      >
-                        Cancel
-                      </p>
-                    ))}
-                  {tab === "wallet" &&
-                    walletNfts &&
-                    walletNfts.length !== 0 &&
-                    !selectAble &&
-                    (isMobile ? (
-                      <Button
-                        onClick={() => {
-                          setSelectAble(true);
-                        }}
-                      >
-                        Select
-                      </Button>
-                    ) : (
-                      <p
-                        className={`text-sm font-medium text-white`}
-                        // style={{
-                        //   color: isWalletSelected ? "#ffffff" : "#29A3A9"
-                        // }}
-                        onClick={() => {
-                          setWalletSelected(!isWalletSelected);
-                          setSelectAble(true);
-                        }}
-                      >
-                        Select
-                      </p>
-                    ))}
-                  {tab === "staked" &&
-                    stakedNfts &&
-                    stakedNfts.length !== 0 &&
-                    !selectAble &&
-                    (isMobile ? (
-                      <Button
-                        onClick={() => {
-                          setSelectAble(true);
-                        }}
-                      >
-                        Select
-                      </Button>
-                    ) : (
-                      <p
-                        className={`text-sm font-medium text-white`}
-                        // style={{
-                        //   color: isWalletSelected ? "#ffffff" : "#29A3A9"
-                        // }}
-                        onClick={() => {
-                          setWalletSelected(!isWalletSelected);
-                          setSelectAble(true);
-                        }}
-                      >
-                        Select
-                      </p>
-                    ))}
-                  {/* 
-                  {tab === "staked" && stakedNfts.length !== 0 && (
-                    <Button onClick={() => setSelectAble(true)}>Select</Button>
-                  )} */}
-                </div>
-              </div>
-            </div>
-          </div>
-          {tab === "wallet" && (
-            <>
-              <div className="md:block hidden md:px-12 px-5 md:pt-8 pt-6 pb-12 md:h-[374px] h-[calc(100vh-320px)] overflow-y-scroll overflow-x-hidden">
-                {walletNfts.length !== 0 ? (
-                  <div className="grid md:grid-cols-5 grid-cols-2 gap-x-5 gap-y-4 mt-4 pb-10 min-h-[224px]">
-                    {walletNfts.map((nft, index: number) => (
-                      <StakeCard
-                        key={index}
-                        // image={"/img/avatar.png"}
-                        image={nft.image}
-                        title={nft.name}
-                        mint={nft.mint}
-                        staked={nft.staked}
-                        selected={selected}
-                        selectAble={selectAble}
-                        setSelected={setSelected}
-                        force={() => setForeceRender(forceRender)}
-                      />
-                    ))}
-                  </div>
-                ) : (
-                  <div className="grid w-full place-content-center mx-auto min-h-[224px] pb-12 text-center text-[#E4DECD] font-medium relative">
-                    <div className="grid grid-cols-2 w-full md:grid-cols-5 gap-x-5 gap-y-4 pb-10 md:min-h-[224px] min-h-[calc(100%-35px)] absolute left-0 top-0 md:mt-10 mt-0">
-                      <div className="bg-[#2D2620] md:h-[220px] h-auto max-md:aspect-[264/328]"></div>
-                      <div className="bg-[#2D2620] md:h-[220px] h-auto max-md:aspect-[264/328]"></div>
-                      <div className="bg-[#2D2620] md:h-[220px] h-auto max-md:aspect-[264/328]"></div>
-                      <div className="bg-[#2D2620] md:h-[220px] h-auto max-md:aspect-[264/328]"></div>
-                      <div className="bg-[#2D2620] md:h-[220px] h-auto max-md:aspect-[264/328] md:block hidden"></div>
-                    </div>
-                    <p className="z-10">You have no NFT,</p>
-                    <div className="whitespace-nowrap z-10">
-                      buy one from{" "}
-                      <span className="underline">
-                        <Link href="#" passHref>
-                          Magic Eden
-                        </Link>
-                      </span>{" "}
-                      now
-                    </div>
-                  </div>
-                )}
-              </div>
-              <div className="max-md:block hidden md:px-12 px-5 md:pt-8 pt-6 pb-12 md:h-[374px] h-[calc(100vh-320px)] overflow-y-scroll overflow-x-hidden">
-                {walletNfts.length !== 0 ? (
-                  <div className="grid md:grid-cols-5 grid-cols-2 gap-x-5 gap-y-4 mt-4 pb-10 min-h-[224px]">
-                    {walletNfts.map((nft, index: number) => (
-                      <StakeCard
-                        key={index}
-                        // image={"/img/avatar.png"}
-                        image={nft.image}
-                        title={nft.name}
-                        mint={nft.mint}
-                        staked={nft.staked}
-                        selected={selected}
-                        selectAble={selectAble}
-                        setSelected={setSelected}
-                        force={() => setForeceRender(forceRender)}
-                      />
-                    ))}
-                  </div>
-                ) : (
-                  <div className="grid w-full place-content-center mx-auto min-h-[224px] pb-12 text-center text-[#E4DECD] font-medium relative">
-                    <div className="grid grid-cols-2 w-full md:grid-cols-5 gap-x-5 gap-y-4 pb-10 md:min-h-[224px] min-h-[calc(100%-35px)] absolute left-0 top-0 md:mt-10 mt-0">
-                      <div className="bg-[#2D2620] md:h-[220px] h-auto max-md:aspect-[264/328]"></div>
-                      <div className="bg-[#2D2620] md:h-[220px] h-auto max-md:aspect-[264/328]"></div>
-                      <div className="bg-[#2D2620] md:h-[220px] h-auto max-md:aspect-[264/328]"></div>
-                      <div className="bg-[#2D2620] md:h-[220px] h-auto max-md:aspect-[264/328]"></div>
-                      <div className="bg-[#2D2620] md:h-[220px] h-auto max-md:aspect-[264/328] md:block hidden"></div>
-                    </div>
-                    <p className="z-10">You have no NFT,</p>
-                    <div className="whitespace-nowrap z-10">
-                      buy one from{" "}
-                      <span className="underline">
-                        <Link href="#" passHref>
-                          Magic Eden
-                        </Link>
-                      </span>{" "}
-                      now
-                    </div>
-                  </div>
-                )}
-              </div>
-            </>
-          )}
-          {tab === "staked" && (
-            <div className="md:px-12 px-5 pt-8 md:pb-12 flex pb-6 md:h-[374px] h-[calc(100%-175px)] overflow-auto">
-              {stakedNfts.length !== 0 ? (
-                <div className="grid grid-cols-2 w-full md:grid-cols-5 gap-x-5 gap-y-4 pb-10 md:min-h-[224px] min-h-[calc(100%-175px)]">
-                  {stakedNfts.map((nft, index: number) => (
-                    <StakeCard
-                      key={index}
-                      // image={"/img/avatar.png"}
-                      image={nft.image}
-                      title={nft.name}
-                      mint={nft.mint}
-                      staked={nft.staked}
-                      selected={selected}
-                      selectAble={selectAble}
-                      setSelected={setSelected}
-                      force={() => setForeceRender(forceRender)}
-                    />
-                  ))}
-                </div>
+                  ) : (
+                    <Button
+                      onClick={unstakeMulti}
+                      disabled={selected.length === 0}
+                    >
+                      Unstake({selected.length})
+                    </Button>
+                  )}
+                </>
               ) : (
-                <div className="grid w-full place-content-center mx-auto min-h-[224px] pb-12 text-center text-[#E4DECD] font-medium relative">
-                  <div className="grid grid-cols-2 w-full md:grid-cols-5 gap-x-5 gap-y-4 pb-10 md:min-h-[224px] min-h-[calc(100%-35px)] absolute left-0 top-0 md:mt-10 mt-0">
-                    <div className="bg-[#2D2620] md:h-[220px] h-auto max-md:aspect-[264/328]"></div>
-                    <div className="bg-[#2D2620] md:h-[220px] h-auto max-md:aspect-[264/328]"></div>
-                    <div className="bg-[#2D2620] md:h-[220px] h-auto max-md:aspect-[264/328]"></div>
-                    <div className="bg-[#2D2620] md:h-[220px] h-auto max-md:aspect-[264/328]"></div>
-                    <div className="bg-[#2D2620] md:h-[220px] h-auto max-md:aspect-[264/328] md:block hidden"></div>
-                  </div>
-                  <p className="z-10">You have no NFT,</p>
-                  <div className="whitespace-nowrap z-10">
-                    buy one from{" "}
-                    <span className="underline">
-                      <Link href="#" passHref>
-                        Magic Eden
-                      </Link>
-                    </span>{" "}
-                    now
-                  </div>
-                </div>
+                <p
+                  className={`text-sm font-medium text-white cursor-pointer`}
+                  onClick={() => {
+                    cancelSelect();
+                  }}
+                >
+                  Cancel
+                </p>
+              ))}
+            {tab === "wallet" &&
+              walletNfts &&
+              walletNfts.length !== 0 &&
+              !selectAble &&
+              (isMobile ? (
+                <Button
+                  onClick={() => {
+                    setSelectAble(true);
+                  }}
+                >
+                  Select
+                </Button>
+              ) : (
+                <p
+                  className={`text-sm font-medium text-white cursor-pointer`}
+                  onClick={() => {
+                    setWalletSelected(!isWalletSelected);
+                    setSelectAble(true);
+                  }}
+                >
+                  Select
+                </p>
+              ))}
+            {tab === "staked" &&
+              stakedNfts &&
+              stakedNfts.length !== 0 &&
+              !selectAble &&
+              (isMobile ? (
+                <Button
+                  onClick={() => {
+                    setSelectAble(true);
+                  }}
+                >
+                  Select
+                </Button>
+              ) : (
+                <p
+                  className={`text-sm font-medium text-white hover:text-[#29A3A9]`}
+                  onClick={() => {
+                    setWalletSelected(!isWalletSelected);
+                    setSelectAble(true);
+                  }}
+                >
+                  Select
+                </p>
+              ))}
+          </div>
+        </div>
+        <div className="mt-20 ml-12 max-md:ml-4 pr-6 max-w-[calc(100%-96px)] max-md:max-w-[calc(100%-32px)] relative z-[2] h-[300px] max-md:h-[calc(100%-350px)] grid grid-cols-5 max-lg:grid-cols-4 max-md:grid-cols-2 gap-[26px] overflow-y-scroll overflow-x-hidden">
+          {!useData.isDataLoading ? (
+            <NftLoading />
+          ) : (
+            <>
+              {tab === "wallet" ? (
+                <>
+                  {walletNfts.length !== 0 ? (
+                    <>
+                      {walletNfts.map((nft, index) => (
+                        <StakeCard
+                          key={index}
+                          image={nft.image}
+                          title={nft.name}
+                          mint={nft.mint}
+                          staked={nft.staked}
+                          selected={selected}
+                          selectAble={selectAble}
+                          setSelected={setSelected}
+                          force={() => setForeceRender(forceRender)}
+                        />
+                      ))}
+                    </>
+                  ) : (
+                    BlankCards()
+                  )}
+                </>
+              ) : tab === "staked" ? (
+                <>
+                  {stakedNfts.length !== 0 ? (
+                    <>
+                      {stakedNfts.map((nft, index: number) => (
+                        <StakeCard
+                          key={index}
+                          image={nft.image}
+                          title={nft.name}
+                          mint={nft.mint}
+                          staked={nft.staked}
+                          selected={selected}
+                          selectAble={selectAble}
+                          setSelected={setSelected}
+                          force={() => setForeceRender(forceRender)}
+                        />
+                      ))}
+                    </>
+                  ) : (
+                    BlankCards()
+                  )}
+                </>
+              ) : (
+                BlankCards()
               )}
-            </div>
+            </>
           )}
         </div>
       </div>
     </div>
-  ) : (
-    <></>
   );
 };
 

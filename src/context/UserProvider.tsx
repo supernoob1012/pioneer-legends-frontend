@@ -29,6 +29,8 @@ export interface UserContextProps {
   setIsAuthrized: Function;
   sign: Function;
   isSignning: boolean;
+  isNetSpeed: string;
+  setIsNetSpeed: Function;
 }
 
 const defaultContext: UserContextProps = {
@@ -48,6 +50,8 @@ const defaultContext: UserContextProps = {
   setIsAuthrized: () => {},
   sign: () => {},
   isSignning: false,
+  isNetSpeed: "",
+  setIsNetSpeed: () => {},
 };
 
 export const UserContext = createContext<UserContextProps>(defaultContext);
@@ -90,6 +94,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
   const [userData, setUserData] = useState<User>(defaultContext.userData);
   const [isAuthrized, setIsAuthrized] = useState<boolean>(false);
   const [isSignning, setIsSignning] = useState(false);
+  const [isNetSpeed, setIsNetSpeed] = useState("");
 
   const router = useRouter();
 
@@ -99,7 +104,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
 
   const getNfts = async (once?: boolean) => {
     if (wallet.publicKey === null) return [];
-    setIsDataLoading(true);
+    setIsDataLoading(false);
     const stakedData = await getNft(wallet.publicKey.toBase58());
 
     const nftList = await getParsedNftAccountsByOwner({
@@ -108,7 +113,6 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
     });
 
     const nfts = new Array(nftList.length); // Initialize with a reasonable capacity
-
     await Promise.all(
       nftList.map(async (item, index) => {
         if (
@@ -118,7 +122,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
           const data = await getNftDetail(item.data.uri);
           if (data) {
             const stakedNft = stakedData.find(
-              nft =>
+              (nft) =>
                 nft.mint === item.mint &&
                 nft.user === wallet.publicKey?.toBase58()
             );
@@ -225,6 +229,8 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
         setIsAuthrized,
         sign,
         isSignning,
+        isNetSpeed,
+        setIsNetSpeed,
       }}
     >
       {children}
