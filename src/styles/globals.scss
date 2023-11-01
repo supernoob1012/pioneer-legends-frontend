@@ -4,7 +4,23 @@
 
 * {
   scroll-behavior: smooth;
-  cursor: url('/icons/cursor.png'), auto;
+  cursor: url('/icons/hover.png'), auto;
+
+}
+
+/* Hover state */
+*:hover {
+  cursor: url('/icons/hover.png'), auto;
+}
+
+/* Pressed state */
+*:active {
+  cursor: url('/icons/press.png'), auto;
+}
+
+/* Normal state */
+* {
+  cursor: url('/icons/normal.png'), auto;
 }
 
 .gradient-bg {
