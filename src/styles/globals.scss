@@ -300,3 +300,56 @@ main {
   clip-path: polygon(0 0, calc(100% - 6px) 0, 100% 6px, 100% 100%, 0 100%);
   backdrop-filter: blur(5px);
 }
+
+.blank_card {
+  width: 154px;
+  height: 220px;
+  background: black;
+  -webkit-clip-path: polygon(8px 0, 100% 0, 100% 100%, 0 100%, 0 8px);
+  clip-path: polygon(8px 0, 100% 0, 100% 100%, 0 100%, 0 8px);
+}
+
+.nft_card {
+  width: 160px;
+  -webkit-clip-path: polygon(8px 0, 100% 0, 100% 100%, 0 100%, 0 8px);
+  clip-path: polygon(8px 0, 100% 0, 100% 100%, 0 100%, 0 8px);
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+}
+
+.stake_title {
+  width: 52px;
+  height: 20px;
+  background-color: #865321;
+  position: relative;
+
+  &::before {
+    position: absolute;
+    content: "";
+    width: 4px;
+    height: 4px;
+    background-color: #FFD77400;
+    border-top: #FFD774;
+    border-right: #FFD774;
+    border-color: #FFD774;
+    border-width: 1px;
+    bottom: -1px;
+    left: -1px;
+  }
+
+  &::after {
+    position: absolute;
+    content: "";
+    width: 4px;
+    height: 4px;
+    background-color: #FFD77400;
+    border-bottom: #FFD774;
+    border-left: #FFD774;
+    border-color: #FFD774;
+    border-width: 1px;
+    top: -1px;
+    right: -1px;
+
+  }
+}
