@@ -67,114 +67,119 @@ const MyWalletModal: FC = () => {
               My Wallet
             </p>
             <CloseButton
-              className="absolute right-5 top-5 md:flex hidden z-10"
+              className="absolute right-5 top-[20px] md:flex hidden z-10"
               onClose={() => setIsMyWalletModal(false)}
             />
-            <div
-              className="absolute right-5 top-5 max-md:flex hidden z-10 cursor-pointer"
+            {/* <button
+              className="md:absolute md:-right-5 md:top-[34px] flex"
               onClick={() => setIsMyWalletModal(false)}
             >
-              <Image
-                src={"/img/white-close.svg"}
-                width={24}
-                height={24}
-                alt=""
-              />
-            </div>
+              {isMobile ? (
+                <Image
+                  src="/img/close-normal.png"
+                  width={40}
+                  height={40}
+                  alt=""
+                />
+              ) : (
+                <CrossIcon color="white" />
+              )}
+            </button> */}
           </div>
-          <div className="-ml-6 relative w-[calc(100%+47px)] lg:w-[1006px] h-[248px] md:h-[132px]">
-            <img
-              src={"/img/banner.png"}
-              className="w-full h-full absolute left-0 top-0 hidden md:block"
-              alt=""
-            />
-
-            <div className="w-4 h-4 overflow-hidden absolute left-0 -top-4">
-              <div className="w-6 h-6 bg-[#161311] rotate-45 mt-1 ml-1" />
-            </div>
-            <div className="w-4 h-4 overflow-hidden absolute right-0 -top-4">
-              <div className="w-6 h-6 bg-[#161311] rotate-45 mt-1 -ml-[15px]" />
-            </div>
-            <div className="flex flex-col overflow-y-scroll overflow-x-hidden relative">
+          <div className="">
+            <div className="-ml-6 relative w-[calc(100%+47px)] lg:w-[1006px] h-[248px] md:h-[132px]">
               <img
-                src={"/img/mobile/info-banner.png"}
-                className="w-full h-[248px] absolute left-0 top-0 block md:hidden "
+                src={"/img/banner.png"}
+                className="w-full h-full absolute left-0 top-0 hidden md:block"
                 alt=""
               />
-              <div className="flex items-start md:items-center z-20 relative pt-9 md:py-4 pl-11 pr-8 justify-between flex-col md:flex-row">
-                <div className="flex items-center gap-4">
-                  <div
-                    className="w-[100px] h-[100px] rounded-full border-[#2D2721] p-0.5 border-2 grid place-content-center overflow-hidden"
-                    style={{
-                      backgroundImage:
-                        "radial-gradient(115.57% 115.57% at -3.5% -16%, #3F434B 0%, #2D2721 100%)",
-                    }}
-                  >
-                    <Image
-                      src={"/img/default-avatar.svg"}
-                      width={98}
-                      height={98}
-                      alt="profile icon"
-                      className="rounded-full"
-                    />
-                  </div>
-                  <div className="">
-                    <p className="text-[#fff] font-medium text-[16px]">
-                      {wallet.publicKey.toBase58().slice(0, 5)}...
-                      {wallet.publicKey.toBase58().slice(-4)}
-                    </p>
-                    <div className="flex gap-2 items-center text-primary-200 font-medium text-[14px] mt-1">
-                      <SolanaIcon /> 5,154.23
-                    </div>
-                  </div>
-                </div>
-                <div className="flex gap-8 w-[calc(100%-10px)] md:w-auto ml-0 md:ml-0 justify-between mt-9">
-                  <Button variant="secondary" onClick={handleProfileModal}>
-                    Edit profile
-                  </Button>
-                  <Button
-                    variant="secondary"
-                    onClick={handleDisconnectWalletModal}
-                  >
-                    Disconnect
-                  </Button>
-                </div>
+
+              <div className="w-4 h-4 overflow-hidden absolute left-0 -top-4">
+                <div className="w-6 h-6 bg-[#161311] rotate-45 mt-1 ml-1" />
               </div>
-              <div className="md:hidden block md:px-12 px-5 md:pt-8 pt-16 md:pb-12 pb-6 h-[calc(100vh-320px)] md:mx-0 mx-5">
-                <p className="text-[14px] text-[white] font-medium flex gap-1">
-                  {allNftList.length !== 0 && <p>My NFT</p>}
-                  {allNftList.length !== 0 && <>({allNftList.length})</>}{" "}
-                </p>
-                {allNftList.length !== 0 ? (
-                  <div className="grid md:grid-cols-5 grid-cols-2 gap-x-5 gap-y-4 mt-4 pb-[40px] min-h-[224px]">
-                    {allNftList.map((nft, index: number) => (
-                      <NftCard
-                        key={index}
-                        image={nft.image}
-                        title={nft.name}
-                        mint={nft.mint}
-                        staked={false}
+              <div className="w-4 h-4 overflow-hidden absolute right-0 -top-4">
+                <div className="w-6 h-6 bg-[#161311] rotate-45 mt-1 -ml-[15px]" />
+              </div>
+              <div className="flex flex-col overflow-y-scroll overflow-x-hidden relative">
+                <img
+                  src={"/img/mobile/info-banner.png"}
+                  className="w-full h-[248px] absolute left-0 top-0 block md:hidden "
+                  alt=""
+                />
+                <div className="flex items-start md:items-center z-20 relative pt-9 md:py-4 pl-11 pr-8 justify-between flex-col md:flex-row">
+                  <div className="flex items-center gap-4">
+                    <div
+                      className="w-[100px] h-[100px] rounded-full border-[#2D2721] p-0.5 border-2 grid place-content-center overflow-hidden"
+                      style={{
+                        backgroundImage:
+                          "radial-gradient(115.57% 115.57% at -3.5% -16%, #3F434B 0%, #2D2721 100%)",
+                      }}
+                    >
+                      <Image
+                        src={"/img/default-avatar.svg"}
+                        width={98}
+                        height={98}
+                        alt="profile icon"
+                        className="rounded-full"
                       />
-                    ))}
-                  </div>
-                ) : (
-                  <div className="grid grid-cols-2 gap-6 justify-center items-center flex-col h-full w-full mx-auto text-center text-[#E4DECD] font-medium relative">
-                    <div className="bg-[#2D2620] h-[calc(100% - 200px)] aspect-[9/16]"></div>
-                    <div className="bg-[#2D2620] h-[calc(100% - 200px)] aspect-[9/16]"></div>
-                    <div className="flex flex-col absolute top-20 justify-center items-center w-full">
-                      <p>You have no NFT,</p>
-                      <div className="whitespace-nowrap">
-                        buy one from{" "}
-                        <span className="underline">
-                          <Link href="#" passHref>
-                            Magic Eden
-                          </Link>
-                        </span>{" "}
-                        now
+                    </div>
+                    <div className="">
+                      <p className="text-[#fff] font-medium text-[16px]">
+                        {wallet.publicKey.toBase58().slice(0, 5)}...
+                        {wallet.publicKey.toBase58().slice(-4)}
+                      </p>
+                      <div className="flex gap-2 items-center text-primary-200 font-medium text-[14px] mt-1">
+                        <SolanaIcon /> 5,154.23
                       </div>
                     </div>
                   </div>
-                )}
+                  <div className="flex gap-8 w-[calc(100%-10px)] md:w-auto ml-0 md:ml-0 justify-between mt-9">
+                    <Button variant="secondary" onClick={handleProfileModal}>
+                      Edit profile
+                    </Button>
+                    <Button
+                      variant="secondary"
+                      onClick={handleDisconnectWalletModal}
+                    >
+                      Disconnect
+                    </Button>
+                  </div>
+                </div>
+                <div className="md:hidden block md:px-12 px-5 md:pt-8 pt-[180px] md:pb-12 pb-6 h-[calc(100vh-320px)] md:mx-0 mx-5">
+                  <p className="text-[14px] text-[white] font-medium flex gap-1">
+                    {allNftList.length !== 0 && <p>My NFT</p>}
+                    {allNftList.length !== 0 && <>({allNftList.length})</>}{" "}
+                  </p>
+                  {allNftList.length !== 0 ? (
+                    <div className="grid md:grid-cols-5 grid-cols-2 gap-x-5 gap-y-4 mt-4 pb-[40px] min-h-[224px]">
+                      {allNftList.map((nft, index: number) => (
+                        <NftCard
+                          key={index}
+                          image={nft.image}
+                          title={nft.name}
+                          mint={nft.mint}
+                        />
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="grid grid-cols-2 gap-6 justify-center items-center flex-col h-full w-full mx-auto text-center text-[#E4DECD] font-medium relative">
+                      <div className="bg-[#2D2620] h-[calc(100% - 200px)] aspect-[9/16]"></div>
+                      <div className="bg-[#2D2620] h-[calc(100% - 200px)] aspect-[9/16]"></div>
+                      <div className="flex flex-col absolute top-20 justify-center items-center w-full">
+                        <p>You have no NFT,</p>
+                        <div className="whitespace-nowrap">
+                          buy one from{" "}
+                          <span className="underline">
+                            <Link href="#" passHref>
+                              Magic Eden
+                            </Link>
+                          </span>{" "}
+                          now
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
           </div>

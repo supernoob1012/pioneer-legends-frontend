@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { FC } from "react";
 
 interface IconProps {
@@ -626,36 +627,9 @@ export const CardCropMask: FC<{
 
 export const LoadingSpin = () => {
   return (
-    <svg
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <mask id="path-1-inside-1_336_13628" fill="white">
-        <path d="M24 12C24 18.6274 18.6274 24 12 24C5.37258 24 0 18.6274 0 12C0 5.37258 5.37258 0 12 0C18.6274 0 24 5.37258 24 12ZM4.03115 12C4.03115 16.4011 7.59893 19.9688 12 19.9688C16.4011 19.9688 19.9688 16.4011 19.9688 12C19.9688 7.59893 16.4011 4.03115 12 4.03115C7.59893 4.03115 4.03115 7.59893 4.03115 12Z" />
-      </mask>
-      <path
-        d="M24 12C24 18.6274 18.6274 24 12 24C5.37258 24 0 18.6274 0 12C0 5.37258 5.37258 0 12 0C18.6274 0 24 5.37258 24 12ZM4.03115 12C4.03115 16.4011 7.59893 19.9688 12 19.9688C16.4011 19.9688 19.9688 16.4011 19.9688 12C19.9688 7.59893 16.4011 4.03115 12 4.03115C7.59893 4.03115 4.03115 7.59893 4.03115 12Z"
-        stroke="url(#paint0_angular_336_13628)"
-        strokeWidth="8"
-        mask="url(#path-1-inside-1_336_13628)"
-      />
-      <defs>
-        <radialGradient
-          id="paint0_angular_336_13628"
-          cx="0"
-          cy="0"
-          r="1"
-          gradientUnits="userSpaceOnUse"
-          gradientTransform="translate(12 12) scale(12)"
-        >
-          <stop stopColor="white" stopOpacity="0" />
-          <stop offset="1" stopColor="#00F3FF" />
-        </radialGradient>
-      </defs>
-    </svg>
+    <div className="w-6 h-6 grid place-content-center mx-auto animate-spin">
+      <Image src="/img/spin.png" width={24} height={24} alt="" />
+    </div>
   );
 };
 

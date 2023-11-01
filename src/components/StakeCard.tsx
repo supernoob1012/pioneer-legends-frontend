@@ -1,7 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
-import { useWallet } from "@solana/wallet-adapter-react";
-import React, { FC, useState } from "react";
-import { stakeNFT } from "../solana/util";
+import React, { FC, useMemo, useState } from "react";
+import Image from "next/image";
 import { CheckSmIcon, CloseIcon } from "./SvgIcons";
 
 interface ItemProps {
@@ -20,18 +19,21 @@ const StakeCard: FC<ItemProps> = ({
   title,
   image,
   mint,
-  staked,
   selectAble,
   selected,
   setSelected,
   force,
 }) => {
-  // console.log("mint", title, image, mint, staked, selectAble, selected);
+  const [isShowOrigin, setIsShowOrigin] = useState(false);
+
+  const names = useMemo(() => {
+    return {
+      name: title ? title.split("#")[0] : "",
+      id: title ? title.split("#")[1] : "",
+    };
+  }, [title]);
 
   const [checked, setChecked] = useState(false);
-  const [isShowOrigin, setIsShowOrigin] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const wallet = useWallet();
 
   const handleChange = () => {
     if (!mint) return;
@@ -53,66 +55,57 @@ const StakeCard: FC<ItemProps> = ({
     force();
   };
 
-  const StakeNFT = async (key: string) => {
-    await stakeNFT(wallet, key, setLoading);
-  };
-
   return (
     <>
-      <div
-        className={`w-40 shadow-[6px_6px_0_0_#1E1915] [height:fit-content] duration-200 ${
-          !staked && !selectAble
-            ? "hover:translate-y-[6px] active:shadow-[0_0_0_0] active:translate-x-[6px]"
-            : ""
-        }`}
-      >
-        <div className="nft_card">
-          <div className="relative">
-            <img src={image} alt="" />
-            {selectAble ? (
-              <div
-                className={`absolute w-8 h-8 border border-white bottom-0 right-0 flex items-center justify-center ${
-                  selected.indexOf(mint!) !== -1
-                    ? "bg-[#34949be6] border-[transparent]"
-                    : "bg-[#1e191566] border-[#fff]"
-                }`}
-                onClick={handleChange}
-              >
-                {selected.indexOf(mint!) !== -1 && <CheckSmIcon />}
-              </div>
-            ) : (
-              <></>
-            )}
-          </div>
-          <div className="bg-[linear-gradient(180deg,#54504C_-0.03%,#433B35_100%)] px-[10px] py-2 flex flex-col gap-2">
-            <div className="flex flex-col">
-              <h1 className="font-medium text-sm text-white">{title}</h1>
-              <h1 className="text-xs text-[#AFABA8]">Rarity multiplier: 1x</h1>
-            </div>
-            {!staked && !selectAble ? (
-              <div className="flex w-full justify-center">
+      {mint && (
+        <div className="shadow-card active:shadow-[0_0_0_0] relative active:top-3 hover:top-[6px] cursor-pointer">
+          <div
+            className="aspect-square relative card-mask"
+            onClick={selectAble ? () => {} : () => setIsShowOrigin(true)}
+          >
+            {selectAble && (
+              <>
                 <div
-                  className="stake_button cursor-pointer"
-                  onClick={() => {
-                    StakeNFT(mint!);
+                  className="w-8 h-8 border absolute right-0 bottom-0 z-10 cursor-pointer grid place-content-center"
+                  style={{
+                    background:
+                      selected.indexOf(mint) !== -1 ? "#34949be6" : "#1e191566",
+                    borderColor:
+                      selected.indexOf(mint) !== -1 ? "transparent" : "#fff",
                   }}
+                  onClick={handleChange}
                 >
-                  <h1 className="absolute font-medium text-xs leading-[18px] text-white top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-                    Stake
-                  </h1>
+                  {selected.indexOf(mint) !== -1 && <CheckSmIcon />}
                 </div>
-              </div>
-            ) : staked ? (
-              <div className="stake_title uppercase font-medium text-[10px] leading-5 text-center text-[#FFD15F]">
-                staked
-              </div>
+              </>
+            )}
+            <Image src={image} layout="fill" alt="" className="" />
+            {selected.indexOf(mint) !== -1 ? (
+              <div className="absolute bg-[#00000066] top-0 left-0 right-0 bottom-0"></div>
             ) : (
               <></>
             )}
+            {/* <Image src={"/img/avatar.png"} layout="fill" alt="" /> */}
+          </div>
+          <div
+            className="pt-2 px-2.5 pb-3"
+            style={{
+              background:
+                "var(--Brown-bg1, linear-gradient(180deg, #54504C -0.03%, #433B35 100%))",
+            }}
+          >
+            <p className="text-[#fff] text-[14px] font-medium flex items-center">
+              {names.name}{" "}
+              <span className="text-[12px] font-normal ml-1">#{names.id}</span>
+            </p>
+            <p className="text-[#AFABA8] text-[11px] font-normal flex items-center pb-2">
+              Rarity multiplier: 1x
+            </p>
           </div>
         </div>
-      </div>
-      {isShowOrigin && selectAble && (
+      )}
+
+      {isShowOrigin && (
         <div className="fixed left-0 top-0 w-screen h-screen backdrop-blur-[10px] z-50 bg-[#000000CC]">
           <img
             src={image}

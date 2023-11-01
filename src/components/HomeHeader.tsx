@@ -10,7 +10,7 @@ interface Props {
 
 const HomeHeader: FC<Props> = ({ scroll }) => {
   return (
-    <div className="fixed w-full left-0 top-0 z-50 bg-[linear-gradient(180deg,rgba(0,0,0,0.50)_0%,rgba(0,0,0,0)_100%)]">
+    <div className="fixed w-full left-0 top-0 z-50 backdrop-blur-[10px] ">
       <div
         className="bg-[#1E1915] absolute left-0 top-0 w-full h-full opacity-80 duration-300"
         style={{
@@ -30,7 +30,7 @@ const HomeHeader: FC<Props> = ({ scroll }) => {
         <div className="py-4 hidden lg:block">
           <img
             src="/img/logo@sm.png"
-            className="w-[177px] aspect-[177/74] duration-300"
+            className="w-[177px] h-[74px] duration-300"
             alt=""
             style={{
               transform: `translateY(${scroll < -50 ? 0 : -150}px)`,
@@ -39,14 +39,18 @@ const HomeHeader: FC<Props> = ({ scroll }) => {
         </div>
         <div className="flex py-[18px] w-full justify-between lg:justify-end">
           <ConnectWallet />
-          <div className="flex items-center gap-4 ml-10 max-sm:hidden">
+          <div className="flex items-center gap-4 ml-10">
             <Link href="https://x.com/pioneerlegendio/" passHref>
-              <a className="w-8 h-8">
+              <a
+                className="w-8 h-8"
+              >
                 <TwitterIcon />
               </a>
             </Link>
             <Link href="https://discord.com/invite/pioneerlegends" passHref>
-              <a className="w-8 h-8">
+              <a
+                className="w-8 h-8"
+              >
                 <DiscordIcon />
               </a>
             </Link>

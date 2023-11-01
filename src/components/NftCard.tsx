@@ -26,8 +26,8 @@ const NftCard: FC<ItemProps> = ({ title, image, mint, staked }) => {
         className="aspect-square relative cursor-pointer card-mask"
         onClick={() => setIsShowOrigin(true)}
       >
-        <Image src={image} layout="fill" alt="" />
-        {/* <Image src={"/img/avatar.png"} layout="fill" alt="" /> */}
+        {/* <Image src={image} layout="fill" alt="" /> */}
+        <Image src={"/img/avatar.png"} layout="fill" alt="" />
       </div>
       <div
         className="pt-2 px-2.5 pb-3"
@@ -40,22 +40,20 @@ const NftCard: FC<ItemProps> = ({ title, image, mint, staked }) => {
           {names.name}{" "}
           <span className="text-[12px] font-normal ml-1">#{names.id}</span>
         </p>
-        {staked && (
-          <button className="uppercase text-primary-100 text-[10px] font-medium bg-secondary-200 py-0.5 px-[7px] relative">
-            staked
-            <span className="absolute right-[0.5px] top-[0.5px]">
-              <BtnCorner color="#FFD774" />
-            </span>
-            <span
-              className="absolute -left-[0.5px] -bottom-[0.5px]"
-              style={{
-                transform: "rotateZ(180deg)",
-              }}
-            >
-              <BtnCorner color="#FFD774" />
-            </span>
-          </button>
-        )}
+        <button className="uppercase text-primary-100 text-[10px] font-medium bg-secondary-200 py-0.5 px-[7px] relative">
+          staked
+          <span className="absolute right-[0.5px] top-[0.5px]">
+            <BtnCorner color="#FFD774" />
+          </span>
+          <span
+            className="absolute -left-[0.5px] -bottom-[0.5px]"
+            style={{
+              transform: "rotateZ(180deg)",
+            }}
+          >
+            <BtnCorner color="#FFD774" />
+          </span>
+        </button>
       </div>
       {isShowOrigin && (
         <div className="fixed left-0 top-0 w-screen h-screen backdrop-blur-[10px] z-50 bg-[#000000CC]">

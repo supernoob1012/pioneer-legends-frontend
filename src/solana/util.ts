@@ -9,7 +9,11 @@ import {
 import { NETWORK } from "../config";
 import { IDL } from "../solana/idl";
 import { PROGRAM_ID } from "../solana/constant";
-import { createLockPnftTx, createUnlockPnftTx } from "./transaction";
+import {
+  createLockMultiPnftTx,
+  createLockPnftTx,
+  createUnlockPnftTx,
+} from "./transaction";
 
 export const METAPLEX = new PublicKey(
   "metaqbxxUerdq28cj1RbAWkYQm3ybzjb6a8bt518x1s"
@@ -173,6 +177,26 @@ export const stakeNFT = async (
   console.log(tx);
   setLoading(false);
   return stakeTransaction;
+};
+
+export const stakeMultiNFT = async (
+  wallet: WalletContextState,
+  mints: string[],
+  setLoading: Function,
+  getNfts: Function
+) => {
+  if (!wallet.publicKey) return;
+  setLoading(true);
+  let cloneWindow: any = window;
+  let provider = new anchor.AnchorProvider(
+    solConnection,
+    cloneWindow["solana"],
+    anchor.AnchorProvider.defaultOptions()
+  );
+  const program = new anchor.Program(IDL as anchor.Idl, PROGRAM_ID, provider);
+
+  await createLockMultiPnftTx(wallet, mints, program, solConnection, getNfts);
+  setLoading(false);
 };
 
 export const unStakeNFT = async (

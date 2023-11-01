@@ -4,8 +4,9 @@ interface ButtonProps {
   variant?: "primary" | "secondary";
   clidren?: ReactNode;
   onClick?: () => void;
-  style?: React.CSSProperties;
   disabled?: boolean;
+  style?: React.CSSProperties;
+  loading?: boolean;
 }
 
 const Button: FC<ButtonProps> = ({
@@ -14,10 +15,11 @@ const Button: FC<ButtonProps> = ({
   onClick,
   style,
   disabled,
+  loading,
 }) => {
   return (
     <button
-      className="h-10 relative min-w-[128px] group outline-none disabled:opacity-[0.35] disabled:pointer-events-none cursor-pointer"
+      className="h-10 relative min-w-[128px] group outline-none disabled:opacity-[0.35] disabled:pointer-events-none"
       style={style}
       disabled={disabled}
       onClick={onClick}

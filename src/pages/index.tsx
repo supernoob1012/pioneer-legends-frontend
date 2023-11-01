@@ -2,29 +2,16 @@
 import { useState, useEffect, useRef } from "react";
 import Head from "next/head";
 import Link from "next/link";
-import {
-  DiscordIcon,
-  DownArrowIcon,
-  TwitterIcon,
-} from "../components/SvgIcons";
+import { DownArrowIcon } from "../components/SvgIcons";
 import { HOME_INTRO_CONTENT } from "../config";
 import IntroBox from "../components/IntroBox";
 import HomeHeader from "../components/HomeHeader";
-import useWindowSize from "../utils/useWindowSize";
-import Button from "../components/Button";
-import { useUserData } from "../context/UserProvider";
 import { useWallet } from "@solana/wallet-adapter-react";
+import { useRouter } from "next/router";
 
 export default function Index(props: { isMute: boolean; setIsMute: Function }) {
   const mainRef = useRef<HTMLDivElement>(null);
   const [scroll, setScroll] = useState(0);
-  const { width } = useWindowSize();
-  const { sign } = useUserData();
-  const { publicKey } = useWallet();
-
-  const handleSign = async () => {
-    await sign();
-  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -50,55 +37,36 @@ export default function Index(props: { isMute: boolean; setIsMute: Function }) {
     };
   }, []);
 
+  const wallet = useWallet();
+  const router = useRouter();
+
+  // useEffect(() => {
+  //   if (wallet.connected && wallet.publicKey) {
+  //     router.push("/map");
+  //   }
+  // // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [wallet.connected, wallet.publicKey]);
+
   return (
     <>
       <Head>
         <title>Pioneer Legends</title>
         <meta name="description" content="Pioneer Legends | Home" />
-        <meta
-          name="viewport"
-          content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
-        />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main ref={mainRef}>
         <HomeHeader scroll={scroll} />
         <div
-          className={`h-screen w-screen left-0 top-0 z-[20] fixed bg-[linear-gradient(180deg,#000_47.89%,rgba(0,0,0,0.00)_100%)] opacity-0 duration-300 ${
-            scroll < -80
-              ? "drop-shadow-[0_4px_4px_rgba(0,0,0,0.25)] opacity-70 backdrop-blur-[20px]"
-              : ""
-          }`}
+          className="h-screen w-screen opacity-80 fixed left-0 top-0 z-[2]"
+          style={{
+            backgroundImage:
+              "linear-gradient(180deg, #1F1B18 0%, #393028 100%)",
+          }}
         ></div>
-        {width <= 640 && (
-          <div className="bottom-6 social_panel z-[8000] fixed flex gap-5 items-center pl-4">
-            <Link href="https://x.com/pioneerlegendio/" passHref>
-              <a className="w-8 h-8">
-                <TwitterIcon />
-              </a>
-            </Link>
-            <Link href="https://discord.com/invite/pioneerlegends" passHref>
-              <a className="w-8 h-8">
-                <DiscordIcon />
-              </a>
-            </Link>
-          </div>
-        )}
-        <div className="relative overflow-hidden z-20">
+        <div className="backdrop-blur-[10px] relative overflow-hidden z-20">
           <div className="grid place-content-center h-screen relative z-10">
-            {width >= 480 ? (
-              <img
-                src="/img/md_logo.png"
-                className="w-[503px] max-lg:w-80 aspect-auto"
-                alt=""
-              />
-            ) : (
-              <img
-                src="/img/sm_logo.png"
-                className="w-[163px] h-[212px]"
-                alt=""
-              />
-            )}
+            <img src="/img/logo.png" className="w-[163px] h-[212px]" alt="" />
             <Link href={"#content"} passHref>
               <div className="w-10 h-10 absolute left-1/2 -translate-x-1/2 bottom-[56px] cursor-pointer drop-scroll">
                 <DownArrowIcon />
@@ -110,24 +78,18 @@ export default function Index(props: { isMute: boolean; setIsMute: Function }) {
             id="content"
           >
             <div className="w-[calc(100%-40px)] lg:w-[970px] mx-5 lg:mx-auto">
-              <h2 className="text-4xl text-white max-lg:text-center">
-                Feeling lucky?
+              <h2 className="text-[24px] lg:text-[36px] font-medium lg:font-normal text-center lg:text-left leading-[1.5]">
+                Intro words
               </h2>
-              <p className="mt-4 font-medium text-2xl text-[#E1E4CD] max-lg:text-center">
-                Welcome to Pioneer Legends, where the Old Wild West meets the
-                New. This is a world full of lawlessness, euphoria, and
-                degeneracy...
+              <p className="mt-4 text-[16px] lg:text-[20px] font-medium lg:font-normal leading-[1.5] text-center lg:text-left">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Diam
+                imperdiet sem id venenatis, massa ornare. Odio diam lectus
+                laoreet semper tortor non. In risus, proin purus a sit. Lorem
+                ipsum dolor sit amet, consectetur adipiscing elit. Diam
+                imperdiet sem id venenatis, massa ornare. Odio diam lectus
+                laoreet semper tortor non. In risus, proin purus a sit.
               </p>
-              <div className="flex w-full justify-center mt-10">
-                <a
-                  href="https://www.pioneerlegends.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <Button variant="primary">See Whitepaper</Button>
-                </a>
-              </div>
-              <div className="grid grid-cols-1 gap-8 my-8 py-12 max-lg:gap-20">
+              <div className="grid grid-cols-1 gap-8 my-8 py-12">
                 {HOME_INTRO_CONTENT.map((item, key) => (
                   <IntroBox
                     title={item.title}
@@ -137,25 +99,15 @@ export default function Index(props: { isMute: boolean; setIsMute: Function }) {
                   />
                 ))}
               </div>
-              <h1 className="text-2xl text-center text-white">
-                You should feel right at home.
-              </h1>
-              <div className="flex gap-10 pt-12 justify-center">
-                <a
-                  href="https://www.pioneerlegends.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <Button variant="secondary">See Whitepaper</Button>
-                </a>
-                {publicKey ? (
-                  <Button variant="primary" onClick={handleSign}>
-                    Connect wallet
-                  </Button>
-                ) : (
-                  <Button variant="primary">Connect wallet</Button>
-                )}
-              </div>
+              <h2 className="text-[24px] lg:text-[36px] font-medium lg:font-normal text-center lg:text-left leading-[1.5]">
+                Close Word
+              </h2>
+              <p className="mt-4 text-[16px] lg:text-[20px] font-medium lg:font-normal leading-[1.5] text-center lg:text-left">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Diam
+                imperdiet sem id venenatis, massa ornare. Odio diam lectus
+                laoreet semper tortor non. In risus, proin purus a sit. Lorem
+                ipsum dolor sit amet, consectetur adipiscing elit.
+              </p>
             </div>
           </div>
         </div>
