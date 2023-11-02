@@ -173,7 +173,7 @@ const Map = () => {
         <div className="relative w-screen h-screen overflow-hidden">
           <div
             ref={viewport}
-            className="z-10 w-screen h-screen overflow-hidden" // Set width, height, and overflow
+            className="z-10 w-screen h-screen overflow-hidden relative" // Set width, height, and overflow
           >
             <TopProfile
               address={
@@ -373,18 +373,17 @@ const Map = () => {
                   </div>
                 </div>
               </div>
-              <div
-                className="h-8 w-8 fixed right-8 bottom-8 bg-[linear-gradient(180deg,rgba(15,9,2,0.7)_0%,rgba(38,33,30,0.7)_100%)] flex items-center justify-center z-50 cursor-pointer"
-                onClick={playingButton}
-              >
-                {!isPlaying ? (
-                  <BiSolidVolumeMute className="text-white" />
-                ) : (
-                  <BiSolidVolumeFull className="text-white" />
-                )}
-              </div>
-
               {isTech && <UserTech setIsTech={setIsTech} />}
+            </div>
+            <div
+              className="h-8 w-8 fixed right-8 bottom-8 bg-[linear-gradient(180deg,rgba(15,9,2,0.7)_0%,rgba(38,33,30,0.7)_100%)] flex items-center justify-center z-50 cursor-pointer"
+              onClick={playingButton}
+            >
+              {!isPlaying ? (
+                <BiSolidVolumeMute className="text-white" />
+              ) : (
+                <BiSolidVolumeFull className="text-white" />
+              )}
             </div>
           </div>
         </div>
