@@ -253,7 +253,7 @@ const Map = () => {
                   transform: `scale(${scale}%)`,
                   opacity: 1,
                 }}
-                className=" group"
+                className="cursor-url('/cursor/hover.png') group"
                 onClick={() => handleOpenSpaceship("airship")}
               >
                 <img

@@ -13,7 +13,7 @@ import {
   createLockMultiPnftTx,
   createLockPnftTx,
   createUnlockPnftTx,
-  createUnlockPnftMultiTx,
+  createUnlockPnftMultiTx
 } from "./transaction";
 
 export const METAPLEX = new PublicKey(
@@ -222,9 +222,11 @@ export const unStakeNFT = async (
   );
 
   const unStakeTransaction = tx?.toString("base64");
+  console.log(tx);
   setLoading(false);
   return unStakeTransaction;
 };
+
 export const unStakeMultiNFT = async (
   wallet: WalletContextState,
   mints: string[],
@@ -241,7 +243,6 @@ export const unStakeMultiNFT = async (
   );
   const program = new anchor.Program(IDL as anchor.Idl, PROGRAM_ID, provider);
   await createUnlockPnftMultiTx(wallet, mints, program, solConnection, getNfts);
-  setLoading(false);
 };
 export {
   getAssociatedTokenAccount,
