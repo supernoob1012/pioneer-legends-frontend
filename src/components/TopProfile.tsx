@@ -6,6 +6,7 @@ import ClickAwayComponent from "./ClickAwayComponent";
 import { useUserData } from "../context/UserProvider";
 import Skeleton from "react-loading-skeleton";
 import Image from "next/image";
+import { BiLinkExternal } from "react-icons/bi";
 
 interface Props {
   pfp?: string;
@@ -132,6 +133,17 @@ const TopProfile: FC<Props> = ({ address }) => {
               >
                 My wallet
               </button>
+            </li>
+            <li>
+              <a
+                href="https://www.pioneerlegends.com/"
+                target="_blank"
+                className="p-3 text-[16px] font-medium text-white w-full text-left hover:bg-[#e1e4cd1a] active:bg-[#1e191566] flex gap-2 items-center"
+                rel="noopener noreferrer"
+              >
+                Whitepaper
+                <BiLinkExternal />
+              </a>
             </li>
             <li className="">
               <button

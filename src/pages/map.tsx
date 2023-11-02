@@ -1,21 +1,24 @@
 /* eslint-disable @next/next/no-img-element */
 import React, { useContext, useEffect, useRef, useState } from "react";
-import Image from "next/image";
+import { useWallet } from "@solana/wallet-adapter-react";
+import Head from "next/head";
+import Link from "next/link";
+import useSound from "use-sound";
+
 import {
   MiningIcon,
   SolanaIcon,
   SpaceshipIcon,
   TownhallIcon,
 } from "../components/SvgIcons";
-import { useWallet } from "@solana/wallet-adapter-react";
 import TopProfile from "../components/TopProfile";
 import { ModalContext } from "../context/ModalProvider";
-import Link from "next/link";
 import useWindowSize from "../utils/useWindowSize";
 import Loading from "../components/Loading";
 import ScrollBooster from "scrollbooster";
-import Head from "next/head";
 import { UserTech } from "../components/UserTech";
+import { UserContext, UserContextProps } from "../context/UserProvider";
+import { BiSolidVolumeFull, BiSolidVolumeMute } from "react-icons/bi";
 
 const Map = () => {
   const { width, height } = useWindowSize();
@@ -23,10 +26,15 @@ const Map = () => {
   const content = useRef<HTMLDivElement>(null);
   const video = useRef<HTMLVideoElement>(null);
   const { setIsStakeModal, setTitle } = useContext<any>(ModalContext);
+  const { isNetSpeed, setIsNetSpeed } =
+    useContext<UserContextProps>(UserContext);
   const [viewWidth, setViewWidth] = useState(0);
   const [viewHeight, setViewHeight] = useState(0);
   const [scale, setScale] = useState(1);
   const [isTech, setIsTech] = useState<boolean>(false);
+  const [isPlaying, setIsPlaying] = useState(true);
+
+  const [play, { pause }] = useSound("/music/pl_bg20.wav");
 
   const wallet = useWallet();
 
@@ -35,39 +43,61 @@ const Map = () => {
     setTitle(title);
   };
 
-  useEffect(() => {}, [viewport]);
+  useEffect(() => {
+    const userImageLink =
+      "https://media.geeksforgeeks.org/wp-content/cdn-uploads/20200714180638/CIP_Launch-banner.png";
+    let time_start: number, end_time: number;
+
+    // The size in bytes
+    const downloadSize = 5616998;
+    const downloadImgSrc = new Image();
+
+    downloadImgSrc.onload = function () {
+      end_time = new Date().getTime();
+      displaySpeed();
+    };
+    time_start = new Date().getTime();
+    downloadImgSrc.src = userImageLink;
+
+    function displaySpeed() {
+      const timeDuration = (end_time - time_start) / 1000;
+      const loadedBits = downloadSize * 8;
+      const bps = (loadedBits / timeDuration).toFixed(2);
+      const mbps = (bps / 1048576).toFixed(2);
+
+      console.log("Speed", mbps, typeof mbps);
+      setIsNetSpeed(mbps);
+    }
+  }, []);
 
   useEffect(() => {
-    if (viewport.current) {
-      console.log(
-        viewport.current.clientWidth,
-        viewport.current.offsetWidth,
-        viewport.current.scrollWidth
-      );
+    if (viewport.current && viewWidth > 0) {
       const sb = new ScrollBooster({
         viewport: viewport.current,
         content: content.current!,
         scrollMode: "transform",
         direction: "all",
         emulateScroll: true,
-
         bounce: false, // Adds a bounce effect when content edge is reached
       });
-      // const offsetX =
-      //   content.current!.scrollWidth - viewport.current!.offsetWidth;
-      // const offsetY =
-      //   video.current!.scrollHeight - viewport.current!.offsetHeight!;
-      // sb.setPosition({
-      //   x: 500,
-      //   y: ,
-      //   // y: offsetY / 2,
-      // });
-      // // sb.setPosition({
-      // //   x: offsetX / 2,
-      // //   y: offsetY / 2,
-      // // });
+
+      sb.scrollTo({
+        x: (viewWidth - viewport.current.clientWidth) / 2,
+        y: 0,
+      });
     }
-  }, [viewport]);
+  }, [viewport, viewWidth, isNetSpeed]);
+
+  const playingButton = () => {
+    if (!video.current) return;
+    if (isPlaying) {
+      play();
+      setIsPlaying(false);
+    } else {
+      pause();
+      setIsPlaying(true);
+    }
+  };
 
   useEffect(() => {
     if (width * 9 === height * 16) {
@@ -129,6 +159,10 @@ const Map = () => {
     return () => clearTimeout(tiemr);
   }, [width]);
 
+  if (!isNetSpeed) {
+    return <></>;
+  }
+
   return (
     <>
       <Head>
@@ -136,20 +170,10 @@ const Map = () => {
       </Head>
       <main>
         <div className="relative w-screen h-screen overflow-hidden">
-          {/* <div className="h-1/5 bg-gradient-to-b from-black/70 fixed top-0 left-0 right-0 w-full z-[21] pointer-events-none" />
-          <div className="h-1/5 bg-gradient-to-t from-black/70 fixed bottom-0 left-0 w-full z-[21] pointer-events-none" /> */}
-
           <div
             ref={viewport}
             className="z-10 w-screen h-screen overflow-hidden" // Set width, height, and overflow
           >
-            {/* <div
-              className="absolute left-0 top-0 w-full h-[160px] z-20"
-              style={{
-                backgroundImage:
-                  "linear-gradient(180deg, rgba(30, 25, 21, 0.50) 0%, rgba(30, 25, 21, 0.00) 100%)",
-              }}
-            /> */}
             <TopProfile
               address={
                 wallet.publicKey?.toBase58() ? wallet.publicKey?.toBase58() : ""
@@ -158,12 +182,7 @@ const Map = () => {
             />
             <Link href={"/"} passHref>
               <div className="w-[289px] h-[32px] absolute top-[21px] left-[26px] z-50 cursor-pointer opacity-0 lg:opacity-100 pointer-events-none lg:pointer-events-auto">
-                <Image
-                  src="/img/logo@text.png"
-                  className="relative"
-                  layout="fill"
-                  alt=""
-                />
+                <img src="/img/logo@text.png" className="relative" alt="" />
               </div>
             </Link>
             <div
@@ -172,8 +191,6 @@ const Map = () => {
               style={{
                 width: viewWidth,
                 height: viewHeight,
-                // width: (3840 / 2160) * (height + (width > 768 ? 100 : 300)),
-                // height: height + 300,
               }}
             >
               <video
@@ -188,7 +205,11 @@ const Map = () => {
                 id="video"
               >
                 <source
-                  src="/video/video.mp4"
+                  src={
+                    parseInt(isNetSpeed) < 2000
+                      ? "/video/video_50.mp4"
+                      : "/video/video_70.mp4"
+                  }
                   type="video/mp4"
                   data-wf-ignore="true"
                 />
@@ -211,9 +232,6 @@ const Map = () => {
                   style={{
                     width: 230,
                     height: 230,
-                    // transform: `scale(${scale}%)`,
-                    // transformOrigin: '70% 50%'
-                    // scale: `${scale}%`
                   }}
                   alt=""
                   draggable="false"
@@ -266,9 +284,6 @@ const Map = () => {
                   style={{
                     width: 230,
                     height: 230,
-                    // transform: `scale(${scale}%)`,
-                    // transformOrigin: '70% 50%'
-                    // scale: `${scale}%`
                   }}
                   alt=""
                   draggable="false"
@@ -321,9 +336,6 @@ const Map = () => {
                   style={{
                     width: 230,
                     height: 230,
-                    // transform: `scale(${scale}%)`,
-                    // transformOrigin: '70% 50%'
-                    // scale: `${scale}%`
                   }}
                   alt=""
                   draggable="false"
@@ -360,16 +372,18 @@ const Map = () => {
                   </div>
                 </div>
               </div>
-
-              <div className=" absolute top-0 h-full">
-                {isTech && (
-                  <UserTech
-                    setIsTech={setIsTech}
-                    width={width}
-                    height={viewHeight}
-                  />
+              <div
+                className="h-8 w-8 fixed right-8 bottom-8 bg-[linear-gradient(180deg,rgba(15,9,2,0.7)_0%,rgba(38,33,30,0.7)_100%)] flex items-center justify-center z-50 cursor-pointer"
+                onClick={playingButton}
+              >
+                {!isPlaying ? (
+                  <BiSolidVolumeMute className="text-white" />
+                ) : (
+                  <BiSolidVolumeFull className="text-white" />
                 )}
               </div>
+
+              {isTech && <UserTech setIsTech={setIsTech} />}
             </div>
           </div>
         </div>
