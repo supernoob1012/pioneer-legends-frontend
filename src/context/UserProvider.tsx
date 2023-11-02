@@ -35,23 +35,23 @@ export interface UserContextProps {
 
 const defaultContext: UserContextProps = {
   allNftList: [],
-  setAllNftList: () => { },
+  setAllNftList: () => {},
   isDataLoading: false,
-  setIsDataLoading: () => { },
-  getNfts: () => { },
+  setIsDataLoading: () => {},
+  getNfts: () => {},
   userData: {
     username: "",
     wallet: "",
     image: "",
   },
-  setUserData: () => { },
-  getUserData: () => { },
+  setUserData: () => {},
+  getUserData: () => {},
   isAuthrized: false,
-  setIsAuthrized: () => { },
-  sign: () => { },
+  setIsAuthrized: () => {},
+  sign: () => {},
   isSignning: false,
   isNetSpeed: "",
-  setIsNetSpeed: () => { },
+  setIsNetSpeed: () => {},
 };
 
 export const UserContext = createContext<UserContextProps>(defaultContext);
@@ -104,7 +104,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
 
   const getNfts = async (once?: boolean) => {
     if (wallet.publicKey === null) return [];
-    setIsDataLoading(false);
+    setIsDataLoading(true);
     const stakedData = await getNft(wallet.publicKey.toBase58());
 
     const nftList = await getParsedNftAccountsByOwner({
@@ -135,18 +135,14 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
               startTime: stakedNft ? stakedNft.startTime : "",
               mint: item.mint,
               uri: item.data.uri,
-              faction: stakedNft?.faction
+              faction: stakedNft?.faction,
             };
           }
         }
       })
     );
     setAllNftList(nfts.filter(Boolean));
-
-    console.log("getNFG------", nfts);
-    if (once) {
-      setIsDataLoading(false);
-    }
+    setIsDataLoading(false);
   };
 
   const getUserData = async () => {
