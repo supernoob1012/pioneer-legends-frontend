@@ -19,7 +19,13 @@
   scroll-behavior: smooth;
   animation: cursor 1s infinite;
 }
+*:hover {
+  cursor: url('/cursor/hover.png'), auto;
+}
 
+*:active {
+  cursor: url('/cursor/hover.png'), auto;
+}
 html {
   background-color: #201913;
 }
