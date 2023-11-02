@@ -33,8 +33,21 @@ const Map = () => {
   const [scale, setScale] = useState(1);
   const [isTech, setIsTech] = useState<boolean>(false);
   const [isPlaying, setIsPlaying] = useState(true);
+  const [isEnd, setIsEnd] = useState(false);
+  const audio = useRef<HTMLAudioElement>(null);
 
-  const [play, { pause }] = useSound("/music/pl_bg20.wav");
+  // const [play, { pause }] = useSound("/music/landing_bg_music.wav", {
+  //   onend: () => {
+  //     setIsEnd(true);
+  //   },
+  // });
+
+  // useEffect(() => {
+  //   if (isEnd) {
+  //     play();
+  //     setIsEnd(false);
+  //   }
+  // }, [isEnd]);
 
   const wallet = useWallet();
 
@@ -90,12 +103,12 @@ const Map = () => {
   }, [viewport, viewWidth, isNetSpeed]);
 
   const playingButton = () => {
-    if (!video.current) return;
+    if (!audio.current) return;
     if (isPlaying) {
-      play();
+      audio.current.pause();
       setIsPlaying(false);
     } else {
-      pause();
+      audio.current.play();
       setIsPlaying(true);
     }
   };
@@ -116,6 +129,7 @@ const Map = () => {
   useEffect(() => {
     setScale(viewHeight / 9);
   }, [viewHeight]);
+
   useEffect(() => {
     const handleWheel = (event: any) => {
       if (event.ctrlKey) {
@@ -155,6 +169,10 @@ const Map = () => {
 
     const tiemr = setTimeout(() => {
       setTechAnim();
+      if (audio.current) {
+        audio.current.load();
+        audio.current.play();
+      }
     }, 3000);
 
     return () => clearTimeout(tiemr);
@@ -170,6 +188,7 @@ const Map = () => {
         <title>Map | Pioneer Legends</title>
       </Head>
       <main>
+        <audio autoPlay src="/music/pl_bg20.wav" ref={audio}></audio>
         <div className="relative w-screen h-screen overflow-hidden">
           <div
             ref={viewport}
