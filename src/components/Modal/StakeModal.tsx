@@ -34,13 +34,6 @@ const StakeModal = () => {
   const { getNfts } = useContext<UserContextProps>(UserContext);
   const [isWalletSelected, setWalletSelected] = useState(false);
 
-  useEffect(() => {
-    console.log(
-      "----------------------------------------------------",
-      useData
-    );
-  }, [useData]);
-
   const notify = () =>
     toast(
       "!\u00A0\u00A0\u00A0\u00A0\u00A0You have reached your selection limit."

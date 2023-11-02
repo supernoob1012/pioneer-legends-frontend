@@ -19,6 +19,7 @@ import ScrollBooster from "scrollbooster";
 import { UserTech } from "../components/UserTech";
 import { UserContext, UserContextProps } from "../context/UserProvider";
 import { BiSolidVolumeFull, BiSolidVolumeMute } from "react-icons/bi";
+import { getCookie } from "cookies-next";
 
 const Map = () => {
   const { width, height } = useWindowSize();
@@ -35,6 +36,7 @@ const Map = () => {
   const [isPlaying, setIsPlaying] = useState(true);
   const [isEnd, setIsEnd] = useState(false);
   const audio = useRef<HTMLAudioElement>(null);
+  const [cookieInfo, setCookieInfo] = useState<string>("");
 
   // const [play, { pause }] = useSound("/music/landing_bg_music.wav", {
   //   onend: () => {
@@ -177,6 +179,12 @@ const Map = () => {
 
     return () => clearTimeout(tiemr);
   }, [width]);
+
+  useEffect(() => {
+    const cookie = getCookie("handtech");
+    // @ts-ignore
+    setCookieInfo(cookie);
+  }, []);
 
   if (!isNetSpeed) {
     return <></>;
@@ -392,7 +400,7 @@ const Map = () => {
                   </div>
                 </div>
               </div>
-              {isTech && <UserTech setIsTech={setIsTech} />}
+              {isTech && !cookieInfo && <UserTech setIsTech={setIsTech} />}
             </div>
             <div
               className="h-8 w-8 fixed right-8 bottom-8 bg-[linear-gradient(180deg,rgba(15,9,2,0.7)_0%,rgba(38,33,30,0.7)_100%)] flex items-center justify-center z-50 cursor-pointer"

@@ -142,11 +142,7 @@ export default function Index(props: { isMute: boolean; setIsMute: Function }) {
           id="video"
         >
           <source
-            src={
-              parseInt(isNetSpeed) < 2000
-                ? "/video/landing_50.mp4"
-                : "/video/landing_70.mp4"
-            }
+            src={"/video/landing_50.mp4"}
             type="video/mp4"
             data-wf-ignore="true"
           />
