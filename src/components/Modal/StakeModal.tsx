@@ -58,20 +58,20 @@ const StakeModal = () => {
 
   switch (title) {
     case "airship":
-      faction = "First Faction";
+      faction = "Governor";
       break;
     case "townhall":
-      faction = "Second Faction";
+      faction = "Outlaw";
       break;
     case "mining":
-      faction = "Third Faction";
+      faction = "Miner";
       break;
     default:
       faction = "Unknown Faction";
       break;
   }
   const stakedNfts = allNftList.filter(
-    (item) => item.staked 
+    (item) => item.staked && item.faction === faction
   );
   const walletNfts = allNftList.filter((item) => !item.staked);
 
