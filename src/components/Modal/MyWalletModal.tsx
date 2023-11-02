@@ -66,10 +66,23 @@ const MyWalletModal: FC = () => {
             <p className="text-[24px] font-secondary text-primary-100 leading-[1.33] uppercase">
               My Wallet
             </p>
-            <CloseButton
-              className="absolute right-5 top-[20px] md:flex hidden z-10"
-              onClose={() => setIsMyWalletModal(false)}
-            />
+            {isMobile ? (
+              <>
+                <CloseButton
+                  className="absolute right-5 top-[20px] md:flex hidden z-10"
+                  onClose={() => setIsMyWalletModal(false)}
+                />
+              </>
+            ) : (
+              <>
+                <button
+                  onClick={() => setIsMyWalletModal(false)}
+                  className="cursor-pointer"
+                >
+                  <CrossIcon color="white" className="cursor-pointer" />
+                </button>
+              </>
+            )}
             {/* <button
               className="md:absolute md:-right-5 md:top-[34px] flex"
               onClick={() => setIsMyWalletModal(false)}
