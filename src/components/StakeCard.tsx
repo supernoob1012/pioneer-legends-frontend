@@ -118,7 +118,7 @@ const StakeCard: FC<ItemProps> = ({
       {isShowOrigin && (
         <div className="fixed left-0 top-0 w-screen h-screen backdrop-blur-[10px] z-[750] bg-[#000000CC]">
           <img
-            src="/img/avatar.png"
+            src={image}
             className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[100vw] md:w-auto h-auto md:h-screen"
             alt=""
           />
