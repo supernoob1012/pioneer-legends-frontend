@@ -58,3 +58,5 @@ export const NFT_METADATA = [
 
 export const BACKEND_URL = "https://weak-gold-brown-bear-gown.cyclic.app";
 // export const BACKEND_URL = "http://192.168.109.68:3000";
+
+export const SOL_RPC = "https://light-morning-sea.solana-mainnet.quiknode.pro/519dc0806495a53ab8c9de64fb90c3418b6a1d15/"

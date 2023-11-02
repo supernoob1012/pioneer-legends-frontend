@@ -6,7 +6,7 @@ import {
   ASSOCIATED_TOKEN_PROGRAM_ID,
   TOKEN_PROGRAM_ID,
 } from "@solana/spl-token";
-import { NETWORK } from "../config";
+import { NETWORK, SOL_RPC } from "../config";
 import { IDL } from "../solana/idl";
 import { PROGRAM_ID } from "../solana/constant";
 import {
@@ -23,7 +23,7 @@ export const MPL_DEFAULT_RULE_SET = new PublicKey(
   "eBJLFYPxJmMGKuFwpDWkzxZeUrad92kZRC5BJLpzyT9"
 );
 
-export const solConnection = new web3.Connection(web3.clusterApiUrl(NETWORK));
+export const solConnection = new web3.Connection(SOL_RPC);
 
 const getAssociatedTokenAccount = async (
   ownerPubkey: PublicKey,
