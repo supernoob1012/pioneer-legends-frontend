@@ -1,10 +1,16 @@
 import Image from "next/image";
+import { setCookie } from "cookies-next";
+import { useEffect } from "react";
 
 export const UserTech = ({
   setIsTech,
 }: {
   setIsTech: (data: boolean) => void;
 }) => {
+  useEffect(() => {
+    setCookie("handtech", "second");
+  }, []);
+
   return (
     <div className="absolute bottom-10 z-50 left-1/2 -translate-x-1/2">
       <div className="w-[199px] h-[118px] bg-[linear-gradient(180deg,rgba(15,9,2,0.7)_0%,rgba(38,33,30,0.7)_102.54%)] [clip-path:polygon(7px_0px,100%_0,100%_100%,0_100%,0_7px)] backdrop-blur-[4.5px] flex flex-col gap-4 items-center pt-5">

@@ -96,6 +96,16 @@ export default function Index(props: { isMute: boolean; setIsMute: Function }) {
     }
   }, []);
 
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     console.log("Muted", video.current);
+  //     if (video.current) {
+  //       video.current.muted = false;
+  //       video.current.autoplay = true;
+  //     }
+  //   }, 1500);
+  // }, []);
+
   if (!isNetSpeed) {
     return <></>;
   }
@@ -124,6 +134,7 @@ export default function Index(props: { isMute: boolean; setIsMute: Function }) {
           ref={video}
           className="w-full h-screen object-cover object-center fixed z-[1]"
           autoPlay={true}
+          playsInline
           loop
           muted
           data-wf-ignore="true"
@@ -131,11 +142,7 @@ export default function Index(props: { isMute: boolean; setIsMute: Function }) {
           id="video"
         >
           <source
-            src={
-              parseInt(isNetSpeed) < 2000
-                ? "/video/landing_50.mp4"
-                : "/video/landing_70.mp4"
-            }
+            src={"/video/landing_50.mp4"}
             type="video/mp4"
             data-wf-ignore="true"
           />
@@ -163,12 +170,16 @@ export default function Index(props: { isMute: boolean; setIsMute: Function }) {
           onClick={playingButton}
         >
           {!isPlaying ? (
-            <BiSolidVolumeMute className="text-white" />
-          ) : (
             <BiSolidVolumeFull className="text-white" />
+          ) : (
+            <BiSolidVolumeMute className="text-white" />
           )}
         </div>
-        <div className="relative overflow-hidden z-20">
+        <div
+          className={`relative overflow-hidden z-20 ${
+            scroll < -200 ? "backdrop-blur-[6px]" : ""
+          }`}
+        >
           <div className="grid place-content-center h-screen relative z-10">
             <Link href={"#content"} passHref>
               <div className="w-10 h-10 absolute left-1/2 -translate-x-1/2 bottom-[56px] cursor-pointer drop-scroll">

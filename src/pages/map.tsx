@@ -19,6 +19,7 @@ import ScrollBooster from "scrollbooster";
 import { UserTech } from "../components/UserTech";
 import { UserContext, UserContextProps } from "../context/UserProvider";
 import { BiSolidVolumeFull, BiSolidVolumeMute } from "react-icons/bi";
+import { getCookie } from "cookies-next";
 
 const Map = () => {
   const { width, height } = useWindowSize();
@@ -33,8 +34,22 @@ const Map = () => {
   const [scale, setScale] = useState(1);
   const [isTech, setIsTech] = useState<boolean>(false);
   const [isPlaying, setIsPlaying] = useState(true);
+  const [isEnd, setIsEnd] = useState(false);
+  const audio = useRef<HTMLAudioElement>(null);
+  const [cookieInfo, setCookieInfo] = useState<string>("");
 
-  const [play, { pause }] = useSound("/music/pl_bg20.wav");
+  // const [play, { pause }] = useSound("/music/landing_bg_music.wav", {
+  //   onend: () => {
+  //     setIsEnd(true);
+  //   },
+  // });
+
+  // useEffect(() => {
+  //   if (isEnd) {
+  //     play();
+  //     setIsEnd(false);
+  //   }
+  // }, [isEnd]);
 
   const wallet = useWallet();
 
@@ -90,12 +105,12 @@ const Map = () => {
   }, [viewport, viewWidth, isNetSpeed]);
 
   const playingButton = () => {
-    if (!video.current) return;
+    if (!audio.current) return;
     if (isPlaying) {
-      play();
+      audio.current.pause();
       setIsPlaying(false);
     } else {
-      pause();
+      audio.current.play();
       setIsPlaying(true);
     }
   };
@@ -116,6 +131,7 @@ const Map = () => {
   useEffect(() => {
     setScale(viewHeight / 9);
   }, [viewHeight]);
+
   useEffect(() => {
     const handleWheel = (event: any) => {
       if (event.ctrlKey) {
@@ -155,10 +171,20 @@ const Map = () => {
 
     const tiemr = setTimeout(() => {
       setTechAnim();
+      if (audio.current) {
+        audio.current.load();
+        audio.current.play();
+      }
     }, 3000);
 
     return () => clearTimeout(tiemr);
   }, [width]);
+
+  useEffect(() => {
+    const cookie = getCookie("handtech");
+    // @ts-ignore
+    setCookieInfo(cookie);
+  }, []);
 
   if (!isNetSpeed) {
     return <></>;
@@ -170,6 +196,7 @@ const Map = () => {
         <title>Map | Pioneer Legends</title>
       </Head>
       <main>
+        <audio autoPlay src="/music/pl_bg20.wav" ref={audio}></audio>
         <div className="relative w-screen h-screen overflow-hidden">
           <div
             ref={viewport}
@@ -373,7 +400,7 @@ const Map = () => {
                   </div>
                 </div>
               </div>
-              {isTech && <UserTech setIsTech={setIsTech} />}
+              {isTech && !cookieInfo && <UserTech setIsTech={setIsTech} />}
             </div>
             <div
               className="h-8 w-8 fixed right-8 bottom-8 bg-[linear-gradient(180deg,rgba(15,9,2,0.7)_0%,rgba(38,33,30,0.7)_100%)] flex items-center justify-center z-50 cursor-pointer"

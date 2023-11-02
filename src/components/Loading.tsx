@@ -20,6 +20,7 @@ const Loading = () => {
           return 110;
         }
       });
+      audio.current?.pause();
     }, 300);
     return () => {
       clearInterval(loadingInterval);

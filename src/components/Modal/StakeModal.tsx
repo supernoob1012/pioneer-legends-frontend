@@ -55,20 +55,22 @@ const StakeModal = () => {
   let faction: string;
 
   switch (title) {
-    case 'airship':
+    case "airship":
       faction = "First Faction";
       break;
-    case 'townhall':
+    case "townhall":
       faction = "Second Faction";
       break;
-    case 'mining':
+    case "mining":
       faction = "Third Faction";
       break;
     default:
       faction = "Unknown Faction";
       break;
   }
-  const stakedNfts = allNftList.filter((item) => item.staked && item.faction === faction);
+  const stakedNfts = allNftList.filter(
+    (item) => item.staked && item.faction === faction
+  );
   const walletNfts = allNftList.filter((item) => !item.staked);
 
   const cancelSelect = () => {
@@ -85,7 +87,7 @@ const StakeModal = () => {
 
   useEffect(() => {
     cancelSelect();
-    console.log(stakedNfts, "stakedNFT")
+    console.log(stakedNfts, "stakedNFT");
   }, [tab]);
 
   const closeModal = () => {
@@ -133,6 +135,9 @@ const StakeModal = () => {
   return (
     <div className="fixed left-0 top-0 bottom-0 right-0 z-[200] flex items-center justify-center backdrop-blur-[20px] bg-[#000000]/40">
       <div className="w-[974px] h-[590px] max-lg:w-[calc(100%-32px)] max-md:w-screen max-md:h-screen bg-[linear-gradient(180deg,#0F0902_0%,#26211E_100%)] relative after:absolute after:top-2 after:left-2 after:bottom-2 after:right-2 max-md:after:top-0 max-md:after:left-0 max-md:after:bottom-0 max-md:after:right-0 after:bg-[linear-gradient(180deg,#1F1B18_0%,#393028_100%)] after:shadow-[0_0_4px_0_rgba(0,0,0,0.80),1px_1px_2px_0_#37322F_inset]">
+        {/**
+         * Make corner image
+         */}
         <img
           src="/img/Deco_leftbottom.png"
           alt="B_L"
@@ -153,6 +158,9 @@ const StakeModal = () => {
           alt="T_R"
           className="absolute -top-1 -right-1 z-[2] max-md:hidden"
         />
+        {/**
+         * Make banner image
+         */}
         <img
           src="/img/banner.png"
           alt="Banner"
@@ -164,6 +172,9 @@ const StakeModal = () => {
           <p className="text-[24px] font-secondary text-primary-100 leading-[1.33] uppercase">
             {title}
           </p>
+          {/**
+           * Close button UI
+           */}
           {isMobile ? (
             <CloseButton
               className="absolute right-5 top-[34px] z-50"
@@ -186,16 +197,24 @@ const StakeModal = () => {
             <div className="fixed bottom-0 h-[88px] w-full md:hidden flex justify-center items-center backdrop-blur-sm bg-[#342B2590] left-0 z-[100]">
               <Button
                 onClick={tab === "wallet" ? stakeMulti : unstakeMulti}
-                disabled={selected.length === 0}
+                disabled={selected.length === 0 || loading}
                 style={{
                   width: "calc(100vw - 40px)",
                   marginLeft: "8px",
                   marginRight: "8px",
                 }}
               >
-                {tab === "wallet"
-                  ? "Stake(" + selected.length + ")"
-                  : "Unstake(" + selected.length + ")"}
+                {loading ? (
+                  <div className="w-6 h-6">
+                    <LoadingSpin />
+                  </div>
+                ) : (
+                  <>
+                    {tab === "wallet"
+                      ? "Stake(" + selected.length + ")"
+                      : "Unstake(" + selected.length + ")"}
+                  </>
+                )}
               </Button>
             </div>
           )}
@@ -206,21 +225,22 @@ const StakeModal = () => {
                   <Button onClick={cancelSelect} variant="secondary">
                     Cancel
                   </Button>
-                  {tab === "wallet" ? (
-                    <Button
-                      onClick={stakeMulti}
-                      disabled={selected.length === 0}
-                    >
-                      Stake({selected.length})
-                    </Button>
-                  ) : (
-                    <Button
-                      onClick={unstakeMulti}
-                      disabled={selected.length === 0}
-                    >
-                      Unstake({selected.length})
-                    </Button>
-                  )}
+                  <Button
+                    onClick={tab === "wallet" ? stakeMulti : unstakeMulti}
+                    disabled={selected.length === 0}
+                  >
+                    {loading ? (
+                      <div className="w-6 h-6">
+                        <LoadingSpin />
+                      </div>
+                    ) : (
+                      <>
+                        {tab === "wallet"
+                          ? "Stake(" + selected.length + ")"
+                          : "Unstake(" + selected.length + ")"}
+                      </>
+                    )}
+                  </Button>
                 </>
               ) : (
                 <p
