@@ -417,7 +417,7 @@ const Map = () => {
           </div>
         </div>
       </main>
-      {/* <Loading /> */}
+      <Loading />
 
     </>
   );
