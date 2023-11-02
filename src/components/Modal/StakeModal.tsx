@@ -44,12 +44,14 @@ const StakeModal = () => {
   const stakeMulti = async () => {
     if (selected.length !== 0) {
       await stakeMultiNFT(wallet, selected, setLoading, getNfts);
+      setSelected([]);
     }
   };
 
   const unstakeMulti = async () => {
     if (selected.length !== 0) {
       await unStakeMultiNFT(wallet, selected, setLoading, getNfts);
+      setSelected([]);
     }
   };
   let faction: string;
@@ -79,7 +81,6 @@ const StakeModal = () => {
   };
 
   useMemo(() => {
-    console.log(stakedNfts.length);
     if (selected.length === 3) {
       notify();
     }
@@ -87,7 +88,6 @@ const StakeModal = () => {
 
   useEffect(() => {
     cancelSelect();
-    console.log(stakedNfts, "stakedNFT");
   }, [tab]);
 
   const closeModal = () => {
@@ -197,24 +197,24 @@ const StakeModal = () => {
             <div className="fixed bottom-0 h-[88px] w-full md:hidden flex justify-center items-center backdrop-blur-sm bg-[#342B2590] left-0 z-[100]">
               <Button
                 onClick={tab === "wallet" ? stakeMulti : unstakeMulti}
-                disabled={selected.length === 0 || loading}
+                disabled={selected.length === 0 || useData.isDataLoading}
                 style={{
                   width: "calc(100vw - 40px)",
                   marginLeft: "8px",
                   marginRight: "8px",
                 }}
               >
-                {loading ? (
+                {/* {loading ? (
                   <div className="w-6 h-6">
                     <LoadingSpin />
                   </div>
                 ) : (
-                  <>
-                    {tab === "wallet"
-                      ? "Stake(" + selected.length + ")"
-                      : "Unstake(" + selected.length + ")"}
-                  </>
-                )}
+                  <> */}
+                {tab === "wallet"
+                  ? "Stake(" + selected.length + ")"
+                  : "Unstake(" + selected.length + ")"}
+                {/* </>
+                )} */}
               </Button>
             </div>
           )}
@@ -225,21 +225,14 @@ const StakeModal = () => {
                   <Button onClick={cancelSelect} variant="secondary">
                     Cancel
                   </Button>
-                 {tab === "wallet" ? (
-                    <Button
-                      onClick={stakeMulti}
-                      disabled={selected.length === 0}
-                    >
-                      Stake({selected.length})
-                    </Button>
-                  ) : (
-                    <Button
-                      onClick={unstakeMulti}
-                      disabled={selected.length === 0}
-                    >
-                      Unstake({selected.length})
-                    </Button>
-                  )}
+                  <Button
+                    onClick={tab === "wallet" ? stakeMulti : unstakeMulti}
+                    disabled={selected.length === 0 || useData.isDataLoading}
+                  >
+                    {tab === "wallet"
+                      ? "Stake(" + selected.length + ")"
+                      : "Unstake(" + selected.length + ")"}
+                  </Button>
                 </>
               ) : (
                 <p
