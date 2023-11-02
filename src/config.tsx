@@ -1,4 +1,4 @@
-export const NETWORK = "devnet";
+export const NETWORK = "mainnet-beta";
 export const CREATOR_ADDRESS = "G2sc5mU3eLRkbRupnupzB3NTzZ85bnc9L1ReAre9dzFU";
 
 export const HOME_INTRO_CONTENT = [
