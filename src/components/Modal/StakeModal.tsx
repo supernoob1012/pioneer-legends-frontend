@@ -265,7 +265,7 @@ const StakeModal = () => {
           </div>
         </div>
         <div className="mt-20 ml-12 max-md:ml-4 pr-6 max-w-[calc(100%-96px)] max-md:max-w-[calc(100%-32px)] relative z-[2] h-[300px] max-md:h-[calc(100%-350px)] grid grid-cols-5 max-lg:grid-cols-4 max-md:grid-cols-2 gap-[26px] overflow-y-scroll overflow-x-hidden">
-          {!useData.isDataLoading ? (
+          {useData.isDataLoading ? (
             <NftLoading />
           ) : (
             <>
