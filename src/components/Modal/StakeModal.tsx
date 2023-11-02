@@ -62,20 +62,22 @@ const StakeModal = () => {
   let faction: string;
 
   switch (title) {
-    case 'airship':
+    case "airship":
       faction = "First Faction";
       break;
-    case 'townhall':
+    case "townhall":
       faction = "Second Faction";
       break;
-    case 'mining':
+    case "mining":
       faction = "Third Faction";
       break;
     default:
       faction = "Unknown Faction";
       break;
   }
-  const stakedNfts = allNftList.filter((item) => item.staked && item.faction === faction);
+  const stakedNfts = allNftList.filter(
+    (item) => item.staked && item.faction === faction
+  );
   const walletNfts = allNftList.filter((item) => !item.staked);
 
   const cancelSelect = () => {
@@ -92,7 +94,7 @@ const StakeModal = () => {
 
   useEffect(() => {
     cancelSelect();
-    console.log(stakedNfts, "stakedNFT")
+    console.log(stakedNfts, "stakedNFT");
   }, [tab]);
 
   const closeModal = () => {
@@ -198,7 +200,7 @@ const StakeModal = () => {
             stakedNumber={stakedNfts.length}
             walletNumber={walletNfts.length}
           />
-          {/* {selectAble && (
+          {selectAble && (
             <div className="fixed bottom-0 h-[88px] w-full md:hidden flex justify-center items-center backdrop-blur-sm bg-[#342B2590] left-0 z-[100]">
               <Button
                 onClick={tab === "wallet" ? stakeMulti : unstakeMulti}
@@ -211,7 +213,6 @@ const StakeModal = () => {
               >
                 {loading ? (
                   <div className="w-6 h-6">
-                    {console.group("---------", loading)}
                     <LoadingSpin />
                   </div>
                 ) : (
@@ -223,7 +224,7 @@ const StakeModal = () => {
                 )}
               </Button>
             </div>
-          )} */}
+          )}
           <div className="flex max-md:mr-5 md:gap-8">
             {selectAble &&
               (isMobile ? (
@@ -231,21 +232,22 @@ const StakeModal = () => {
                   <Button onClick={cancelSelect} variant="secondary">
                     Cancel
                   </Button>
-                  {tab === "wallet" ? (
-                    <Button
-                      onClick={stakeMulti}
-                      disabled={selected.length === 0}
-                    >
-                      Stake({selected.length})
-                    </Button>
-                  ) : (
-                    <Button
-                      onClick={unstakeMulti}
-                      disabled={selected.length === 0}
-                    >
-                      Unstake({selected.length})
-                    </Button>
-                  )}
+                  <Button
+                    onClick={tab === "wallet" ? stakeMulti : unstakeMulti}
+                    disabled={selected.length === 0}
+                  >
+                    {loading ? (
+                      <div className="w-6 h-6">
+                        <LoadingSpin />
+                      </div>
+                    ) : (
+                      <>
+                        {tab === "wallet"
+                          ? "Stake(" + selected.length + ")"
+                          : "Unstake(" + selected.length + ")"}
+                      </>
+                    )}
+                  </Button>
                 </>
               ) : (
                 <p
@@ -257,7 +259,6 @@ const StakeModal = () => {
                   Cancel
                 </p>
               ))}
-            {console.log("walletNfts-----", walletNfts)}
             {tab === "wallet" &&
               walletNfts &&
               walletNfts.length !== 0 &&
