@@ -232,22 +232,21 @@ const StakeModal = () => {
                   <Button onClick={cancelSelect} variant="secondary">
                     Cancel
                   </Button>
-                  <Button
-                    onClick={tab === "wallet" ? stakeMulti : unstakeMulti}
-                    disabled={selected.length === 0}
-                  >
-                    {loading ? (
-                      <div className="w-6 h-6">
-                        <LoadingSpin />
-                      </div>
-                    ) : (
-                      <>
-                        {tab === "wallet"
-                          ? "Stake(" + selected.length + ")"
-                          : "Unstake(" + selected.length + ")"}
-                      </>
-                    )}
-                  </Button>
+                 {tab === "wallet" ? (
+                    <Button
+                      onClick={stakeMulti}
+                      disabled={selected.length === 0}
+                    >
+                      Stake({selected.length})
+                    </Button>
+                  ) : (
+                    <Button
+                      onClick={unstakeMulti}
+                      disabled={selected.length === 0}
+                    >
+                      Unstake({selected.length})
+                    </Button>
+                  )}
                 </>
               ) : (
                 <p
