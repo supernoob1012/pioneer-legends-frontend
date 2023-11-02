@@ -58,10 +58,10 @@ const StakeModal = () => {
 
   switch (title) {
     case "airship":
-      faction = "Governor";
+      faction = "Outlaw";
       break;
     case "townhall":
-      faction = "Outlaw";
+      faction = "Governor";
       break;
     case "mining":
       faction = "Miner";
