@@ -88,6 +88,7 @@ export default function Index(props: { isMute: boolean; setIsMute: Function }) {
       const timeDuration = (end_time - time_start) / 1000;
       const loadedBits = downloadSize * 8;
       const bps = (loadedBits / timeDuration).toFixed(2);
+      // @ts-ignore
       const mbps = (bps / 1048576).toFixed(2);
 
       console.log("Speed", mbps, typeof mbps);
