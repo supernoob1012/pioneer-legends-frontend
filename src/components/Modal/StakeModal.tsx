@@ -34,6 +34,13 @@ const StakeModal = () => {
   const { getNfts } = useContext<UserContextProps>(UserContext);
   const [isWalletSelected, setWalletSelected] = useState(false);
 
+  useEffect(() => {
+    console.log(
+      "----------------------------------------------------",
+      useData
+    );
+  }, [useData]);
+
   const notify = () =>
     toast(
       "!\u00A0\u00A0\u00A0\u00A0\u00A0You have reached your selection limit."
@@ -117,6 +124,9 @@ const StakeModal = () => {
   return (
     <div className="fixed left-0 top-0 bottom-0 right-0 z-[200] flex items-center justify-center backdrop-blur-[20px] bg-[#000000]/40">
       <div className="w-[974px] h-[590px] max-lg:w-[calc(100%-32px)] max-md:w-screen max-md:h-screen bg-[linear-gradient(180deg,#0F0902_0%,#26211E_100%)] relative after:absolute after:top-2 after:left-2 after:bottom-2 after:right-2 max-md:after:top-0 max-md:after:left-0 max-md:after:bottom-0 max-md:after:right-0 after:bg-[linear-gradient(180deg,#1F1B18_0%,#393028_100%)] after:shadow-[0_0_4px_0_rgba(0,0,0,0.80),1px_1px_2px_0_#37322F_inset]">
+        {/**
+         * Make corner image
+         */}
         <img
           src="/img/Deco_leftbottom.png"
           alt="B_L"
@@ -137,6 +147,9 @@ const StakeModal = () => {
           alt="T_R"
           className="absolute -top-1 -right-1 z-[2] max-md:hidden"
         />
+        {/**
+         * Make banner image
+         */}
         <img
           src="/img/banner.png"
           alt="Banner"
@@ -148,6 +161,9 @@ const StakeModal = () => {
           <p className="text-[24px] font-secondary text-primary-100 leading-[1.33] uppercase">
             {title}
           </p>
+          {/**
+           * Close button UI
+           */}
           {isMobile ? (
             <CloseButton
               className="absolute right-5 top-[34px] z-50"
@@ -166,23 +182,32 @@ const StakeModal = () => {
             stakedNumber={stakedNfts.length}
             walletNumber={walletNfts.length}
           />
-          {selectAble && (
+          {/* {selectAble && (
             <div className="fixed bottom-0 h-[88px] w-full md:hidden flex justify-center items-center backdrop-blur-sm bg-[#342B2590] left-0 z-[100]">
               <Button
                 onClick={tab === "wallet" ? stakeMulti : unstakeMulti}
-                disabled={selected.length === 0}
+                disabled={selected.length === 0 || loading}
                 style={{
                   width: "calc(100vw - 40px)",
                   marginLeft: "8px",
                   marginRight: "8px",
                 }}
               >
-                {tab === "wallet"
-                  ? "Stake(" + selected.length + ")"
-                  : "Unstake(" + selected.length + ")"}
+                {loading ? (
+                  <div className="w-6 h-6">
+                    {console.group("---------", loading)}
+                    <LoadingSpin />
+                  </div>
+                ) : (
+                  <>
+                    {tab === "wallet"
+                      ? "Stake(" + selected.length + ")"
+                      : "Unstake(" + selected.length + ")"}
+                  </>
+                )}
               </Button>
             </div>
-          )}
+          )} */}
           <div className="flex max-md:mr-5 md:gap-8">
             {selectAble &&
               (isMobile ? (
@@ -216,6 +241,7 @@ const StakeModal = () => {
                   Cancel
                 </p>
               ))}
+            {console.log("walletNfts-----", walletNfts)}
             {tab === "wallet" &&
               walletNfts &&
               walletNfts.length !== 0 &&
