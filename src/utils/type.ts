@@ -7,6 +7,7 @@ export interface NftItem {
   user: string;
   startTime: string;
   uri: string;
+  faction: string;
 }
 
 export interface User {
