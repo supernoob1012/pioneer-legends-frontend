@@ -2,57 +2,20 @@
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 
-@keyframes cursor {
-  0% {
-    cursor: url("/cursor/Nomal50_500000.png"), auto;
-  }
-  10% {
-    cursor: url("/cursor/Nomal50_500001.png"), auto;
-  }
-  20% {
-    cursor: url("/cursor/Nomal50_500002.png"), auto;
-  }
-  30% {
-    cursor: url("/cursor/Nomal50_500003.png"), auto;
-  }
-  40% {
-    cursor: url("/cursor/Nomal50_500004.png"), auto;
-  }
-  50% {
-    cursor: url("/cursor/Nomal50_500005.png"), auto;
-  }
-  60% {
-    cursor: url("/cursor/Nomal50_500006.png"), auto;
-  }
-  70% {
-    cursor: url("/cursor/Nomal50_500007.png"), auto;
-  }
-  80% {
-    cursor: url("/cursor/Nomal50_500008.png"), auto;
-  }
-  90% {
-    cursor: url("/cursor/Nomal50_500009.png"), auto;
-  }
-}
-button{
-  cursor: none;
-}
+
 * {
   scroll-behavior: smooth;
-  // animation: cursor 1s infinite;
+  cursor: url('/cursor/normal.png'), auto;
 }
 
-// *:active {
-  //   cursor: url("/cursor/hover.png"), auto;
-  // }
-  body {
-    cursor: none !important; /* Hide the default cursor */
-  }
 
 html {
   background-color: #201913;
 }
+.custom-hover-cursor{
+  cursor: url('/cursor/hover.png'), auto;
 
+}
 .gradient-bg {
   background: linear-gradient(180deg, #4d4036 0%, #362c23 28.12%, #261c13 100%),
     #d9d9d9 !important;

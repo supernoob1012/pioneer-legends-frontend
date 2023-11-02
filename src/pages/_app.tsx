@@ -50,18 +50,6 @@ function initializeGTM() {
 export default function App({ Component, pageProps }: AppProps) {
   const [position, setPosition] = useState({ x: -100, y: -100 });
 
-  // Update cursor position on mouse movement
-  const updateCursorPosition = (e: MouseEvent) => {
-    setPosition({ x: e.clientX, y: e.clientY });
-  };
-
-  useEffect(() => {
-    document.addEventListener("mousemove", updateCursorPosition);
-    return () => {
-      document.removeEventListener("mousemove", updateCursorPosition);
-    };
-  }, []);
-
   useEffect(() => {
     initializeGTM();
   }, []);
@@ -70,11 +58,6 @@ export default function App({ Component, pageProps }: AppProps) {
       <WalletModalProvider>
         <UserProvider>
           <ModalProvider>
-            <CustomCursor
-              style={{ left: `${position.x}px`, top: `${position.y}px` }}
-            >
-              <Image src="/cursor/cursor.gif" width={50} height={50} alt="" />
-            </CustomCursor>
             <MainLayout>
               <Component {...pageProps} />
               <ProfileModal />
