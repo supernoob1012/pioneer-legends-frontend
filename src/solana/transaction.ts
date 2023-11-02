@@ -29,6 +29,7 @@ import { WalletContextState } from "@solana/wallet-adapter-react";
 import axios from "axios";
 import { BACKEND_URL } from "../config";
 import { toast } from "react-toastify";
+import { successAlert } from "../components/ToastGroup";
 
 export const createInitUserTx = async (
   userAddress: PublicKey,
@@ -237,7 +238,7 @@ export const createLockMultiPnftTx = async (
         })
       );
       await getNfts();
-      toast.success(`Successfully locked ${confirmed} NFTs`);
+      successAlert(`Successfully locked ${confirmed} NFTs`);
     }
   } catch (error) {
     console.log(error);
@@ -393,6 +394,6 @@ export const createUnlockPnftMultiTx = async (
       })
     );
     await getNfts();
-    toast.success(`Successfully unlocked ${confirmed} NFTs`);
+    successAlert(`Successfully unlocked ${confirmed} NFTs`);
   }
 }

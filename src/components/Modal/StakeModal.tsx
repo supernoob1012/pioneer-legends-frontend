@@ -52,8 +52,23 @@ const StakeModal = () => {
       await unStakeMultiNFT(wallet, selected, setLoading, getNfts);
     }
   };
+  let faction: string;
 
-  const stakedNfts = allNftList.filter((item) => item.staked);
+  switch (title) {
+    case 'airship':
+      faction = "First Faction";
+      break;
+    case 'townhall':
+      faction = "Second Faction";
+      break;
+    case 'mining':
+      faction = "Third Faction";
+      break;
+    default:
+      faction = "Unknown Faction";
+      break;
+  }
+  const stakedNfts = allNftList.filter((item) => item.staked && item.faction === faction);
   const walletNfts = allNftList.filter((item) => !item.staked);
 
   const cancelSelect = () => {
@@ -70,6 +85,7 @@ const StakeModal = () => {
 
   useEffect(() => {
     cancelSelect();
+    console.log(stakedNfts, "stakedNFT")
   }, [tab]);
 
   const closeModal = () => {
