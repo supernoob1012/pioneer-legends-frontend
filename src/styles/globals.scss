@@ -53,17 +53,14 @@ button {
   // animation: cursor 1s infinite;
 }
 
-// *:hover {
-//   cursor: url("/cursor/hover.png"), auto;
-// }
-
-// *:active {
-//   cursor: url("/cursor/hover.png"), auto;
-// }
 body {
   cursor: none !important;
   /* Hide the default cursor */
 }
+
+// *:active {
+//   cursor: url("/cursor/hover.png"), auto;
+// }
 
 html {
   background-color: #201913;
