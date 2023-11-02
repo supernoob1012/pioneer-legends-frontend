@@ -41,16 +41,13 @@ button{
   scroll-behavior: smooth;
   // animation: cursor 1s infinite;
 }
-// *:hover {
-//   cursor: url("/cursor/hover.png"), auto;
-// }
 
 // *:active {
-//   cursor: url("/cursor/hover.png"), auto;
-// }
-body {
-  cursor: none !important; /* Hide the default cursor */
-}
+  //   cursor: url("/cursor/hover.png"), auto;
+  // }
+  body {
+    cursor: none !important; /* Hide the default cursor */
+  }
 
 html {
   background-color: #201913;

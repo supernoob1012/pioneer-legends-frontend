@@ -418,17 +418,7 @@ const Map = () => {
         </div>
       </main>
       {/* <Loading /> */}
-      <Button onClick={() => {
-        toast.info("shti", {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          theme: "colored",
-        });
-      }}>CLICK ME</Button>
+
     </>
   );
 };
