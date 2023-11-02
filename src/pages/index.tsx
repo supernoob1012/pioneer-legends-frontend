@@ -122,7 +122,7 @@ export default function Index(props: { isMute: boolean; setIsMute: Function }) {
         />
         <video
           ref={video}
-          className="w-full h-screen z-20 object-cover object-center"
+          className="w-full h-screen object-cover object-center fixed z-[1]"
           autoPlay={true}
           loop
           muted
@@ -168,7 +168,7 @@ export default function Index(props: { isMute: boolean; setIsMute: Function }) {
             <BiSolidVolumeFull className="text-white" />
           )}
         </div>
-        <div className="relative overflow-hidden z-20 top-[-100vh]">
+        <div className="relative overflow-hidden z-20">
           <div className="grid place-content-center h-screen relative z-10">
             <Link href={"#content"} passHref>
               <div className="w-10 h-10 absolute left-1/2 -translate-x-1/2 bottom-[56px] cursor-pointer drop-scroll">

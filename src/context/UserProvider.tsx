@@ -142,7 +142,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
     );
     setAllNftList(nfts.filter(Boolean));
 
-    console.log("getNFG------");
+    console.log("getNFG------", nfts);
     if (once) {
       setIsDataLoading(false);
     }
