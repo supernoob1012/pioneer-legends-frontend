@@ -115,15 +115,15 @@ const StakeCard: FC<ItemProps> = ({
         </div>
       </div>
 
-      {isShowOrigin && selectAble && (
-        <div className="fixed left-0 top-0 w-screen h-screen backdrop-blur-[10px] z-50 bg-[#000000CC]">
+      {isShowOrigin && (
+        <div className="fixed left-0 top-0 w-screen h-screen backdrop-blur-[10px] z-[750] bg-[#000000CC]">
           <img
-            src={image}
-            className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[100vh] md:h-screen h-auto"
+            src="/img/avatar.png"
+            className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[100vw] md:w-auto h-auto md:h-screen"
             alt=""
           />
           <button
-            className="absolute md:right-[96px] md:top-9 z-40 top-6 right-6"
+            className="absolute md:right-[96px] right-5 top-9 z-40 md:w-[30px] md:h-[30px] w-6 h-6 flex items-center justify-center"
             onClick={() => setIsShowOrigin(false)}
           >
             <CloseIcon />
