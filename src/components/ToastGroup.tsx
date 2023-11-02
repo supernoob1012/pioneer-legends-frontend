@@ -1,5 +1,4 @@
 import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 
 export const successAlert = (text: string) => {
   toast.info(text, {

@@ -29,7 +29,7 @@ const TitleBox: FC<BoxProps> = ({
 }) => {
   return (
     <div
-      className="absolute z-10 cursor-pointer"
+      className="absolute z-10 "
       style={{
         left,
         top,

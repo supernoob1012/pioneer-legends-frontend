@@ -17,7 +17,7 @@ const StakeTab: FC<TabProps> = ({
   return (
     <div className="h-10 flex">
       <button
-        className="w-[137px] h-10 cursor-pointer relative"
+        className="w-[137px] h-10  relative"
         onClick={() => setTab("wallet")}
       >
         <div
@@ -45,7 +45,7 @@ const StakeTab: FC<TabProps> = ({
           />
         )}
       </button>
-      <button className="w-[137px] h-10 cursor-pointer relative"
+      <button className="w-[137px] h-10  relative"
         onClick={() => setTab("staked")}>
         <div
           className="text-[16px] relative z-10"

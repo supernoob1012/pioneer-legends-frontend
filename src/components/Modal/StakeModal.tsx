@@ -130,7 +130,7 @@ const StakeModal = () => {
           You have no NFT,
           <br />
           buy one from{" "}
-          <span className="underline cursor-pointer">
+          <span className="underline ">
             <a>Magic Eden</a>
           </span>{" "}
           now!
@@ -250,7 +250,7 @@ const StakeModal = () => {
                 </>
               ) : (
                 <p
-                  className={`text-sm font-medium text-white cursor-pointer`}
+                  className={`text-sm font-medium text-white `}
                   onClick={() => {
                     cancelSelect();
                   }}
@@ -272,7 +272,7 @@ const StakeModal = () => {
                 </Button>
               ) : (
                 <p
-                  className={`text-sm font-medium text-white cursor-pointer`}
+                  className={`text-sm font-medium text-white `}
                   onClick={() => {
                     setWalletSelected(!isWalletSelected);
                     setSelectAble(true);

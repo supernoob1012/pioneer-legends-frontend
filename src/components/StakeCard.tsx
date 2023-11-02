@@ -93,7 +93,7 @@ const StakeCard: FC<ItemProps> = ({
             {!staked && !selectAble ? (
               <div className="flex w-full justify-center">
                 <div
-                  className="stake_button cursor-pointer"
+                  className="stake_button "
                   onClick={() => {
                     console.log("mint");
                     // StakeNFT(mint!);

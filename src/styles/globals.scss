@@ -3,29 +3,55 @@
 @import "tailwindcss/utilities";
 
 @keyframes cursor {
-  0% { cursor: url('/cursor/Nomal50_500000.png'), auto; }
-  10% { cursor: url('/cursor/Nomal50_500001.png'), auto; }
-  20% { cursor: url('/cursor/Nomal50_500002.png'), auto; }
-  30% { cursor: url('/cursor/Nomal50_500003.png'), auto; }
-  40% { cursor: url('/cursor/Nomal50_500004.png'), auto; }
-  50% { cursor: url('/cursor/Nomal50_500005.png'), auto; }
-  60% { cursor: url('/cursor/Nomal50_500006.png'), auto; }
-  70% { cursor: url('/cursor/Nomal50_500007.png'), auto; }
-  80% { cursor: url('/cursor/Nomal50_500008.png'), auto; }
-  90% { cursor: url('/cursor/Nomal50_500009.png'), auto; }
+  0% {
+    cursor: url("/cursor/Nomal50_500000.png"), auto;
+  }
+  10% {
+    cursor: url("/cursor/Nomal50_500001.png"), auto;
+  }
+  20% {
+    cursor: url("/cursor/Nomal50_500002.png"), auto;
+  }
+  30% {
+    cursor: url("/cursor/Nomal50_500003.png"), auto;
+  }
+  40% {
+    cursor: url("/cursor/Nomal50_500004.png"), auto;
+  }
+  50% {
+    cursor: url("/cursor/Nomal50_500005.png"), auto;
+  }
+  60% {
+    cursor: url("/cursor/Nomal50_500006.png"), auto;
+  }
+  70% {
+    cursor: url("/cursor/Nomal50_500007.png"), auto;
+  }
+  80% {
+    cursor: url("/cursor/Nomal50_500008.png"), auto;
+  }
+  90% {
+    cursor: url("/cursor/Nomal50_500009.png"), auto;
+  }
 }
-
+button{
+  cursor: none;
+}
 * {
   scroll-behavior: smooth;
-  animation: cursor 1s infinite;
+  // animation: cursor 1s infinite;
 }
-*:hover {
-  cursor: url('/cursor/hover.png'), auto;
+// *:hover {
+//   cursor: url("/cursor/hover.png"), auto;
+// }
+
+// *:active {
+//   cursor: url("/cursor/hover.png"), auto;
+// }
+body {
+  cursor: none !important; /* Hide the default cursor */
 }
 
-*:active {
-  cursor: url('/cursor/hover.png'), auto;
-}
 html {
   background-color: #201913;
 }
@@ -140,9 +166,11 @@ main {
 }
 
 .elipse-animate {
-  background: radial-gradient(45.54% 45.54% at 50% 50%,
-      #fff 0%,
-      rgba(0, 0, 0, 0) 100%);
+  background: radial-gradient(
+    45.54% 45.54% at 50% 50%,
+    #fff 0%,
+    rgba(0, 0, 0, 0) 100%
+  );
   mix-blend-mode: color-dodge;
   width: 84px;
   height: 54px;
@@ -220,8 +248,10 @@ main {
   height: 100%;
   top: 0;
   left: 0;
-  background-size: calc(100% - 20px) 2px, calc(100% - 20px) 2px, 20px 100%, 2px 65%, 20px 100%, 20px 100%, 2px 65%, 20px 100%;
-  background-position: 50% 100%, 50% 0%, 100% 24px, 100% 50%, 100% -24px, 0 -24px, 0 50%, 0 24px;
+  background-size: calc(100% - 20px) 2px, calc(100% - 20px) 2px, 20px 100%,
+    2px 65%, 20px 100%, 20px 100%, 2px 65%, 20px 100%;
+  background-position: 50% 100%, 50% 0%, 100% 24px, 100% 50%, 100% -24px,
+    0 -24px, 0 50%, 0 24px;
   background-repeat: no-repeat, no-repeat;
 }
 
@@ -251,16 +281,19 @@ main {
   border-top: 25px solid #27221d;
 }
 
-
 .tooltip1 {
-  background: linear-gradient(180deg, #0F0902 0%, #26211E 100%);
+  background: linear-gradient(180deg, #0f0902 0%, #26211e 100%);
   opacity: 0.7;
 }
 
 .tooltip2 {
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.40) 0%, rgba(255, 255, 255, 0.00) 100%), linear-gradient(180deg, #0F0902 0%, #26211E 100%);
+  background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.4) 0%,
+      rgba(255, 255, 255, 0) 100%
+    ),
+    linear-gradient(180deg, #0f0902 0%, #26211e 100%);
   opacity: 0.7;
-
 }
 
 .hand_anim {
@@ -269,7 +302,8 @@ main {
 }
 
 @keyframes hand {
-  0% {}
+  0% {
+  }
 
   33% {
     transform: translateX(0);
@@ -299,9 +333,27 @@ main {
 .stake_button {
   width: 134px;
   height: 25px;
-  background: linear-gradient(180deg, #376F73 0%, #3C433C 100%);
-  -webkit-clip-path: polygon(6px 0, calc(100% - 6px) 0, 100% 6px, 100% calc(100% - 6px), calc(100% - 6px) 100%, 6px 100%, 0 calc(100% - 6px), 0 6px);
-  clip-path: polygon(6px 0, calc(100% - 6px) 0, 100% 6px, 100% calc(100% - 6px), calc(100% - 6px) 100%, 6px 100%, 0 calc(100% - 6px), 0 6px);
+  background: linear-gradient(180deg, #376f73 0%, #3c433c 100%);
+  -webkit-clip-path: polygon(
+    6px 0,
+    calc(100% - 6px) 0,
+    100% 6px,
+    100% calc(100% - 6px),
+    calc(100% - 6px) 100%,
+    6px 100%,
+    0 calc(100% - 6px),
+    0 6px
+  );
+  clip-path: polygon(
+    6px 0,
+    calc(100% - 6px) 0,
+    100% 6px,
+    100% calc(100% - 6px),
+    calc(100% - 6px) 100%,
+    6px 100%,
+    0 calc(100% - 6px),
+    0 6px
+  );
   position: relative;
 
   &::after {
@@ -309,9 +361,17 @@ main {
     content: "";
     width: 100%;
     height: 100%;
-    background: linear-gradient(to right, #3E777A, #3E777A), linear-gradient(45deg, transparent 40%, #3E777A 40%), linear-gradient(to right, #3E777A, #3E777A), linear-gradient(135deg, transparent 40%, #3E777A 40%), linear-gradient(225deg, transparent 40%, #3E777A 40%), linear-gradient(to right, #3E777A, #3E777A), linear-gradient(315deg, transparent 40%, #3E777A 40%);
-    background-size: calc(100% - 6px) 2px, 6px 6px, 2px calc(100% - 6px), 6px 6px, 6px 6px, 2px calc(100% - 6px), 6px 6px;
-    background-position: 6px 0, 100% 10%, 100% 6px, 100% 90%, 0 90%, 0 6px, 0 10%;
+    background: linear-gradient(to right, #3e777a, #3e777a),
+      linear-gradient(45deg, transparent 40%, #3e777a 40%),
+      linear-gradient(to right, #3e777a, #3e777a),
+      linear-gradient(135deg, transparent 40%, #3e777a 40%),
+      linear-gradient(225deg, transparent 40%, #3e777a 40%),
+      linear-gradient(to right, #3e777a, #3e777a),
+      linear-gradient(315deg, transparent 40%, #3e777a 40%);
+    background-size: calc(100% - 6px) 2px, 6px 6px, 2px calc(100% - 6px),
+      6px 6px, 6px 6px, 2px calc(100% - 6px), 6px 6px;
+    background-position: 6px 0, 100% 10%, 100% 6px, 100% 90%, 0 90%, 0 6px,
+      0 10%;
     background-repeat: no-repeat, no-repeat;
   }
 }
@@ -319,8 +379,14 @@ main {
 .social_panel {
   width: 116px;
   height: 56px;
-  background: linear-gradient(180deg, #0F0902 -3.57%, #26211E 103.57%);
-  -webkit-clip-path: polygon(0 0, calc(100% - 6px) 0, 100% 6px, 100% 100%, 0 100%);
+  background: linear-gradient(180deg, #0f0902 -3.57%, #26211e 103.57%);
+  -webkit-clip-path: polygon(
+    0 0,
+    calc(100% - 6px) 0,
+    100% 6px,
+    100% 100%,
+    0 100%
+  );
   clip-path: polygon(0 0, calc(100% - 6px) 0, 100% 6px, 100% 100%, 0 100%);
   backdrop-filter: blur(5px);
 }
@@ -353,10 +419,10 @@ main {
     content: "";
     width: 4px;
     height: 4px;
-    background-color: #FFD77400;
-    border-top: #FFD774;
-    border-right: #FFD774;
-    border-color: #FFD774;
+    background-color: #ffd77400;
+    border-top: #ffd774;
+    border-right: #ffd774;
+    border-color: #ffd774;
     border-width: 1px;
     bottom: -1px;
     left: -1px;
@@ -367,17 +433,15 @@ main {
     content: "";
     width: 4px;
     height: 4px;
-    background-color: #FFD77400;
-    border-bottom: #FFD774;
-    border-left: #FFD774;
-    border-color: #FFD774;
+    background-color: #ffd77400;
+    border-bottom: #ffd774;
+    border-left: #ffd774;
+    border-color: #ffd774;
     border-width: 1px;
     top: -1px;
     right: -1px;
-
   }
 }
-
 
 .circle {
   width: 20px;
@@ -387,7 +451,7 @@ main {
   background-color: #fff;
   left: 15%;
   transform-origin: 50%;
-  animation: circle .5s alternate infinite ease;
+  animation: circle 0.5s alternate infinite ease;
 }
 
 @keyframes circle {
@@ -411,27 +475,27 @@ main {
 
 .circle:nth-child(2) {
   left: 45%;
-  animation-delay: .2s;
+  animation-delay: 0.2s;
 }
 
 .circle:nth-child(3) {
   left: auto;
   right: 15%;
-  animation-delay: .3s;
+  animation-delay: 0.3s;
 }
 
 .shadow {
   width: 20px;
   height: 4px;
   border-radius: 50%;
-  background-color: rgba(0, 0, 0, .5);
+  background-color: rgba(0, 0, 0, 0.5);
   position: absolute;
   top: 62px;
   transform-origin: 50%;
   z-index: -1;
   left: 15%;
   filter: blur(1px);
-  animation: shadow .5s alternate infinite ease;
+  animation: shadow 0.5s alternate infinite ease;
 }
 
 @keyframes shadow {
@@ -441,30 +505,30 @@ main {
 
   40% {
     transform: scaleX(1);
-    opacity: .7;
+    opacity: 0.7;
   }
 
   100% {
-    transform: scaleX(.2);
-    opacity: .4;
+    transform: scaleX(0.2);
+    opacity: 0.4;
   }
 }
 
 .shadow:nth-child(4) {
   left: 45%;
-  animation-delay: .2s
+  animation-delay: 0.2s;
 }
 
 .shadow:nth-child(5) {
   left: auto;
   right: 15%;
-  animation-delay: .3s;
+  animation-delay: 0.3s;
 }
 
 .wrapper span {
   position: absolute;
   top: 75px;
-  font-family: 'Lato';
+  font-family: "Lato";
   font-size: 20px;
   letter-spacing: 12px;
   color: #fff;

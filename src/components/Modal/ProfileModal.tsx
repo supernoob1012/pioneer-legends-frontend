@@ -278,7 +278,7 @@ const PfpCard = ({
 
   return (
     <div
-      className="aspect-square relative max-h-[calc((100% - 16px)/3)] cursor-pointer card-mask"
+      className="aspect-square relative max-h-[calc((100% - 16px)/3)]  card-mask"
       onClick={() => {
         setIsClicked(!isClicked);
         setCheckedImage(image);

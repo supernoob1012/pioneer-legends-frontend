@@ -54,7 +54,7 @@ const TopProfile: FC<Props> = ({ address }) => {
       />
       <div className="flex items-center justify-between relative z-20 w-full pr-4">
         <div
-          className="flex items-center cursor-pointer"
+          className="flex items-center "
           onClick={() => {
             if (!isDataLoading) {
               setIsMyWalletModal(true);

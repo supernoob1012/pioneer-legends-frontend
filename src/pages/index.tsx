@@ -170,7 +170,7 @@ export default function Index(props: { isMute: boolean; setIsMute: Function }) {
           </div>
         )}
         <div
-          className="h-8 w-8 fixed right-8 bottom-8 bg-[linear-gradient(180deg,rgba(15,9,2,0.7)_0%,rgba(38,33,30,0.7)_100%)] flex items-center justify-center z-50 cursor-pointer"
+          className="h-8 w-8 fixed right-8 bottom-8 bg-[linear-gradient(180deg,rgba(15,9,2,0.7)_0%,rgba(38,33,30,0.7)_100%)] flex items-center justify-center z-50 "
           onClick={playingButton}
         >
           {!isPlaying ? (
@@ -186,7 +186,7 @@ export default function Index(props: { isMute: boolean; setIsMute: Function }) {
         >
           <div className="grid place-content-center h-screen relative z-10">
             <Link href={"#content"} passHref>
-              <div className="w-10 h-10 absolute left-1/2 -translate-x-1/2 bottom-[56px] cursor-pointer drop-scroll">
+              <div className="w-10 h-10 absolute left-1/2 -translate-x-1/2 bottom-[56px]  drop-scroll">
                 <DownArrowIcon />
               </div>
             </Link>

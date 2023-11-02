@@ -43,14 +43,14 @@ const HomeHeader: FC<Props> = ({ scroll }) => {
               target="_blank"
               rel="noopener noreferrer"
             >
-              <BsTwitter className="text-white text-2xl cursor-pointer" />
+              <BsTwitter className="text-white text-2xl " />
             </a>
             <a
               href="https://discord.com/invite/pioneerlegends"
               target="_blank"
               rel="noopener noreferrer"
             >
-              <BsDiscord className="text-white text-2xl cursor-pointer" />
+              <BsDiscord className="text-white text-2xl " />
             </a>
           </div>
         </div>

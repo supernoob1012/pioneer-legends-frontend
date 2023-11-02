@@ -19,6 +19,8 @@ import ScrollBooster from "scrollbooster";
 import { UserTech } from "../components/UserTech";
 import { UserContext, UserContextProps } from "../context/UserProvider";
 import { BiSolidVolumeFull, BiSolidVolumeMute } from "react-icons/bi";
+import Button from "../components/Button";
+import { toast } from "react-toastify";
 
 const Map = () => {
   const { width, height } = useWindowSize();
@@ -201,7 +203,7 @@ const Map = () => {
               pfp=""
             />
             <Link href={"/"} passHref>
-              <div className="w-[289px] h-[32px] absolute top-[21px] left-[26px] z-50 cursor-pointer opacity-0 lg:opacity-100 pointer-events-none lg:pointer-events-auto">
+              <div className="w-[289px] h-[32px] absolute top-[21px] left-[26px] z-50  opacity-0 lg:opacity-100 pointer-events-none lg:pointer-events-auto">
                 <img src="/img/logo@text.png" className="relative" alt="" />
               </div>
             </Link>
@@ -243,7 +245,7 @@ const Map = () => {
                   transform: `scale(${scale}%)`,
                   opacity: 1,
                 }}
-                className="cursor-pointer group"
+                className=" group"
                 onClick={() => handleOpenSpaceship("airship")}
               >
                 <img
@@ -296,7 +298,7 @@ const Map = () => {
                   transform: `scale(${scale}%)`,
                 }}
                 onClick={() => handleOpenSpaceship("townhall")}
-                className="cursor-pointer group"
+                className=" group"
               >
                 <img
                   src="/img/build-hover.png"
@@ -348,7 +350,7 @@ const Map = () => {
                   transform: `scale(${scale}%)`,
                 }}
                 onClick={() => handleOpenSpaceship("mining")}
-                className="cursor-pointer group"
+                className=" group"
               >
                 <img
                   src="/img/build-hover1.png"
@@ -395,7 +397,7 @@ const Map = () => {
               {isTech && <UserTech setIsTech={setIsTech} />}
             </div>
             <div
-              className="h-8 w-8 fixed right-8 bottom-8 bg-[linear-gradient(180deg,rgba(15,9,2,0.7)_0%,rgba(38,33,30,0.7)_100%)] flex items-center justify-center z-50 cursor-pointer"
+              className="h-8 w-8 fixed right-8 bottom-8 bg-[linear-gradient(180deg,rgba(15,9,2,0.7)_0%,rgba(38,33,30,0.7)_100%)] flex items-center justify-center z-50 "
               onClick={playingButton}
             >
               {!isPlaying ? (
@@ -407,7 +409,18 @@ const Map = () => {
           </div>
         </div>
       </main>
-      <Loading />
+      {/* <Loading /> */}
+      <Button onClick={() => {
+        toast.info("shti", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          theme: "colored",
+        });
+      }}>CLICK ME</Button>
     </>
   );
 };

@@ -10,7 +10,7 @@ const SocialLink: FC<Props> = ({ className, isDark }) => {
   return (
     <div className={`flex gap-4 ${className ? className : ""}`}>
       <Link href="#" passHref>
-        <div className="flex space-x-2 items-center cursor-pointer">
+        <div className="flex space-x-2 items-center ">
           <Image
             src={"/icons/twitter.svg"}
             width={34}
@@ -22,7 +22,7 @@ const SocialLink: FC<Props> = ({ className, isDark }) => {
         </div>
       </Link>
       <Link href="#" passHref>
-        <div className="flex space-x-2 items-center cursor-pointer">
+        <div className="flex space-x-2 items-center ">
           <Image
             src={"/icons/discord.svg"}
             width={34}

@@ -16,7 +16,7 @@ export const UserTech = ({
         </h1>
       </div>
       <div
-        className="absolute -top-2 -right-2 flex items-center justify-center bg-[linear-gradient(180deg,rgba(15,9,2,0.7)_0%,rgba(38,33,30,0.7)_100%)] backdrop-blur-[4.5px] w-8 h-8 cursor-pointer group"
+        className="absolute -top-2 -right-2 flex items-center justify-center bg-[linear-gradient(180deg,rgba(15,9,2,0.7)_0%,rgba(38,33,30,0.7)_100%)] backdrop-blur-[4.5px] w-8 h-8  group"
         onClick={() => setIsTech(false)}
       >
         <Image
