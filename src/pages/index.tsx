@@ -90,8 +90,6 @@ export default function Index(props: { isMute: boolean; setIsMute: Function }) {
       const bps = (loadedBits / timeDuration).toFixed(2);
       // @ts-ignore
       const mbps = (bps / 1048576).toFixed(2);
-
-      console.log("Speed", mbps, typeof mbps);
       setIsNetSpeed(mbps);
     }
   }, []);
