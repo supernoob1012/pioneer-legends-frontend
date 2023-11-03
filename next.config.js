@@ -16,6 +16,6 @@ module.exports = {
   reactStrictMode: true,
   output: 'export',
   images: {
-      domains: ['arweave.net'],
+      domains: ['arweave.net', 'ipfs.io'],
   },
 }
