@@ -13,10 +13,12 @@
 html {
   background-color: #201913;
 }
-.custom-hover-cursor{
+
+.custom-hover-cursor {
   cursor: url('/cursor/hover.png'), auto;
 
 }
+
 .gradient-bg {
   background: linear-gradient(180deg, #4d4036 0%, #362c23 28.12%, #261c13 100%),
     #d9d9d9 !important;
@@ -344,6 +346,14 @@ main {
 .blank_card {
   width: 154px;
   height: 220px;
+  background: black;
+  -webkit-clip-path: polygon(8px 0, 100% 0, 100% 100%, 0 100%, 0 8px);
+  clip-path: polygon(8px 0, 100% 0, 100% 100%, 0 100%, 0 8px);
+}
+
+.blank_card1 {
+  width: 116px;
+  height: 116px;
   background: black;
   -webkit-clip-path: polygon(8px 0, 100% 0, 100% 100%, 0 100%, 0 8px);
   clip-path: polygon(8px 0, 100% 0, 100% 100%, 0 100%, 0 8px);

@@ -104,19 +104,19 @@ const StakeModal = () => {
   const BlankCards = () => {
     return (
       <>
-        <div className="w-[154px] h-[220px] shadow-[6px_6px_0_#1E1915] opacity-10">
+        <div className="w-[154px] h-[220px] shadow-[6px_6px_0_#1E1915] opacity-10 justify-self-center">
           <div className="blank_card"></div>
         </div>
-        <div className="w-[154px] h-[220px] shadow-[6px_6px_0_#1E1915] opacity-10">
+        <div className="w-[154px] h-[220px] shadow-[6px_6px_0_#1E1915] opacity-10 justify-self-center">
           <div className="blank_card"></div>
         </div>
-        <div className="w-[154px] h-[220px] shadow-[6px_6px_0_#1E1915] opacity-10">
+        <div className="w-[154px] h-[220px] shadow-[6px_6px_0_#1E1915] opacity-10 justify-self-center">
           <div className="blank_card"></div>
         </div>
-        <div className="w-[154px] h-[220px] shadow-[6px_6px_0_#1E1915] opacity-10">
+        <div className="w-[154px] h-[220px] shadow-[6px_6px_0_#1E1915] opacity-10 justify-self-center">
           <div className="blank_card"></div>
         </div>
-        <div className="w-[154px] h-[220px] shadow-[6px_6px_0_#1E1915] opacity-10">
+        <div className="w-[154px] h-[220px] shadow-[6px_6px_0_#1E1915] opacity-10 justify-self-center">
           <div className="blank_card"></div>
         </div>
         <h1 className="absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 font-medium text-center text-[#E4DECD]">

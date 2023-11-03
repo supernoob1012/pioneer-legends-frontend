@@ -6,6 +6,7 @@ import { FC, useEffect, useState } from "react";
 interface BoxProps {
   username: string;
   setUsername: Function;
+  isChanged: boolean;
   inputActive: boolean;
   setIsChanged: React.Dispatch<React.SetStateAction<boolean>>;
 }
@@ -14,42 +15,48 @@ const DisplayNamebox: FC<BoxProps> = ({
   username,
   setUsername,
   inputActive,
+  isChanged,
   setIsChanged,
 }) => {
   const { userData } = useUserData();
   const { publicKey } = useWallet();
+  const [isActive, setIsActive] = useState(false);
+
   const handleUsername = (value: string) => {
-    console.log("username", userData.username);
     setUsername(value);
-    if (userData.username === value) {
+    if (userData.username && userData.username === value) {
       setIsChanged(false);
     } else {
       setIsChanged(true);
     }
-    if (value === "") {
-    }
   };
-  const [isActive, setIsActive] = useState(false);
+
   useEffect(() => {
-    if (userData.username === "" && publicKey) {
+    if (!publicKey) return;
+    if (userData.username === "" && !isChanged) {
       setUsername(publicKey.toBase58());
+      return;
     }
     if (userData.username === username) {
-      setIsActive(true);
+      setIsChanged(false);
     } else {
-      setIsActive(false);
+      setIsChanged(true);
     }
-    // eslint-disable-next-line
   }, [userData, username]);
 
   return (
-    <div className="mt-7 mb-8">
+    <div className="flex flex-col gap-[10px]">
       <p className="text-white font-medium">Display name</p>
       <div className="mt-2 relative overflow-hidden group">
-        <button
-          className={`absolute right-3 top-3 ${!username ? "hidden" : "show"}`}
-          onClick={() => setUsername("")}
-        ></button>
+        {/* <button
+          className={`absolute right-3 top-3 z-[150] ${
+            !username ? "hidden" : "show"
+          }`}
+          onClick={() => {
+            setUsername("");
+            console.log("hidde?");
+          }}
+        ></button> */}
         <div className="flex justify-between items-center relative w-full">
           {publicKey && (
             <>
@@ -73,12 +80,13 @@ const DisplayNamebox: FC<BoxProps> = ({
                 }}
               />
               <div className="box-outer absolute peer-hover:before:border-r-[22px] peer-hover:before:border-r-[rgba(225,228,205,0.2)] peer-hover:after:border-l-[22px] peer-hover:after:border-l-[rgba(225,228,205,0.2)] "></div>
-              <div className="absolute w-full h-full bg-[#fff0] peer-focus:before:bg-[linear-gradient(to_right,#29A3A9_0%,#29A3A9_100%),linear-gradient(to_right,#29A3A9_0%,#29A3A9_100%),linear-gradient(-45deg,transparent_45%,#29A3A9_50%,transparent_55%),linear-gradient(to_right,#29A3A9_0%,#29A3A9_100%),linear-gradient(225deg,transparent_45%,#29A3A9_50%,transparent_55%),linear-gradient(-45deg,transparent_45%,#29A3A9_50%,transparent_55%),linear-gradient(to_right,#29A3A9_0%,#29A3A9_100%),linear-gradient(225deg,transparent_45%,#29A3A9_50%,transparent_55%)] input_border"></div>
+              <div className="absolute w-full h-full bg-[#fff0] peer-focus:before:bg-[linear-gradient(to_right,#29A3A9_0%,#29A3A9_100%),linear-gradient(to_right,#29A3A9_0%,#29A3A9_100%),linear-gradient(-45deg,transparent_45%,#29A3A9_50%,transparent_55%),linear-gradient(to_right,#29A3A9_0%,#29A3A9_100%),linear-gradient(225deg,transparent_45%,#29A3A9_50%,transparent_55%),linear-gradient(-45deg,transparent_45%,#29A3A9_50%,transparent_55%),linear-gradient(to_right,#29A3A9_0%,#29A3A9_100%),linear-gradient(225deg,transparent_45%,#29A3A9_50%,transparent_55%)] input_border" />
             </>
           )}
           <button
-            className={`absolute top-[12px] right-[15px] w-4 h-4 z-[5] ${username === "" ? "hidden" : "block"
-              }`}
+            className={`absolute top-[12px] right-[15px] w-4 h-4 z-[5] ${
+              username === "" ? "hidden" : "block"
+            }`}
             onClick={() => {
               handleUsername("");
             }}
