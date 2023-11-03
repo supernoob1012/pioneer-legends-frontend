@@ -40,7 +40,7 @@ const StakeModal = () => {
     );
 
   const allNftList = useData ? useData.allNftList : [];
-    console.log("allNftList", allNftList)
+  // console.log("allNftList", allNftList)
   const stakeMulti = async () => {
     if (selected.length !== 0) {
       await stakeMultiNFT(wallet, selected, setLoading, getNfts);
