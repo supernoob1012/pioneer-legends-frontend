@@ -163,16 +163,16 @@ const ProfileModal: FC = () => {
                 {allNftList.length !== 0 ? (
                   <div className="md:h-[248px] h-full overflow-auto md:mt-2 mt-[10px] pr-1.5 custom-scroll md:mb-0 mb-[112px]">
                     <div className="grid grid-cols-3 md:grid-cols-4 md:gap-4 gap-[12px]">
-                      {/* {allNftList.map((item, key) => (
-                      <PfpCard
-                        image={item.image}
-                        key={key}
-                        pfp={userData.image}
-                        checkedImge={checkedImge}
-                        setCheckedImage={setCheckedImage}
-                      />
-                    ))} */}
-                      {Array.from({ length: 30 }, (_, index) => (
+                      {allNftList.map((item, key) => (
+                        <PfpCard
+                          image={item.image}
+                          key={key}
+                          pfp={userData.image}
+                          checkedImge={checkedImge}
+                          setCheckedImage={setCheckedImage}
+                        />
+                      ))}
+                      {/* {Array.from({ length: 30 }, (_, index) => (
                         <PfpCard
                           image={"/img/avatar.png"}
                           key={index}
@@ -180,7 +180,7 @@ const ProfileModal: FC = () => {
                           checkedImge={checkedImge}
                           setCheckedImage={setCheckedImage}
                         />
-                      ))}
+                      ))} */}
                     </div>
                   </div>
                 ) : (
@@ -284,12 +284,7 @@ const PfpCard = ({
         setCheckedImage(image);
       }}
     >
-      <Image
-        src="/img/avatar.png"
-        layout="fill"
-        className="relative z-10"
-        alt=""
-      />
+      <Image src={image} layout="fill" className="relative z-10" alt="" />
       <div className="bg-[#1E1915] absolute left-1.5 top-1.5 w-full h-full" />
       {checkedImge === image && (
         <div
