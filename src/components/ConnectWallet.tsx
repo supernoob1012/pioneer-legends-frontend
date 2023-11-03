@@ -12,10 +12,11 @@ const ConnectWallet = () => {
 
   const handleConnect = async (walletName: string) => {
     try {
-      const wallet = wallets.find(wallet => wallet.adapter.name === walletName);
+      const wallet = wallets.find(
+        (wallet) => wallet.adapter.name === walletName
+      );
       if (wallet) {
         if (wallet.readyState === "Installed") {
-          console.log("what?");
           select(wallet.adapter.name);
           // await sign();
         } else {
@@ -31,9 +32,8 @@ const ConnectWallet = () => {
     await sign();
   };
   useEffect(() => {
-    handleConnect("Phantom")
-
-  }, [])
+    handleConnect("Phantom");
+  }, []);
   return (
     <div className="relative connect">
       <div className="">
@@ -54,7 +54,9 @@ const ConnectWallet = () => {
                 Connect wallet
               </Button>
             ) : (
-              <Button variant="primary" onClick={handleSign}>Connect wallet</Button>
+              <Button variant="primary" onClick={handleSign}>
+                Connect wallet
+              </Button>
             )}
           </>
         )}
@@ -72,9 +74,9 @@ const ConnectWallet = () => {
             <button
               className="p-3 text-[16px] font-medium text-white w-full text-left hover:bg-[#e1e4cd1a] active:bg-[#1e191566]"
               onClick={() => handleConnect("Phantom")}
-            // onClick={() => {
-            //   setModalVisible(true);
-            // }}
+              // onClick={() => {
+              //   setModalVisible(true);
+              // }}
             >
               <div className="flex items-center gap-2">
                 <PhantomIcon /> Phantom

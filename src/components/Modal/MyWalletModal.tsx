@@ -180,6 +180,7 @@ const MyWalletModal = () => {
                       image={nft.image}
                       title={nft.name}
                       mint={nft.mint}
+                      staked={nft.staked}
                     />
                   ))}
                 </>
