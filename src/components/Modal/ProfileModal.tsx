@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import React, { FC, useContext, useState, useEffect } from "react";
 import Image from "next/image";
 import { useWallet } from "@solana/wallet-adapter-react";
@@ -276,6 +277,10 @@ const PfpCard = ({
   const { userData } = useUserData();
   const [isClicked, setIsClicked] = useState(false);
 
+  useEffect(() => {
+    console.log(image, checkedImge);
+  }, []);
+
   return (
     <div
       className="aspect-square relative max-h-[calc((100% - 16px)/3)]  card-mask"
@@ -284,7 +289,8 @@ const PfpCard = ({
         setCheckedImage(image);
       }}
     >
-      <Image src={image} layout="fill" className="relative z-10" alt="" />
+      <img src={image} alt="" className="relative z-10" />
+      {/* <Image src={image} layout="fill" className="relative z-10" alt="" /> */}
       <div className="bg-[#1E1915] absolute left-1.5 top-1.5 w-full h-full" />
       {checkedImge === image && (
         <div
