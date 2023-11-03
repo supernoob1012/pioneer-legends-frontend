@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import React, { FC, useMemo, useState } from "react";
+import React, { FC, useMemo, useState, useEffect } from "react";
 import Image from "next/image";
 import { BtnCorner, CardCropMask, CloseIcon } from "./SvgIcons";
 
@@ -19,6 +19,10 @@ const NftCard: FC<ItemProps> = ({ title, image, mint, staked }) => {
       id: title ? title.split("#")[1] : "",
     };
   }, [title]);
+
+  useEffect(() => {
+    console.log(image);
+  }, [image]);
 
   return (
     <div className="shadow-card active:shadow-[0_0_0_0] relative active:top-3 hover:top-[6px]">
