@@ -26,11 +26,6 @@ export const stake = async (
       {
         encodedTx: stakeTx,
         user: wallet,
-      },
-      {
-        headers: {
-          "ngrok-skip-browser-warning": "true",
-        },
       }
     );
     await getNfts();
@@ -57,11 +52,6 @@ export const unStake = async (
       {
         encodedTx: stakeTx,
         user: wallet,
-      },
-      {
-        headers: {
-          "ngrok-skip-browser-warning": "true",
-        },
       }
     );
 
@@ -79,11 +69,7 @@ export const unStake = async (
 export const getNft = async (wallet: string) => {
   const nfts: StakedItem[] = [];
   try {
-    const res = await axios.get(`${BACKEND_URL}/stake/findByWallet/${wallet}`, {
-      headers: {
-        "ngrok-skip-browser-warning": "true",
-      },
-    });
+    const res = await axios.get(`${BACKEND_URL}/stake/findByWallet/${wallet}`);
     if (res.data) {
       res.data.map((item: any) => {
         nfts.push({
@@ -138,11 +124,6 @@ export const getNonce = async (wallet: string) => {
       `${BACKEND_URL}/nonce/get-nonce`,
       {
         wallet,
-      },
-      {
-        headers: {
-          "ngrok-skip-browser-warning": "true",
-        },
       }
     );
     return res?.data?.nonce;
@@ -160,11 +141,6 @@ export const authorizeUser = async (
       wallet: wallet,
       signature: signature,
       nonce: nonce,
-    },
-    {
-      headers: {
-        "ngrok-skip-browser-warning": "true",
-      },
     }
   );
 
@@ -191,11 +167,6 @@ export const updateProfile = async ({
         wallet,
         img: image,
         signature,
-      },
-      {
-        headers: {
-          "ngrok-skip-browser-warning": "true",
-        },
       }
     );
     console.log(res);
