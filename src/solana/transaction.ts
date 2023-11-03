@@ -234,11 +234,6 @@ export const createLockMultiPnftTx = async (
             {
               encodedTx: encodedTx,
               user: wallet.publicKey?.toBase58(),
-            },
-            {
-              headers: {
-                "ngrok-skip-browser-warning": "true",
-              },
             }
           );
 
@@ -404,11 +399,6 @@ export const createUnlockPnftMultiTx = async (
             encodedTx: encodedTx,
             user: wallet.publicKey?.toBase58(),
           },
-          {
-            headers: {
-              "ngrok-skip-browser-warning": "true",
-            },
-          }
         );
 
         if (res.status == 200) confirmed += 1;

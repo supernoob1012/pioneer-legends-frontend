@@ -56,7 +56,7 @@ export const NFT_METADATA = [
   },
 ];
 
-export const BACKEND_URL = "https://3a36-194-87-169-231.ngrok-free.app";
+export const BACKEND_URL = "https://pioneer-legends-backend-production.up.railway.app/";
 // export const BACKEND_URL = "http://192.168.109.68:3000";
 
 export const SOL_RPC = "https://light-morning-sea.solana-mainnet.quiknode.pro/519dc0806495a53ab8c9de64fb90c3418b6a1d15/"
