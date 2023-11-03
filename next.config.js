@@ -1,7 +1,4 @@
-
-
-
-// /** @type {import('next').NextConfig} */
+/** @type {import('next').NextConfig} */
 // const nextConfig = {
 //   reactStrictMode: true,
 //   output: 'export',
@@ -16,6 +13,6 @@ module.exports = {
   reactStrictMode: true,
   output: 'export',
   images: {
-      domains: ['arweave.net', 'ipfs.io'],
+    domains: ['arweave.net', 'ipfs.io'],
   },
 }

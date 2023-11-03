@@ -1,238 +1,196 @@
 /* eslint-disable @next/next/no-img-element */
-import React, { FC, useContext, useEffect, useMemo, useState } from "react";
-import Image from "next/image";
 import { useWallet } from "@solana/wallet-adapter-react";
+import Image from "next/image";
+import { useContext } from "react";
 import { ModalContext } from "../../context/ModalProvider";
-import { SolanaIcon, CrossIcon } from "../SvgIcons";
-import { UserContext, UserContextProps } from "../../context/UserProvider";
+import {
+  UserContext,
+  UserContextProps,
+  useUserData,
+} from "../../context/UserProvider";
+import useWindowSize from "../../utils/useWindowSize";
 import Button from "../Button";
 import NftCard from "../NftCard";
-import Link from "next/link";
+import { NftLoading } from "../Nftloading";
+import { CrossIcon, SolanaIcon } from "../SvgIcons";
 import CloseButton from "./CloseButton";
-import useWindowSize from "../../utils/useWindowSize";
-const MyWalletModal: FC = () => {
+
+const MyWalletModal = () => {
+  const wallet = useWallet();
   const {
     isMyWalletModal,
     setIsMyWalletModal,
-    isProfileModal,
-    setIsProfileModal,
     isDisconnectWalletModal,
     setIsDisconnectWalletModal,
+    isProfileModal,
+    setIsProfileModal,
   } = useContext<any>(ModalContext);
-
-  const wallet = useWallet();
   const useData = useContext<UserContextProps>(UserContext);
-  const { width, height } = useWindowSize();
+  const { width } = useWindowSize();
+  const { userData } = useUserData();
+
   const isMobile = width > 768;
-  const allNftList = useData ? useData.allNftList : [];
-  const handleProfileModal = () => {
-    setIsProfileModal(!isProfileModal);
-    setIsMyWalletModal(false);
-  };
+
+  if (!wallet.publicKey || !isMyWalletModal) return <></>;
 
   const handleDisconnectWalletModal = () => {
     setIsDisconnectWalletModal(!isDisconnectWalletModal);
     setIsMyWalletModal(false);
   };
 
-  if (!wallet.publicKey) return <></>;
-  return isMyWalletModal ? (
-    <div className="fixed left-0 top-0 w-screen h-screen z-[1000] flex items-center justify-center backdrop-blur-[20px] bg-[#000000]/40">
-      <div className="w-full md:w-[calc(100%-50px)] h-full md:h-auto lg:w-[974px] bg-gradient-to-b from-[#0F0902] to-[#26211E] md:rounded-2xl relative md:p-2">
-        <div className="absolute -right-1 -bottom-3 hidden md:block">
-          <Image
-            src={"/img/Deco_rightbottom.png"}
-            width={100}
-            height={100}
-            alt=""
-          />
-        </div>
-        <div className="absolute -left-1 -bottom-3 hidden md:block">
-          <Image
-            src={"/img/Deco_leftbottom.png"}
-            width={100}
-            height={100}
-            alt=""
-          />
-        </div>
-        <div className="absolute -left-1 -top-1 hidden md:block">
-          <Image src={"/img/Deco_lefttop.png"} width={80} height={60} alt="" />
-        </div>
-        <div className="absolute -right-1 -top-1 hidden md:block">
-          <Image src={"/img/Deco_righttop.png"} width={80} height={60} alt="" />
-        </div>
-        <div className="bg-gradient-to-b from-[#1F1B18] to-[#393028] h-full">
-          <div className="p-5 flex items-center justify-between">
-            <p className="text-[24px] font-secondary text-primary-100 leading-[1.33] uppercase">
-              My Wallet
-            </p>
-            {isMobile ? (
-              <>
-                <CloseButton
-                  className="absolute right-5 top-[20px] md:flex hidden z-10"
-                  onClose={() => setIsMyWalletModal(false)}
-                />
-              </>
-            ) : (
-              <>
-                <button
-                  onClick={() => setIsMyWalletModal(false)}
-                  className="cursor-pointer"
-                >
-                  <CrossIcon color="white" className="cursor-pointer" />
-                </button>
-              </>
-            )}
-            {/* <button
-              className="md:absolute md:-right-5 md:top-[34px] flex"
-              onClick={() => setIsMyWalletModal(false)}
-            >
-              {isMobile ? (
-                <Image
-                  src="/img/close-normal.png"
-                  width={40}
-                  height={40}
-                  alt=""
-                />
-              ) : (
-                <CrossIcon color="white" />
-              )}
-            </button> */}
-          </div>
-          <div className="">
-            <div className="-ml-6 relative w-[calc(100%+47px)] lg:w-[1006px] h-[248px] md:h-[132px]">
-              <img
-                src={"/img/banner.png"}
-                className="w-full h-full absolute left-0 top-0 hidden md:block"
-                alt=""
-              />
+  const handleProfileModal = () => {
+    setIsProfileModal(!isProfileModal);
+    setIsMyWalletModal(false);
+  };
 
-              <div className="w-4 h-4 overflow-hidden absolute left-0 -top-4">
-                <div className="w-6 h-6 bg-[#161311] rotate-45 mt-1 ml-1" />
-              </div>
-              <div className="w-4 h-4 overflow-hidden absolute right-0 -top-4">
-                <div className="w-6 h-6 bg-[#161311] rotate-45 mt-1 -ml-[15px]" />
-              </div>
-              <div className="flex flex-col overflow-y-scroll overflow-x-hidden relative">
-                <img
-                  src={"/img/mobile/info-banner.png"}
-                  className="w-full h-[248px] absolute left-0 top-0 block md:hidden "
-                  alt=""
-                />
-                <div className="flex items-start md:items-center z-20 relative pt-9 md:py-4 pl-11 pr-8 justify-between flex-col md:flex-row">
-                  <div className="flex items-center gap-4">
-                    <div
-                      className="w-[100px] h-[100px] rounded-full border-[#2D2721] p-0.5 border-2 grid place-content-center overflow-hidden"
-                      style={{
-                        backgroundImage:
-                          "radial-gradient(115.57% 115.57% at -3.5% -16%, #3F434B 0%, #2D2721 100%)",
-                      }}
-                    >
-                      <Image
-                        src={"/img/default-avatar.svg"}
-                        width={98}
-                        height={98}
-                        alt="profile icon"
-                        className="rounded-full"
-                      />
-                    </div>
-                    <div className="">
-                      <p className="text-[#fff] font-medium text-[16px]">
-                        {wallet.publicKey.toBase58().slice(0, 5)}...
-                        {wallet.publicKey.toBase58().slice(-4)}
-                      </p>
-                      <div className="flex gap-2 items-center text-primary-200 font-medium text-[14px] mt-1">
-                        <SolanaIcon /> 5,154.23
-                      </div>
-                    </div>
-                  </div>
-                  <div className="flex gap-8 w-[calc(100%-10px)] md:w-auto ml-0 md:ml-0 justify-between mt-9">
-                    {/* <Button variant="secondary" onClick={handleProfileModal}>
-                      Edit profile
-                    </Button> */}
-                    <Button
-                      variant="secondary"
-                      onClick={handleDisconnectWalletModal}
-                    >
-                      Disconnect
-                    </Button>
-                  </div>
-                </div>
-                <div className="md:hidden block md:px-12 px-5 md:pt-8 pt-[180px] md:pb-12 pb-6 h-[calc(100vh-320px)] md:mx-0 mx-5">
-                  <p className="text-[14px] text-[white] font-medium flex gap-1">
-                    {allNftList.length !== 0 && <p>My NFT</p>}
-                    {allNftList.length !== 0 && <>({allNftList.length})</>}{" "}
-                  </p>
-                  {allNftList.length !== 0 ? (
-                    <div className="grid md:grid-cols-5 grid-cols-2 gap-x-5 gap-y-4 mt-4 pb-[40px] min-h-[224px]">
-                      {allNftList.map((nft, index: number) => (
-                        <NftCard
-                          key={index}
-                          image={nft.image}
-                          title={nft.name}
-                          mint={nft.mint}
-                        />
-                      ))}
-                    </div>
-                  ) : (
-                    <div className="grid grid-cols-2 gap-6 justify-center items-center flex-col h-full w-full mx-auto text-center text-[#E4DECD] font-medium relative">
-                      <div className="bg-[#2D2620] h-[calc(100% - 200px)] aspect-[9/16]"></div>
-                      <div className="bg-[#2D2620] h-[calc(100% - 200px)] aspect-[9/16]"></div>
-                      <div className="flex flex-col absolute top-20 justify-center items-center w-full">
-                        <p>You have no NFT,</p>
-                        <div className="whitespace-nowrap">
-                          buy one from{" "}
-                          <span className="underline">
-                            <Link href="#" passHref>
-                              Magic Eden
-                            </Link>
-                          </span>{" "}
-                          now
-                        </div>
-                      </div>
-                    </div>
-                  )}
-                </div>
+  const allNftList = useData ? useData.allNftList : [];
+
+  const BlankCards = () => {
+    return (
+      <>
+        <div className="w-[154px] h-[220px] shadow-[6px_6px_0_#1E1915] opacity-10 justify-self-center">
+          <div className="blank_card"></div>
+        </div>
+        <div className="w-[154px] h-[220px] shadow-[6px_6px_0_#1E1915] opacity-10 justify-self-center">
+          <div className="blank_card"></div>
+        </div>
+        <div className="w-[154px] h-[220px] shadow-[6px_6px_0_#1E1915] opacity-10 justify-self-center">
+          <div className="blank_card"></div>
+        </div>
+        <div className="w-[154px] h-[220px] shadow-[6px_6px_0_#1E1915] opacity-10 justify-self-center">
+          <div className="blank_card"></div>
+        </div>
+        <div className="w-[154px] h-[220px] shadow-[6px_6px_0_#1E1915] opacity-10 justify-self-center">
+          <div className="blank_card"></div>
+        </div>
+        <h1 className="absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 font-medium text-center text-[#E4DECD]">
+          You have no NFT,
+          <br />
+          buy one from{" "}
+          <span className="underline ">
+            <a>Magic Eden</a>
+          </span>{" "}
+          now!
+        </h1>
+      </>
+    );
+  };
+
+  return (
+    <div className="fixed left-0 top-0 bottom-0 right-0 z-[100] flex items-center justify-center backdrop-blur-[20px] bg-[#000000]/40">
+      <div className="w-[974px] h-[590px] max-lg:w-[calc(100%-32px)] max-md:w-screen max-md:h-screen bg-[linear-gradient(180deg,#0F0902_0%,#26211E_100%)] relative after:absolute after:top-2 after:left-2 after:bottom-2 after:right-2 max-md:after:top-0 max-md:after:left-0 max-md:after:bottom-0 max-md:after:right-0 after:bg-[linear-gradient(180deg,#1F1B18_0%,#393028_100%)] after:shadow-[0_0_4px_0_rgba(0,0,0,0.80),1px_1px_2px_0_#37322F_inset]">
+        {/**
+         * Make corner image
+         */}
+        <img
+          src="/img/Deco_leftbottom.png"
+          alt="B_L"
+          className="absolute -bottom-1 -left-1 z-[2] max-md:hidden"
+        />
+        <img
+          src="/img/Deco_rightbottom.png"
+          alt="B_R"
+          className="absolute -bottom-1 -right-1 z-[2] max-md:hidden"
+        />
+        <img
+          src="/img/Deco_lefttop.png"
+          alt="T_L"
+          className="absolute -top-1 -left-1 z-[2] max-md:hidden"
+        />
+        <img
+          src="/img/Deco_righttop.png"
+          alt="T_R"
+          className="absolute -top-1 -right-1 z-[2] max-md:hidden"
+        />
+        {/**
+         * Make banner image
+         */}
+        <img
+          src="/img/banner.png"
+          alt="Banner"
+          className="absolute top-24 -left-4 max-lg:-left-[1%] z-[3] !max-w-[calc(100%+32px)] max-lg:!max-w-[102%] min-h-[130px] max-sm:h-[90px]"
+        />
+        <div className="w-4 h-4 border-t-[#0000] border-l-[#0000] border-[8px] max-lg:border-[0.5%] border-[#161311] absolute top-20 z-[2] -left-4 max-lg:hidden" />
+        <div className="w-4 h-4 border-t-[#0000] border-r-[#0000] border-[8px] max-lg:border-[0.5%] border-[#161311] absolute top-20 z-[2] -right-4 max-lg:hidden" />
+        <div className="px-6 py-10 flex justify-between items-center relative z-[2]">
+          {" "}
+          <p className="text-[24px] font-secondary text-primary-100 leading-[1.33] uppercase">
+            my wallet
+          </p>
+          {/**
+           * Close button UI
+           */}
+          {isMobile ? (
+            <CloseButton
+              className="absolute right-5 top-[34px] z-50"
+              onClose={() => setIsMyWalletModal(false)}
+            />
+          ) : (
+            <button onClick={() => setIsMyWalletModal(false)}>
+              <CrossIcon color="white" />
+            </button>
+          )}
+        </div>
+        <div className="flex items-center justify-between z-[20] mt-1 mx-12 relative">
+          <div className="flex gap-4 items-center">
+            <div className="w-[100px] h-[100px] rounded-full border-[#2D2721] p-0.5 border-2 grid place-content-center overflow-hidden bg-[radial-gradient(115.57%_115.57%_at_-3.5%_-16%,#3F434B_0%,#2D2721_100%)]">
+              <Image
+                src={"/img/default-avatar.svg"}
+                width={94}
+                height={94}
+                alt="profile icon"
+                className="rounded-[50%] object-cover"
+              />
+            </div>
+            <div className="">
+              <p className="text-[#fff] font-medium text-[16px]">
+                {userData.username ? (
+                  <>{userData.username}</>
+                ) : (
+                  <>
+                    {wallet.publicKey.toBase58().slice(0, 5)}...
+                    {wallet.publicKey.toBase58().slice(-4)}
+                  </>
+                )}
+              </p>
+              <div className="flex gap-2 items-center text-primary-200 font-medium text-[14px] mt-1">
+                <SolanaIcon /> 5,154.23
               </div>
             </div>
           </div>
-          <div className="md:block hidden md:px-12 px-5 md:pt-8 pt-6 pb-12 md:h-[374px] h-[calc(100vh-320px)] overflow-y-scroll overflow-x-hidden">
-            <p className="text-[14px] text-[white] font-medium flex gap-1">
-              {allNftList.length !== 0 && <p>My NFT</p>}
-              {allNftList.length !== 0 && <>({allNftList.length})</>}{" "}
-            </p>
-            {allNftList.length !== 0 ? (
-              <div className="grid md:grid-cols-4 grid-cols-2 gap-x-5 gap-y-4 mt-4 pb-10 min-h-[224px]">
-                {console.log(allNftList)}
-                {allNftList.map((nft, index: number) => (
-                  <NftCard
-                    key={index}
-                    image={nft.image}
-                    title={nft.name}
-                    mint={nft.mint}
-                  />
-                ))}
-              </div>
-            ) : (
-              <div className="flex justify-center flex-col h-full w-full mx-auto text-center text-[#E4DECD] font-medium">
-                <p>You have no NFT,</p>
-                <div className="whitespace-nowrap">
-                  buy one from{" "}
-                  <span className="underline">
-                    <Link href="#" passHref>
-                      Magic Eden
-                    </Link>
-                  </span>{" "}
-                  now
-                </div>
-              </div>
-            )}
+          <div className="flex gap-8 justify-between">
+            <Button variant="secondary" onClick={handleProfileModal}>
+              Edit profile
+            </Button>
+            <Button variant="secondary" onClick={handleDisconnectWalletModal}>
+              Disconnect
+            </Button>
           </div>
+        </div>
+        <div className="mt-20 ml-12 max-md:ml-4 pr-6 max-w-[calc(100%-96px)] max-md:max-w-[calc(100%-32px)] relative z-[20] h-[250px] max-md:h-[calc(100%-350px)] grid grid-cols-5 max-lg:grid-cols-4 max-md:grid-cols-2 gap-[26px] overflow-y-scroll overflow-x-hidden">
+          {useData.isDataLoading ? (
+            <NftLoading />
+          ) : (
+            <>
+              {allNftList.length !== 0 ? (
+                <>
+                  {allNftList.map((nft, index) => (
+                    <NftCard
+                      key={index}
+                      image={nft.image}
+                      title={nft.name}
+                      mint={nft.mint}
+                    />
+                  ))}
+                </>
+              ) : (
+                BlankCards()
+              )}
+            </>
+          )}
         </div>
       </div>
     </div>
-  ) : (
-    <></>
   );
 };
 
