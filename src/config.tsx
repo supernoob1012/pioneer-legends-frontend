@@ -56,7 +56,7 @@ export const NFT_METADATA = [
   },
 ];
 
-export const BACKEND_URL = "https://kind-erin-anemone-coat.cyclic.app";
+export const BACKEND_URL = "https://pioneer-legends-backend-production.up.railway.app";
 // export const BACKEND_URL = "http://192.168.109.68:3000";
 
 export const SOL_RPC =
