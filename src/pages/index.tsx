@@ -228,13 +228,13 @@ export default function Index(props: { isMute: boolean; setIsMute: Function }) {
                 >
                   <Button variant="secondary">See Whitepaper</Button>
                 </a>
-                {publicKey ? (
+                {/* {publicKey ? (
                   <Button variant="primary" onClick={handleSign}>
                     Connect wallet
                   </Button>
                 ) : (
                   <Button variant="primary">Connect wallet</Button>
-                )}
+                )} */}
               </div>
             </div>
           </div>
