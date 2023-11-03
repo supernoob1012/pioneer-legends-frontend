@@ -150,12 +150,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
     if (wallet.publicKey) {
       try {
         const res = await axios.get(
-          `${BACKEND_URL}/user/profile/${wallet.publicKey.toBase58()}`,
-          {
-            headers: {
-              "ngrok-skip-browser-warning": "true",
-            },
-          }
+          `${BACKEND_URL}/user/profile/${wallet.publicKey.toBase58()}`
         );
         console.log("res.data", res.data);
         if (res.data) {

@@ -6,9 +6,14 @@ export const solConnection = new web3.Connection(web3.clusterApiUrl(NETWORK));
 
 export const getNftDetail = async (uri: string) => {
   try {
-    const response = await axios.get(uri);
+    // const response = await axios.get(uri);
+    const response = (await Promise.race([
+        fetch(uri, { method: 'GET' }),
+        new Promise((_, reject) => setTimeout(() => reject(new Error('Timeout')), 3000)),
+    ])) as Response;
+    
     if (response.status === 200) {
-      return response.data;
+      return response.json();
     } else {
       throw new Error(
         `Failed to fetch NFT detail. Status code: ${response.status}`
