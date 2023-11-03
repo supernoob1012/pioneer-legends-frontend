@@ -122,7 +122,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
           const data = await getNftDetail(item.data.uri);
           if (data) {
             const stakedNft = stakedData.find(
-              (nft) =>
+              nft =>
                 nft.mint === item.mint &&
                 nft.user === wallet.publicKey?.toBase58()
             );
@@ -150,7 +150,12 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
     if (wallet.publicKey) {
       try {
         const res = await axios.get(
-          `${BACKEND_URL}/user/profile/${wallet.publicKey.toBase58()}`
+          `${BACKEND_URL}/user/profile/${wallet.publicKey.toBase58()}`,
+          {
+            headers: {
+              "ngrok-skip-browser-warning": "true",
+            },
+          }
         );
         console.log("res.data", res.data);
         if (res.data) {

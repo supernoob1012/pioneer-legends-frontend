@@ -229,10 +229,18 @@ export const createLockMultiPnftTx = async (
           const encodedTx = Buffer.from(
             o.serialize({ requireAllSignatures: false })
           ).toString("base64");
-          const res = await axios.post(`${BACKEND_URL}/stake/lock`, {
-            encodedTx: encodedTx,
-            user: wallet.publicKey?.toBase58(),
-          });
+          const res = await axios.post(
+            `${BACKEND_URL}/stake/lock`,
+            {
+              encodedTx: encodedTx,
+              user: wallet.publicKey?.toBase58(),
+            },
+            {
+              headers: {
+                "ngrok-skip-browser-warning": "true",
+              },
+            }
+          );
 
           if (res.status == 200) confirmed += 1;
         })
@@ -334,17 +342,22 @@ export const createUnlockPnftMultiTx = async (
   console.log("userPool: ", userPool.toBase58());
   const txs: Transaction[] = [];
   for (let mint of nftMints) {
-
     const nftEdition = await getMasterEdition(new PublicKey(mint));
     console.log("nftEdition: ", nftEdition.toBase58());
 
-    let tokenAccount = await getAssociatedTokenAccount(userAddress, new PublicKey(mint));
+    let tokenAccount = await getAssociatedTokenAccount(
+      userAddress,
+      new PublicKey(mint)
+    );
     console.log("tokenAccount: ", tokenAccount.toBase58());
 
     const mintMetadata = await getMetadata(new PublicKey(mint));
     console.log("mintMetadata: ", mintMetadata.toBase58());
 
-    const tokenMintRecord = findTokenRecordPda(new PublicKey(mint), tokenAccount);
+    const tokenMintRecord = findTokenRecordPda(
+      new PublicKey(mint),
+      tokenAccount
+    );
     console.log("tokenMintRecord: ", tokenMintRecord.toBase58());
 
     const tx = new Transaction();
@@ -385,10 +398,18 @@ export const createUnlockPnftMultiTx = async (
         const encodedTx = Buffer.from(
           o.serialize({ requireAllSignatures: false })
         ).toString("base64");
-        const res = await axios.post(`${BACKEND_URL}/stake/unlock`, {
-          encodedTx: encodedTx,
-          user: wallet.publicKey?.toBase58(),
-        });
+        const res = await axios.post(
+          `${BACKEND_URL}/stake/unlock`,
+          {
+            encodedTx: encodedTx,
+            user: wallet.publicKey?.toBase58(),
+          },
+          {
+            headers: {
+              "ngrok-skip-browser-warning": "true",
+            },
+          }
+        );
 
         if (res.status == 200) confirmed += 1;
       })
@@ -396,4 +417,4 @@ export const createUnlockPnftMultiTx = async (
     await getNfts();
     successAlert(`Successfully unlocked ${confirmed} NFTs`);
   }
-}
+};

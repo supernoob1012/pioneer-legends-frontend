@@ -21,10 +21,18 @@ export const stake = async (
 ) => {
   try {
     setLoading(true);
-    const res = await axios.post(`${BACKEND_URL}/stake/lock`, {
-      encodedTx: stakeTx,
-      user: wallet,
-    });
+    const res = await axios.post(
+      `${BACKEND_URL}/stake/lock`,
+      {
+        encodedTx: stakeTx,
+        user: wallet,
+      },
+      {
+        headers: {
+          "ngrok-skip-browser-warning": "true",
+        },
+      }
+    );
     await getNfts();
     successAlert("Stake successful!");
     return res.data;
@@ -44,10 +52,18 @@ export const unStake = async (
 ) => {
   try {
     setLoading(true);
-    const res = await axios.post(`${BACKEND_URL}/stake/unlock`, {
-      encodedTx: stakeTx,
-      user: wallet,
-    });
+    const res = await axios.post(
+      `${BACKEND_URL}/stake/unlock`,
+      {
+        encodedTx: stakeTx,
+        user: wallet,
+      },
+      {
+        headers: {
+          "ngrok-skip-browser-warning": "true",
+        },
+      }
+    );
 
     await getNfts();
     successAlert("Unstake successful!");
@@ -63,7 +79,11 @@ export const unStake = async (
 export const getNft = async (wallet: string) => {
   const nfts: StakedItem[] = [];
   try {
-    const res = await axios.get(`${BACKEND_URL}/stake/findByWallet/${wallet}`);
+    const res = await axios.get(`${BACKEND_URL}/stake/findByWallet/${wallet}`, {
+      headers: {
+        "ngrok-skip-browser-warning": "true",
+      },
+    });
     if (res.data) {
       res.data.map((item: any) => {
         nfts.push({
@@ -114,9 +134,17 @@ export const signature = async (signMessage: any, nonce: string) => {
 
 export const getNonce = async (wallet: string) => {
   if (wallet) {
-    const res = await axios.post(`${BACKEND_URL}/nonce/get-nonce`, {
-      wallet,
-    });
+    const res = await axios.post(
+      `${BACKEND_URL}/nonce/get-nonce`,
+      {
+        wallet,
+      },
+      {
+        headers: {
+          "ngrok-skip-browser-warning": "true",
+        },
+      }
+    );
     return res?.data?.nonce;
   }
 };
@@ -126,11 +154,19 @@ export const authorizeUser = async (
   signature: string,
   nonce: string
 ) => {
-  const res = await axios.post(`${BACKEND_URL}/user/authorize`, {
-    wallet: wallet,
-    signature: signature,
-    nonce: nonce,
-  });
+  const res = await axios.post(
+    `${BACKEND_URL}/user/authorize`,
+    {
+      wallet: wallet,
+      signature: signature,
+      nonce: nonce,
+    },
+    {
+      headers: {
+        "ngrok-skip-browser-warning": "true",
+      },
+    }
+  );
 
   if (res?.status == 200) return true;
   return false;
@@ -148,12 +184,20 @@ export const updateProfile = async ({
   signature: string;
 }) => {
   try {
-    const res = await axios.post(`${BACKEND_URL}/user/setprofile`, {
-      name,
-      wallet,
-      img: image,
-      signature,
-    });
+    const res = await axios.post(
+      `${BACKEND_URL}/user/setprofile`,
+      {
+        name,
+        wallet,
+        img: image,
+        signature,
+      },
+      {
+        headers: {
+          "ngrok-skip-browser-warning": "true",
+        },
+      }
+    );
     console.log(res);
     successAlert("Profile is updated!");
   } catch (error) {
