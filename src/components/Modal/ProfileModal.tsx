@@ -162,7 +162,7 @@ const ProfileModal: FC = () => {
                   Profile picture
                 </p>
                 {allNftList.length !== 0 ? (
-                  <div className="md:h-[248px] h-full overflow-auto md:mt-2 mt-[10px] pr-1.5 custom-scroll md:mb-0 mb-[112px]">
+                  <div className="md:h-[248px] h-full overflow-auto md:mt-8 mt-[20px] pr-1.5 custom-scroll md:mb-0 mb-[112px]">
                     <div className="grid grid-cols-3 md:grid-cols-4 md:gap-4 gap-[12px]">
                       {allNftList.map((item, key) => (
                         <PfpCard
