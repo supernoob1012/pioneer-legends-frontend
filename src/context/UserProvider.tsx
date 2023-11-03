@@ -113,9 +113,11 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
     });
 
     const nfts = new Array(nftList.length); // Initialize with a reasonable capacity
+
     await Promise.all(
       nftList.map(async (item, index) => {
         if (
+          item.data.creators &&
           item.data.creators[0]?.verified === 1 &&
           item.data.creators[0]?.address === CREATOR_ADDRESS
         ) {
