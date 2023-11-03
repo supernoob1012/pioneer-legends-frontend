@@ -20,10 +20,6 @@ const NftCard: FC<ItemProps> = ({ title, image, mint, staked }) => {
     };
   }, [title]);
 
-  useEffect(() => {
-    console.log(image);
-  }, [image]);
-
   return (
     <>
       <div
@@ -36,7 +32,7 @@ const NftCard: FC<ItemProps> = ({ title, image, mint, staked }) => {
           <Image src={image} layout="fill" alt="" />
         </div>
         <div
-          className="pt-2 px-2.5 pb-3"
+          className="pt-2 px-2.5 pb-3 min-h-[65px]"
           style={{
             background:
               "var(--Brown-bg1, linear-gradient(180deg, #54504C -0.03%, #433B35 100%))",
@@ -46,20 +42,24 @@ const NftCard: FC<ItemProps> = ({ title, image, mint, staked }) => {
             {names.name}{" "}
             <span className="text-[12px] font-normal ml-1">#{names.id}</span>
           </p>
-          <button className="uppercase text-primary-100 text-[10px] font-medium bg-secondary-200 py-0.5 px-[7px] relative">
-            staked
-            <span className="absolute right-[0.5px] top-[0.5px]">
-              <BtnCorner color="#FFD774" />
-            </span>
-            <span
-              className="absolute -left-[0.5px] -bottom-[0.5px]"
-              style={{
-                transform: "rotateZ(180deg)",
-              }}
-            >
-              <BtnCorner color="#FFD774" />
-            </span>
-          </button>
+          {staked ? (
+            <button className="uppercase text-primary-100 text-[10px] font-medium bg-secondary-200 py-0.5 px-[7px] relative">
+              staked
+              <span className="absolute right-[0.5px] top-[0.5px]">
+                <BtnCorner color="#FFD774" />
+              </span>
+              <span
+                className="absolute -left-[0.5px] -bottom-[0.5px]"
+                style={{
+                  transform: "rotateZ(180deg)",
+                }}
+              >
+                <BtnCorner color="#FFD774" />
+              </span>
+            </button>
+          ) : (
+            ""
+          )}
         </div>
       </div>
       {isShowOrigin && (
