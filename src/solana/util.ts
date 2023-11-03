@@ -20,7 +20,7 @@ export const METAPLEX = new PublicKey(
   "metaqbxxUerdq28cj1RbAWkYQm3ybzjb6a8bt518x1s"
 );
 export const MPL_DEFAULT_RULE_SET = new PublicKey(
-  "eBJLFYPxJmMGKuFwpDWkzxZeUrad92kZRC5BJLpzyT9"
+  "AdH2Utn6Fus15ZhtenW4hZBQnvtLgM1YCW2MfVp7pYS5"
 );
 
 export const solConnection = new web3.Connection(SOL_RPC);
