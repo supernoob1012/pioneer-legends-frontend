@@ -203,6 +203,7 @@ const MyWalletModal: FC = () => {
             </p>
             {allNftList.length !== 0 ? (
               <div className="grid md:grid-cols-4 grid-cols-2 gap-x-5 gap-y-4 mt-4 pb-10 min-h-[224px]">
+                {console.log(allNftList)}
                 {allNftList.map((nft, index: number) => (
                   <NftCard
                     key={index}
