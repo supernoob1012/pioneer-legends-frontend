@@ -217,12 +217,14 @@ export const createLockMultiPnftTx = async (
 
       tx.add(txId);
 
-      tx.feePayer = userAddress;
       txs.push(tx);
     }
 
     let block = await connection.getLatestBlockhash();
-    txs.map((tx) => tx.recentBlockhash = block.blockhash);
+    txs.map((tx) => {
+      tx.feePayer = userAddress;
+      tx.recentBlockhash = block.blockhash
+    });
 
     let confirmed = 0;
     if (wallet.signAllTransactions) {
@@ -389,7 +391,7 @@ export const createUnlockPnftMultiTx = async (
 
   let block = await connection.getLatestBlockhash();
   txs.map((tx) => tx.recentBlockhash = block.blockhash);
-  
+
   let confirmed = 0;
 
   if (wallet.signAllTransactions) {
