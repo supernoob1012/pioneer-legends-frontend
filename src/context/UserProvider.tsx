@@ -10,7 +10,7 @@ import { useWallet } from "@solana/wallet-adapter-react";
 import { authorizeUser, getNft, getNonce } from "../utils/api";
 import { getParsedNftAccountsByOwner } from "@nfteyez/sol-rayz";
 import { solConnection } from "../solana/util";
-import { BACKEND_URL, CREATOR_ADDRESS } from "../config";
+import { BACKEND_URL, CREATOR_ADDRESS, METADATA_URL } from "../config";
 import { getNftDetail } from "../utils/util";
 import axios from "axios";
 import bs58 from "bs58";
@@ -123,7 +123,10 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
           item.data.creators[0]?.verified === 1 &&
           item.data.creators[0]?.address === CREATOR_ADDRESS
         ) {
-          const data = await getNftDetail(item.data.uri);
+          const parts = item.data.uri.split("/");
+          
+          const data = await getNftDetail(METADATA_URL + parts[parts.length - 1]);
+          
           if (data) {
             const stakedNft = stakedData.find(
               nft =>
