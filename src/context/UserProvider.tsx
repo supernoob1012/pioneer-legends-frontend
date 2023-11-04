@@ -114,7 +114,8 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
       connection: solConnection,
     });
 
-    const nfts = new Array(nftList.length); // Initialize with a reasonable capacity
+    // const nfts = new Array(nftList.length); // Initialize with a reasonable capacity
+    const nfts: any[] = [];
 
     await Promise.all(
       nftList.map(async (item, index) => {
@@ -124,26 +125,37 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
           item.data.creators[0]?.address === CREATOR_ADDRESS
         ) {
           const parts = item.data.uri.split("/");
-          
-          const data = await getNftDetail(METADATA_URL + parts[parts.length - 1]);
-          
-          if (data) {
-            const stakedNft = stakedData.find(
-              nft =>
-                nft.mint === item.mint &&
-                nft.user === wallet.publicKey?.toBase58()
+          try {
+            const data = await getNftDetail(
+              METADATA_URL + parts[parts.length - 1]
             );
-            nfts[index] = {
-              name: data.name,
-              image: data.image,
-              description: data.description,
-              staked: stakedNft ? true : false,
-              user: wallet.publicKey ? wallet.publicKey.toBase58() : "",
-              startTime: stakedNft ? stakedNft.startTime : "",
-              mint: item.mint,
-              uri: item.data.uri,
-              faction: stakedNft?.faction,
-            };
+
+            if (data) {
+              const stakedNft = stakedData.find(
+                (nft) =>
+                  nft.mint === item.mint &&
+                  nft.user === wallet.publicKey?.toBase58()
+              );
+              nfts.push({
+                name: data.name,
+                image: data.image,
+                description: data.description,
+                staked: stakedNft ? true : false,
+                user: wallet.publicKey ? wallet.publicKey.toBase58() : "",
+                startTime: stakedNft ? stakedNft.startTime : "",
+                mint: item.mint,
+                uri: item.data.uri,
+                faction: stakedNft?.faction,
+              });
+            } else {
+              throw Error(
+                "Could not fetch metadata: " +
+                  (METADATA_URL + parts[parts.length - 1])
+              );
+            }
+          } catch (error) {
+            // nfts[index] = undefined;
+            console.log(error);
           }
         }
       })
