@@ -81,7 +81,7 @@ const StakeModal = () => {
   };
 
   useMemo(() => {
-    if (selected.length === 3) {
+    if (selected.length === 20) {
       notify();
     }
   }, [selected]);
