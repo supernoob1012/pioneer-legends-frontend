@@ -217,6 +217,7 @@ export const createLockMultiPnftTx = async (
         })
         .transaction();
 
+        
       tx.add(txId);
 
       tx.feePayer = userAddress;
