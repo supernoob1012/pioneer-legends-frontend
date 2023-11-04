@@ -1,9 +1,10 @@
 /* eslint-disable @next/next/no-img-element */
-import React, { FC, useMemo, useState } from "react";
+import React, { FC, useContext, useMemo, useState } from "react";
 import Image from "next/image";
 import { CheckSmIcon, CloseIcon } from "./SvgIcons";
 import { useWallet } from "@solana/wallet-adapter-react";
-import { stakeNFT } from "../solana/util";
+import { stakeMultiNFT, stakeNFT } from "../solana/util";
+import { UserContext, UserContextProps } from "../context/UserProvider";
 
 interface ItemProps {
   title?: string;
@@ -31,6 +32,7 @@ const StakeCard: FC<ItemProps> = ({
 }) => {
   const [isShowOrigin, setIsShowOrigin] = useState(false);
   const [checked, setChecked] = useState(false);
+  const { getNfts } = useContext<UserContextProps>(UserContext);
   const wallet = useWallet();
 
   const names = useMemo(() => {
@@ -61,6 +63,10 @@ const StakeCard: FC<ItemProps> = ({
   };
 
   if (!wallet.publicKey) return <></>;
+
+  const stake = async (mint: string) => {
+    await stakeMultiNFT(wallet, [mint], setLoading, getNfts);
+  };
 
   return (
     <>
@@ -119,8 +125,7 @@ const StakeCard: FC<ItemProps> = ({
                 <div
                   className="stake_button "
                   onClick={() => {
-                    console.log("mint");
-                    stakeNFT(wallet, mint!, setLoading);
+                    stake(mint!);
                     // StakeNFT(mint!);
                   }}
                 >
