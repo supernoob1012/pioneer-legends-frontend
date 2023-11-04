@@ -187,15 +187,6 @@ export const createLockMultiPnftTx = async (
 
       const tx = new Transaction();
 
-      let poolAccount = await connection.getAccountInfo(userPool);
-      if ((poolAccount === null || poolAccount.data === null) && i == 0) {
-        console.log("init User Pool");
-        const tx_initUserPool = await createInitUserTx(userAddress, program);
-        if (tx_initUserPool) {
-          tx.add(tx_initUserPool);
-        }
-      }
-
       const txId = await program.methods
         .lockPnft()
         .accounts({
@@ -217,16 +208,52 @@ export const createLockMultiPnftTx = async (
         })
         .transaction();
 
-        
       tx.add(txId);
 
       tx.feePayer = userAddress;
-      tx.recentBlockhash = (await connection.getLatestBlockhash()).blockhash;
       txs.push(tx);
     }
+    const blockhash = (await connection.getLatestBlockhash()).blockhash;
+    txs.map((tx) => tx.recentBlockhash = blockhash);
+
+    let tx_init = null;
+    let poolAccount = await connection.getAccountInfo(userPool);
+    if (poolAccount === null || poolAccount.data === null) {
+      tx_init = await createInitUserTx(userAddress, program);
+      if (tx_init) {
+        tx_init.feePayer = userAddress;
+        tx_init.recentBlockhash = blockhash;
+      }
+    }
+
     let confirmed = 0;
     if (wallet.signAllTransactions) {
-      const signedTxs = await wallet.signAllTransactions(txs);
+      const signedTxs = tx_init == null ? await wallet.signAllTransactions(txs) : await wallet.signAllTransactions([tx_init, ...txs]);
+
+      if (tx_init) {
+        console.log("sending init tx");
+        const sTx = signedTxs[0].serialize();
+
+        // Send the raw transaction
+        const options = {
+            commitment: 'processed',
+            skipPreflight: false,
+        };
+        // Confirm the transaction
+        const signature = await connection.sendRawTransaction(sTx, options);
+        const blockhash = await connection.getLatestBlockhash();
+
+        const confirmed = await connection.confirmTransaction({
+                signature,
+                blockhash: blockhash.blockhash,
+                lastValidBlockHeight: blockhash.lastValidBlockHeight
+            }, "processed");
+
+        console.log("init tx: ", confirmed);
+      }
+      
+      signedTxs.shift();
+      
       await Promise.all(
         signedTxs.map(async o => {
           const encodedTx = Buffer.from(
