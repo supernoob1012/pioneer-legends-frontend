@@ -164,6 +164,15 @@ export const createLockMultiPnftTx = async (
 
     const txs: Transaction[] = [];
 
+    let poolAccount = await connection.getAccountInfo(userPool);
+    if (poolAccount === null || poolAccount.data === null) {
+      console.log("init User Pool");
+      const tx_initUserPool = await createInitUserTx(userAddress, program);
+      if (tx_initUserPool) {
+        txs.push(tx_initUserPool);
+      }
+    }
+
     for (let mint of nftMints) {
       const nftEdition = await getMasterEdition(new PublicKey(mint));
       console.log("nftEdition: ", nftEdition.toBase58());
@@ -184,15 +193,6 @@ export const createLockMultiPnftTx = async (
       console.log("tokenMintRecord: ", tokenMintRecord.toBase58());
 
       const tx = new Transaction();
-
-      let poolAccount = await connection.getAccountInfo(userPool);
-      if (poolAccount === null || poolAccount.data === null) {
-        console.log("init User Pool");
-        const tx_initUserPool = await createInitUserTx(userAddress, program);
-        if (tx_initUserPool) {
-          tx.add(tx_initUserPool);
-        }
-      }
 
       const txId = await program.methods
         .lockPnft()

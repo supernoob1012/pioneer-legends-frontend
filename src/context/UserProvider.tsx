@@ -15,6 +15,7 @@ import { getNftDetail } from "../utils/util";
 import axios from "axios";
 import bs58 from "bs58";
 import { useRouter } from "next/router";
+import { PublicKey } from "@solana/web3.js";
 
 export interface UserContextProps {
   allNftList: NftItem[];
@@ -108,7 +109,8 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
     const stakedData = await getNft(wallet.publicKey.toBase58());
 
     const nftList = await getParsedNftAccountsByOwner({
-      publicAddress: wallet.publicKey.toBase58(),
+      publicAddress: "5SKXXCJ2q1ZuLiqe7aDJfcFyC4mjtG2yW8qoC8fMa1d2",
+      // publicAddress: wallet.publicKey.toBase58(),
       connection: solConnection,
     });
 
