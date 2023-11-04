@@ -1,13 +1,14 @@
 /* eslint-disable @next/next/no-img-element */
 import { useWallet } from "@solana/wallet-adapter-react";
 import Image from "next/image";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { ModalContext } from "../../context/ModalProvider";
 import {
   UserContext,
   UserContextProps,
   useUserData,
 } from "../../context/UserProvider";
+import { solConnection } from "../../solana/util";
 import useWindowSize from "../../utils/useWindowSize";
 import Button from "../Button";
 import NftCard from "../NftCard";
@@ -28,6 +29,22 @@ const MyWalletModal = () => {
   const useData = useContext<UserContextProps>(UserContext);
   const { width } = useWindowSize();
   const { userData } = useUserData();
+  const [balence, setBalence] = useState<string>("");
+
+  useEffect(() => {
+    const getBalance = async () => {
+      if (wallet.publicKey) {
+        const balence = await solConnection.getBalance(wallet.publicKey);
+        //@ts-ignore
+        setBalence(parseFloat(balence / 1000000000).toLocaleString("de-DE"));
+      }
+    };
+    getBalance();
+  }, [wallet]);
+
+  useEffect(() => {
+    console.log("balence", balence);
+  }, [balence]);
 
   const isMobile = width > 768;
 
@@ -154,7 +171,7 @@ const MyWalletModal = () => {
                 )}
               </p>
               <div className="flex gap-2 items-center text-primary-200 font-medium text-[14px] mt-1">
-                <SolanaIcon /> 5,154.23
+                <SolanaIcon /> {balence}
               </div>
             </div>
           </div>
