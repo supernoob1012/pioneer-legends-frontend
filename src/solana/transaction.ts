@@ -164,16 +164,9 @@ export const createLockMultiPnftTx = async (
 
     const txs: Transaction[] = [];
 
-    let poolAccount = await connection.getAccountInfo(userPool);
-    if (poolAccount === null || poolAccount.data === null) {
-      console.log("init User Pool");
-      const tx_initUserPool = await createInitUserTx(userAddress, program);
-      if (tx_initUserPool) {
-        txs.push(tx_initUserPool);
-      }
-    }
+    for (let i = 0; i < nftMints.length; i ++) {
+      const mint = nftMints[i];
 
-    for (let mint of nftMints) {
       const nftEdition = await getMasterEdition(new PublicKey(mint));
       console.log("nftEdition: ", nftEdition.toBase58());
 
@@ -193,6 +186,15 @@ export const createLockMultiPnftTx = async (
       console.log("tokenMintRecord: ", tokenMintRecord.toBase58());
 
       const tx = new Transaction();
+
+      let poolAccount = await connection.getAccountInfo(userPool);
+      if ((poolAccount === null || poolAccount.data === null) && i == 0) {
+        console.log("init User Pool");
+        const tx_initUserPool = await createInitUserTx(userAddress, program);
+        if (tx_initUserPool) {
+          tx.add(tx_initUserPool);
+        }
+      }
 
       const txId = await program.methods
         .lockPnft()
@@ -217,15 +219,10 @@ export const createLockMultiPnftTx = async (
 
       tx.add(txId);
 
+      tx.feePayer = userAddress;
+      tx.recentBlockhash = (await connection.getLatestBlockhash()).blockhash;
       txs.push(tx);
     }
-
-    let block = await connection.getLatestBlockhash();
-    txs.map((tx) => {
-      tx.feePayer = userAddress;
-      tx.recentBlockhash = block.blockhash
-    });
-
     let confirmed = 0;
     if (wallet.signAllTransactions) {
       const signedTxs = await wallet.signAllTransactions(txs);
@@ -386,12 +383,9 @@ export const createUnlockPnftMultiTx = async (
     tx.add(txId);
 
     tx.feePayer = userAddress;
+    tx.recentBlockhash = (await connection.getLatestBlockhash()).blockhash;
     txs.push(tx);
   }
-
-  let block = await connection.getLatestBlockhash();
-  txs.map((tx) => tx.recentBlockhash = block.blockhash);
-
   let confirmed = 0;
 
   if (wallet.signAllTransactions) {
