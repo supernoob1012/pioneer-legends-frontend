@@ -114,8 +114,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
       connection: solConnection,
     });
 
-    // const nfts = new Array(nftList.length); // Initialize with a reasonable capacity
-    const nfts: any[] = [];
+    const nfts = new Array(nftList.length); // Initialize with a reasonable capacity
 
     await Promise.all(
       nftList.map(async (item, index) => {
@@ -136,7 +135,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
                   nft.mint === item.mint &&
                   nft.user === wallet.publicKey?.toBase58()
               );
-              nfts.push({
+              nfts[index] = {
                 name: data.name,
                 image: data.image,
                 description: data.description,
@@ -146,7 +145,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
                 mint: item.mint,
                 uri: item.data.uri,
                 faction: stakedNft?.faction,
-              });
+              };
             } else {
               throw Error(
                 "Could not fetch metadata: " +
