@@ -10,11 +10,12 @@ import { useWallet } from "@solana/wallet-adapter-react";
 import { authorizeUser, getNft, getNonce } from "../utils/api";
 import { getParsedNftAccountsByOwner } from "@nfteyez/sol-rayz";
 import { solConnection } from "../solana/util";
-import { BACKEND_URL, CREATOR_ADDRESS } from "../config";
+import { BACKEND_URL, CREATOR_ADDRESS, METADATA_URL } from "../config";
 import { getNftDetail } from "../utils/util";
 import axios from "axios";
 import bs58 from "bs58";
 import { useRouter } from "next/router";
+import { PublicKey } from "@solana/web3.js";
 
 export interface UserContextProps {
   allNftList: NftItem[];
@@ -108,6 +109,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
     const stakedData = await getNft(wallet.publicKey.toBase58());
 
     const nftList = await getParsedNftAccountsByOwner({
+      // publicAddress: "FipD7y7cPXhmXtQorVy2x94wQx4Ay1DKz6u9byjtc2E3",
       publicAddress: wallet.publicKey.toBase58(),
       connection: solConnection,
     });
@@ -121,24 +123,38 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
           item.data.creators[0]?.verified === 1 &&
           item.data.creators[0]?.address === CREATOR_ADDRESS
         ) {
-          const data = await getNftDetail(item.data.uri);
-          if (data) {
-            const stakedNft = stakedData.find(
-              nft =>
-                nft.mint === item.mint &&
-                nft.user === wallet.publicKey?.toBase58()
+          const parts = item.data.uri.split("/");
+          try {
+            const data = await getNftDetail(
+              METADATA_URL + parts[parts.length - 1]
             );
-            nfts[index] = {
-              name: data.name,
-              image: data.image,
-              description: data.description,
-              staked: stakedNft ? true : false,
-              user: wallet.publicKey ? wallet.publicKey.toBase58() : "",
-              startTime: stakedNft ? stakedNft.startTime : "",
-              mint: item.mint,
-              uri: item.data.uri,
-              faction: stakedNft?.faction,
-            };
+
+            if (data) {
+              const stakedNft = stakedData.find(
+                (nft) =>
+                  nft.mint === item.mint &&
+                  nft.user === wallet.publicKey?.toBase58()
+              );
+              nfts[index] = {
+                name: data.name,
+                image: data.image,
+                description: data.description,
+                staked: stakedNft ? true : false,
+                user: wallet.publicKey ? wallet.publicKey.toBase58() : "",
+                startTime: stakedNft ? stakedNft.startTime : "",
+                mint: item.mint,
+                uri: item.data.uri,
+                faction: stakedNft?.faction,
+              };
+            } else {
+              throw Error(
+                "Could not fetch metadata: " +
+                  (METADATA_URL + parts[parts.length - 1])
+              );
+            }
+          } catch (error) {
+            // nfts[index] = undefined;
+            console.log(error);
           }
         }
       })

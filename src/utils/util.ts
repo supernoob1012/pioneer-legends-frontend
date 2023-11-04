@@ -1,8 +1,3 @@
-import axios from "axios";
-import { web3 } from "@project-serum/anchor";
-import { NETWORK } from "../config";
-
-export const solConnection = new web3.Connection(web3.clusterApiUrl(NETWORK));
 
 export const getNftDetail = async (uri: string) => {
   try {

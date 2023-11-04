@@ -29,7 +29,7 @@ const NftCard: FC<ItemProps> = ({ title, image, mint, staked }) => {
           className="aspect-square relative  card-mask"
           onClick={() => setIsShowOrigin(true)}
         >
-          <Image src={image} layout="fill" alt="" />
+          <Image src={image} layout="fill" alt="" className=" object-cover object-center" />
         </div>
         <div
           className="pt-2 px-2.5 pb-3 min-h-[65px]"
