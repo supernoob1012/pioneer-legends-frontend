@@ -42,10 +42,6 @@ const MyWalletModal = () => {
     getBalance();
   }, [wallet]);
 
-  useEffect(() => {
-    console.log("balence", balence);
-  }, [balence]);
-
   const isMobile = width > 768;
 
   if (!wallet.publicKey || !isMyWalletModal) return <></>;
