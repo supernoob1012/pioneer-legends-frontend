@@ -311,6 +311,7 @@ const StakeModal = () => {
                           selected={selected}
                           selectAble={selectAble}
                           setSelected={setSelected}
+                          setLoading={setLoading}
                           force={() => setForeceRender(forceRender)}
                         />
                       ))}
@@ -333,6 +334,7 @@ const StakeModal = () => {
                           selected={selected}
                           selectAble={selectAble}
                           setSelected={setSelected}
+                          setLoading={setLoading}
                           force={() => setForeceRender(forceRender)}
                         />
                       ))}

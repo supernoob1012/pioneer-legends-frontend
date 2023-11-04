@@ -2,6 +2,8 @@
 import React, { FC, useMemo, useState } from "react";
 import Image from "next/image";
 import { CheckSmIcon, CloseIcon } from "./SvgIcons";
+import { useWallet } from "@solana/wallet-adapter-react";
+import { stakeNFT } from "../solana/util";
 
 interface ItemProps {
   title?: string;
@@ -13,6 +15,7 @@ interface ItemProps {
   selectAble?: boolean;
   selected: string[];
   setSelected: React.Dispatch<React.SetStateAction<string[]>>;
+  setLoading: (data: boolean) => void;
   force: () => void;
 }
 const StakeCard: FC<ItemProps> = ({
@@ -22,11 +25,13 @@ const StakeCard: FC<ItemProps> = ({
   staked,
   selectAble,
   selected,
+  setLoading,
   setSelected,
   force,
 }) => {
   const [isShowOrigin, setIsShowOrigin] = useState(false);
   const [checked, setChecked] = useState(false);
+  const wallet = useWallet();
 
   const names = useMemo(() => {
     return {
@@ -55,6 +60,8 @@ const StakeCard: FC<ItemProps> = ({
     force();
   };
 
+  if (!wallet.publicKey) return <></>;
+
   return (
     <>
       <div
@@ -64,16 +71,29 @@ const StakeCard: FC<ItemProps> = ({
             : ""
         }`}
       >
-        <div className="nft_card" onClick={() => {
-          if (selectAble) {
-            handleChange();
-          }
-        }}>
+        <div
+          className="nft_card"
+          onClick={() => {
+            if (selectAble) {
+              handleChange();
+            }
+          }}
+        >
           <div
             className="relative"
-            onClick={selectAble ? () => {} : () => {setIsShowOrigin(true)}}
+            onClick={
+              selectAble
+                ? () => {}
+                : () => {
+                    setIsShowOrigin(true);
+                  }
+            }
           >
-            <img src={image} alt="" className="w-full aspect-square object-cover object-center" />
+            <img
+              src={image}
+              alt=""
+              className="w-full aspect-square object-cover object-center"
+            />
             {selectAble && (
               <>
                 <div
@@ -95,20 +115,20 @@ const StakeCard: FC<ItemProps> = ({
               <h1 className="text-xs text-[#AFABA8]">Rarity multiplier: 1x</h1>
             </div>
             {!staked && !selectAble ? (
-              // <div className="flex w-full justify-center">
-              //   <div
-              //     className="stake_button "
-              //     onClick={() => {
-              //       console.log("mint");
-              //       // StakeNFT(mint!);
-              //     }}
-              //   >
-              //     <h1 className="absolute font-medium text-xs leading-[18px] text-white top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-              //       Stake
-              //     </h1>
-              //   </div>
-              // </div>
-              <></>
+              <div className="flex w-full justify-center">
+                <div
+                  className="stake_button "
+                  onClick={() => {
+                    console.log("mint");
+                    stakeNFT(wallet, mint!, setLoading);
+                    // StakeNFT(mint!);
+                  }}
+                >
+                  <h1 className="absolute font-medium text-xs leading-[18px] text-white top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+                    Stake
+                  </h1>
+                </div>
+              </div>
             ) : staked ? (
               <div className="stake_title uppercase font-medium text-[10px] leading-5 text-center text-[#FFD15F]">
                 staked
