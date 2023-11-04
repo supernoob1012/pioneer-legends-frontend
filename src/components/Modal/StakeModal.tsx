@@ -124,6 +124,8 @@ const StakeModal = () => {
           <span className="underline ">
             <a
               href="https://magiceden.io/marketplace/pioneer_legends"
+              target="_blank"
+              rel="noopener noreferrer"
               className="cursor-pointer"
             >
               Magic Eden
