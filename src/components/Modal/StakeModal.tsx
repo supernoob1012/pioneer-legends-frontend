@@ -122,7 +122,12 @@ const StakeModal = () => {
           <br />
           buy one from{" "}
           <span className="underline ">
-            <a>Magic Eden</a>
+            <a
+              href="https://magiceden.io/marketplace/pioneer_legends"
+              className="cursor-pointer"
+            >
+              Magic Eden
+            </a>
           </span>{" "}
           now!
         </h1>
