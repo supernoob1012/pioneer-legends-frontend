@@ -70,9 +70,7 @@ const StakeModal = () => {
       faction = "Unknown Faction";
       break;
   }
-  const stakedNfts = allNftList.filter(
-    (item) => item.staked && item.faction === faction
-  );
+  const stakedNfts = allNftList.filter((item) => item.staked);
   const walletNfts = allNftList.filter((item) => !item.staked);
 
   const cancelSelect = () => {
