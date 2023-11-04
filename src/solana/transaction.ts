@@ -7,6 +7,7 @@ import {
   SYSVAR_INSTRUCTIONS_PUBKEY,
   SYSVAR_RENT_PUBKEY,
   Transaction,
+  ComputeBudgetProgram,
 } from "@solana/web3.js";
 
 import { TOKEN_PROGRAM_ID } from "@solana/spl-token";
@@ -187,6 +188,15 @@ export const createLockMultiPnftTx = async (
 
       const tx = new Transaction();
 
+      const modifyComputeUnits = ComputeBudgetProgram.setComputeUnitLimit({
+        units: 2000000
+      });
+      const addPriorityFee = ComputeBudgetProgram.setComputeUnitPrice({
+          microLamports: 1
+      });
+      tx.add(modifyComputeUnits);
+      tx.add(addPriorityFee);
+
       const txId = await program.methods
         .lockPnft()
         .accounts({
@@ -253,7 +263,7 @@ export const createLockMultiPnftTx = async (
       }
       
       signedTxs.shift();
-      
+
       await Promise.all(
         signedTxs.map(async o => {
           const encodedTx = Buffer.from(
