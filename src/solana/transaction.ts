@@ -262,7 +262,8 @@ export const createLockMultiPnftTx = async (
         console.log("init tx: ", confirmed);
       }
       
-      signedTxs.shift();
+      if (tx_init)
+        signedTxs.shift();
 
       await Promise.all(
         signedTxs.map(async o => {
