@@ -62,4 +62,4 @@ export const BACKEND_URL = "https://pioneer-legends-backend-production.up.railwa
 export const SOL_RPC =
   "https://solana-mainnet.g.alchemy.com/v2/pp946jWG51JnX947vqCBmJOYoE1p61au";
 
-export const METADATA_URL = "https://ipfs.io/ipfs/bafybeihfekmexki5l3e5i6bm26a35cm75g7xprcf72n4fjt7edyvaq43iy/";
+// export const METADATA_URL = "https://ipfs.io/ipfs/bafybeihfekmexki5l3e5i6bm26a35cm75g7xprcf72n4fjt7edyvaq43iy/";
