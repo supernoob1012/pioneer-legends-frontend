@@ -144,9 +144,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
                 faction: stakedNft?.faction,
               };
             } else {
-              throw Error(
-                "Could not fetch metadata: " + item.data.uri
-              );
+              throw Error("Could not fetch metadata: " + item.data.uri);
             }
           } catch (error) {
             // nfts[index] = undefined;
