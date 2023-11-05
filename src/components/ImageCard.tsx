@@ -22,7 +22,12 @@ const ImageCard = ({
       }}
     >
       {/* <img src={image} alt="" className="relative z-10" /> */}
-      <Image src={image} layout="fill" className="relative z-10" alt="" />
+      <Image
+        src={image}
+        layout="fill"
+        className="relative z-10 object-cover object-center"
+        alt=""
+      />
       <div className="bg-[#1E1915] absolute left-1.5 top-1.5 w-full h-full" />
       {checkedImage === image && (
         <div className="w-8 h-8 grid place-content-center absolute right-0 bottom-0 z-20 bg-[linear-gradient(180deg,#376F73_0%,#3C433C_100%)]">
