@@ -175,7 +175,7 @@ const ProfileModal = () => {
         </div>
         <div className="mt-8 px-8 flex flex-col gap-[10px] relative z-[20]">
           <h1 className="font-medium text-sm text-white">Profile picture</h1>
-          <div className="w-full min-h-[200px] max-sm:min-h-[calc(100vh-400px)] h-full overflow-x-hidden overflow-y-auto">
+          <div className="w-full min-h-[200px] max-sm:min-h-[calc(100vh-400px)] h-full overflow-x-hidden overflow-y-auto max-h-[200px] max-sm:max-h-[calc(100vh-400px)]">
             {allNftList.length !== 0 ? (
               <div className="grid grid-cols-4 max-sm:grid-cols-2 gap-x-[10px] gap-y-4 relative">
                 {allNftList.map((item, index) => (
