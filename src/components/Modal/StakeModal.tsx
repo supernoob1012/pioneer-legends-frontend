@@ -70,7 +70,9 @@ const StakeModal = () => {
       faction = "Unknown Faction";
       break;
   }
-  const stakedNfts = allNftList.filter((item) => item.staked);
+  const stakedNfts = allNftList.filter(
+    (item) => item.staked && item.faction === faction
+  );
   const walletNfts = allNftList.filter((item) => !item.staked);
 
   const cancelSelect = () => {
@@ -94,7 +96,9 @@ const StakeModal = () => {
   };
 
   useEffect(() => {
-    getNfts();
+    if (isStakeModal) {
+      getNfts();
+    }
   }, [isStakeModal]);
 
   if (!wallet.publicKey || !isStakeModal) return <></>;
