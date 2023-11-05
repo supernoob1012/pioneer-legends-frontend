@@ -26,6 +26,7 @@ const ProfileModal = () => {
   const [inputActive, setInputActive] = useState(false);
   const [isChanged, setIsChanged] = useState<boolean>(false);
   const [checkedImge, setCheckedImage] = useState(userData.image);
+  const [checkedMin, setCheckedMint] = useState<string>("");
   const [isSaving, setIsSaving] = useState(false);
   const useData = useContext<UserContextProps>(UserContext);
   const { width } = useWindowSize();
@@ -178,11 +179,14 @@ const ProfileModal = () => {
           <div className="w-full min-h-[200px] max-sm:min-h-[calc(100vh-400px)] h-full overflow-x-hidden overflow-y-auto max-h-[200px] max-sm:max-h-[calc(100vh-400px)]">
             {allNftList.length !== 0 ? (
               <div className="grid grid-cols-4 max-sm:grid-cols-2 gap-x-[10px] gap-y-4 relative">
+                {console.log("allNftList", allNftList)}
                 {allNftList.map((item, index) => (
                   <ImageCard
                     key={index}
                     image={item.image}
-                    checkedImage={checkedImge}
+                    mint={item.mint}
+                    checkMint={checkedMin}
+                    setCheckMint={setCheckedMint}
                     setCheckedImage={setCheckedImage}
                   />
                 ))}
