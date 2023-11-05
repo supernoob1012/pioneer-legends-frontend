@@ -94,11 +94,27 @@ const ProfileModal = () => {
         <h1 className="absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 font-medium text-center text-[#E4DECD]">
           You have no NFT,
           <br />
-          buy one from{" "}
+          buy one now on{" "}
           <span className="underline ">
-            <a>Magic Eden</a>
+            <a
+              href="https://magiceden.io/marketplace/pioneer_legends"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="cursor-pointer"
+            >
+              Magic Eden
+            </a>
           </span>{" "}
-          now!
+          Or{" "}
+          <span className="underline">
+            <a
+              href="https://www.tensor.trade/trade/pioneer_legends"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Tensor!
+            </a>
+          </span>
         </h1>
       </>
     );

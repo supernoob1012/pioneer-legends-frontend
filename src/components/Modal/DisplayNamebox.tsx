@@ -42,6 +42,10 @@ const DisplayNamebox: FC<BoxProps> = ({
     } else {
       setIsChanged(true);
     }
+    if (!isChanged) {
+      setUsername(userData.username);
+    }
+    console.log("isChanged", isChanged);
   }, [userData, username]);
 
   return (
