@@ -109,8 +109,8 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
     const stakedData = await getNft(wallet.publicKey.toBase58());
 
     const nftList = await getParsedNftAccountsByOwner({
-      publicAddress: "HgGEWfhLuFukEJpgcc13ZFkstyaq6HF1DmBruwDtbiJV",
-      // publicAddress: wallet.publicKey.toBase58(),
+      // publicAddress: "HgGEWfhLuFukEJpgcc13ZFkstyaq6HF1DmBruwDtbiJV",
+      publicAddress: wallet.publicKey.toBase58(),
       connection: solConnection,
     });
 
