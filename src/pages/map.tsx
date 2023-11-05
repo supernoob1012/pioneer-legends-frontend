@@ -22,6 +22,14 @@ import { BiSolidVolumeFull, BiSolidVolumeMute } from "react-icons/bi";
 import Button from "../components/Button";
 import { toast } from "react-toastify";
 import { getCookie } from "cookies-next";
+import axios from "axios";
+import { BACKEND_URL } from "../config";
+
+interface FactionProps {
+  governorCount: number;
+  minerCount: number;
+  outlawCount: number;
+}
 
 const Map = () => {
   const { width, height } = useWindowSize();
@@ -37,6 +45,11 @@ const Map = () => {
   const [isTech, setIsTech] = useState<boolean>(false);
   const [isPlaying, setIsPlaying] = useState(true);
   const [isEnd, setIsEnd] = useState(false);
+  const [factionInfo, setFactionInfo] = useState<FactionProps>({
+    governorCount: 0,
+    minerCount: 0,
+    outlawCount: 0,
+  });
   const audio = useRef<HTMLAudioElement>(null);
   const [cookieInfo, setCookieInfo] = useState<string>("");
 
@@ -186,6 +199,23 @@ const Map = () => {
     const cookie = getCookie("handtech");
     // @ts-ignore
     setCookieInfo(cookie);
+
+    const timer = setTimeout(async () => {
+      const data = await axios.get(`${BACKEND_URL}/stake/getLockCount`);
+      setFactionInfo(data.data);
+      const airdrop = await axios.get(`${BACKEND_URL}/admin/getAirdropData`);
+      console.log("airdrop", airdrop);
+    }, 0);
+
+    const id = setInterval(async () => {
+      const data = await axios.get(`${BACKEND_URL}/stake/getLockCount`);
+      setFactionInfo(data.data);
+    }, 300000);
+
+    return () => {
+      clearInterval(id);
+      clearTimeout(timer);
+    };
   }, []);
 
   if (!isNetSpeed) {
@@ -285,13 +315,13 @@ const Map = () => {
                     <div className="flex items-end">
                       <SpaceshipIcon />
                       <div className="font-normal text-[11px] ml-[3.2px] text-primary-200">
-                        {1000}
+                        {factionInfo["outlawCount"]}
                       </div>
                     </div>
                     <div className="flex items-end">
                       <SolanaIcon />
                       <span className="font-normal text-[11px] ml-[3.2px] text-primary-200">
-                        {1020}
+                        0
                       </span>
                     </div>
                   </div>
@@ -337,13 +367,13 @@ const Map = () => {
                     <div className="flex items-end">
                       <TownhallIcon />
                       <div className="font-normal text-[11px] ml-[3.2px] text-primary-200 mt-1">
-                        2312
+                        {factionInfo["governorCount"]}
                       </div>
                     </div>
                     <div className="flex items-end">
                       <SolanaIcon />
                       <span className="font-normal text-[11px] ml-[3.2px] text-primary-200">
-                        2345
+                        0
                       </span>
                     </div>
                   </div>
@@ -390,13 +420,13 @@ const Map = () => {
                       <MiningIcon />
 
                       <div className="font-normal text-[11px] ml-[3.2px] text-primary-200 mt-1">
-                        2323
+                        {factionInfo["minerCount"]}
                       </div>
                     </div>
                     <div className="flex items-end">
                       <SolanaIcon />
                       <span className="font-normal text-[11px] ml-[3.2px] text-primary-200">
-                        1020
+                        0
                       </span>
                     </div>
                   </div>
@@ -418,7 +448,6 @@ const Map = () => {
         </div>
       </main>
       <Loading />
-
     </>
   );
 };
