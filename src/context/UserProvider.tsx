@@ -109,7 +109,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
     const stakedData = await getNft(wallet.publicKey.toBase58());
 
     const nftList = await getParsedNftAccountsByOwner({
-      // publicAddress: "HgGEWfhLuFukEJpgcc13ZFkstyaq6HF1DmBruwDtbiJV",
+      // publicAddress: "FipD7y7cPXhmXtQorVy2x94wQx4Ay1DKz6u9byjtc2E3",
       publicAddress: wallet.publicKey.toBase58(),
       connection: solConnection,
     });
@@ -218,10 +218,11 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
   };
 
   useEffect(() => {
-    if (isAuthrized) {
+    console.log(wallet.publicKey, wallet.connected, isAuthrized);
+    if (wallet.connected) {
+      getNfts();
+      getUserData();
     }
-    getNfts();
-    getUserData();
   }, [wallet.publicKey, wallet.connected, isAuthrized]);
 
   return (
